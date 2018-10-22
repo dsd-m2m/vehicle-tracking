@@ -1,0 +1,12 @@
+{
+    "web":
+    {
+        "client_id":"758979408479-h8rgnvkfhro2o2i3q3idek10r5cbt4u3.apps.googleusercontent.com",
+        "project_id":"dsd-m2m",
+        "auth_uri":"https://accounts.google.com/o/oauth2/auth",
+        "token_uri":"https://www.googleapis.com/oauth2/v3/token",
+        "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
+        "client_secret":"WtnbOBgVjGNYrEFaBXkONxXI",
+        "javascript_origins":["http://localhost:5000"]
+    }
+}
