@@ -1,4 +1,4 @@
-const googleConfig  = require('../google.config.json');
+const googleConfig  = require('../config/google.config.json');
 const GOOGLE_CLIENT_ID = googleConfig.web.client_id;
 const { OAuth2Client } = require('google-auth-library');
 var client = new OAuth2Client(GOOGLE_CLIENT_ID, '', '');

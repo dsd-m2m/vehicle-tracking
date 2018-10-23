@@ -1,6 +1,6 @@
 const jwt = require('./jwt');
 const googleAuth = require('./google-auth');
-
+const config = require('../config/config')
 const createToken = user => {
     return jwt.generateToken(user);
   };
@@ -29,16 +29,12 @@ const createToken = user => {
   };
 
   
-const isProtectedResource = (req, authConfig) => {
-    const config = authConfig.config;
-    let protectedPaths = config.protect;
-    let protectedPath = protectedPaths.filter(resource =>
-      req.url.startsWith(resource.path)
+const isProtectedResource = (req) => {
+    let unprotectedPaths = config.unprotectedRoutes
+    let unprotectedPath = unprotectedPaths.filter(path =>
+      req.url.startsWith(path)
     );
-    if (protectedPath.length == 0) {
-      return false;
-    }
-    if (protectedPath[0].methods.indexOf(req.method) > -1) {
+    if (unprotectedPath.length == 0) {
       return true;
     }
     return false;
@@ -54,14 +50,13 @@ const isProtectedResource = (req, authConfig) => {
   };
 
   class Authentication {
-    constructor(config) {
-      this.config = config;
+    constructor() {
     }
   
     filter() {
       return (req, res, next) => {
         try {
-          let shouldProtect = isProtectedResource(req, this.config.routes);
+          let shouldProtect = isProtectedResource(req);
   
           if (shouldProtect) {
             let principal = checkToken(req);

@@ -2,9 +2,9 @@
   "name": "backend-api",
   "version": "1.0.0",
   "description": "dsd-m2m api",
-  "main": "server.js",
+  "main": "./src/server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon ./src/server.js"
   },
   "author": "",
   "license": "ISC",
