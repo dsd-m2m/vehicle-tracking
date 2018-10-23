@@ -1,11 +1,9 @@
-var jwt = require('jsonwebtoken');
+var jsonwebtoken = require('jsonwebtoken');
+var expressJwt = require('express-jwt')
 const config = require('../config/config.json');
-module.exports.verify = token => {
-    return jwt.verify(token, config.jwtSecret);
-};
 
 module.exports.generateToken = user => {
-    return jwt.sign(
+    return jsonwebtoken.sign(
       {
         sub: user.id,
       },
@@ -15,3 +13,9 @@ module.exports.generateToken = user => {
       }
     );
   };
+
+module.exports.jwt = () => {
+  return expressJwt({ secret: config.jwtSecret }).unless({
+      path: config.unprotectedRoutes
+  });
+};

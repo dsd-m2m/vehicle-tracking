@@ -6,31 +6,28 @@ const config = require('./config/config.json');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const express = require('express');
-const Authentication = require('./auth');
-const auth = new Authentication();
-
+const jwt = require('./auth/jwt');
 
 const app = express();
+
 
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(auth.filter());
+app.use(jwt.jwt());
 
 
-app.get('/', function(req,res) {
-    res.sendfile('static/index.html');
-  });
+app.use(function catchAuthErrors(err, req, res, next) {
+	if (err.name === 'UnauthorizedError') {
+		res.status(401).send({ success: false, data: 'Missing authentication credentials.'});
+	}else{
+    res.status(404).send({ success: false, data: 'Resource not found.'});
+  }
+});
 
 fs.readdirSync(path.join(__dirname, 'routes')).map(file => {
   require('./routes/' + file)(app);
 });
-  
-app.use(function(req, res, next){
-    res.status(404).json({ success: false, error: 'not_found' }).end();
-});
-
-
 
 const server = app.listen(config.port, () => {
     console.log(`Server is listening on http://localhost:${server.address().port}`);
