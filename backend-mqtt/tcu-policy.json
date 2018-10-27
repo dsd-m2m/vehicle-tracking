@@ -1,0 +1,30 @@
+{
+	"Version": "2012-10-17",
+	"desc": "ID and Region should be set accordingly",
+	"Statement": [
+		{
+			"Effect": "Allow",
+			"Action": ["iot:Publish", "iot:Receive"],
+			"Resource": [
+				"arn:aws:iot:eu-central-1:905541657615:topic/sdk/test/Python",
+				"arn:aws:iot:eu-central-1:905541657615:topic/tcu"
+			]
+		},
+		{
+			"Effect": "Allow",
+			"Action": ["iot:Subscribe"],
+			"Resource": [
+				"arn:aws:iot:eu-central-1:905541657615:topicfilter/sdk/test/Python",
+				"arn:aws:iot:eu-central-1:905541657615:topicfilter/tcu"
+			]
+		},
+		{
+			"Effect": "Allow",
+			"Action": ["iot:Connect"],
+			"Resource": [
+				"arn:aws:iot:eu-central-1:905541657615:client/basicPubSub",
+				"arn:aws:iot:eu-central-1:905541657615:client/car-*"
+			]
+		}
+	]
+}
