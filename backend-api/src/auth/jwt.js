@@ -1,21 +1,21 @@
 var jsonwebtoken = require('jsonwebtoken');
 var expressJwt = require('express-jwt')
-const config = require('../config/config.json');
+const config = require('../config');
 
 module.exports.generateToken = user => {
     return jsonwebtoken.sign(
       {
         sub: user.id,
       },
-      config.jwtSecret,
+      config.jwt.secret,
       {
-        expiresIn: config.jwtExpiresIn
+        expiresIn: config.expiresIn
       }
     );
   };
 
 module.exports.jwt = () => {
-  return expressJwt({ secret: config.jwtSecret }).unless({
-      path: config.unprotectedRoutes
+  return expressJwt({ secret: config.jwt.secret }).unless({
+      path: ["/auth/login", "/ping/public"]
   });
 };

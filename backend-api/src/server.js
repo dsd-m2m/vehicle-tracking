@@ -1,12 +1,11 @@
-
+require('dotenv').config('.env');
 const fs = require('fs');
 const path = require('path');
-const googleConfig = require('./config/google.config.json');
-const config = require('./config/config.json');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const express = require('express');
 const jwt = require('./auth/jwt');
+const config = require('./config');
 
 const app = express();
 
@@ -29,6 +28,6 @@ fs.readdirSync(path.join(__dirname, 'routes')).map(file => {
   require('./routes/' + file)(app);
 });
 
-const server = app.listen(config.port, () => {
+const server = app.listen(config.server.port, () => {
     console.log(`Server is listening on http://localhost:${server.address().port}`);
   });

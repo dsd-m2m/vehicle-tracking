@@ -1,6 +1,0 @@
-{
-    "port" : 5000,
-    "jwtSecret" : "VerySecretKeyVerySecretKey",
-    "jwtExpiresIn" : "365d",
-    "unprotectedRoutes": ["/auth/login", "/ping/public" ]
-}
