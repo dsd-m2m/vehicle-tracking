@@ -1,19 +1,18 @@
-const googleConfig  = require('../config/google.config.json');
-const GOOGLE_CLIENT_ID = googleConfig.web.client_id;
+const config  = require('../config');
 const { OAuth2Client } = require('google-auth-library');
-var client = new OAuth2Client(GOOGLE_CLIENT_ID, '', '');
+var client = new OAuth2Client(config.auth.googleClientId, '', '');
 
 module.exports.getGoogleUser = code => {
   return client
-    .verifyIdToken({ idToken: code, audience: GOOGLE_CLIENT_ID })
+    .verifyIdToken({ idToken: code, audience: config.auth.googleClientId })
     .then(login => {
       var payload = login.getPayload();
 
       var audience = payload.aud;
-      if (audience !== GOOGLE_CLIENT_ID) {
+      if (audience !== config.auth.googleClientId) {
         throw new Error(
           'error while authenticating google user: audience mismatch: wanted [' +
-            GOOGLE_CLIENT_ID +
+          config.auth.googleClientId +
             '] but was [' +
             audience +
             ']'
