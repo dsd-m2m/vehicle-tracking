@@ -6,9 +6,11 @@ import {
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 
+import { MODULE_NAME as HOME_MODULE } from '~/modules/home';
+
 // Load all imported application modules
 export function composeRootReducer() {
-  const moduleReducers = { };
+  const moduleReducers = { [HOME_MODULE]: {} };
 
   return combineReducers(moduleReducers);
 }
@@ -50,7 +52,7 @@ export function composeStore() {
   const rootReducer = composeRootReducer();
 
   return {
-    enhancers,
     rootReducer,
+    enhancers,
   };
 }

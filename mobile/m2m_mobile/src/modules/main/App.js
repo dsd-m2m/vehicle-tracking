@@ -9,8 +9,8 @@ import RootNavigator from './navigator';
 import { composeStore } from './redux';
 
 const {
-  enhancers,
   rootReducer,
+  enhancers,
 } = composeStore();
 
 const store = createStore(

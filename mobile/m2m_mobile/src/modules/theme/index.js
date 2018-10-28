@@ -11,6 +11,8 @@ import {
   fontWeight,
 } from './typography';
 
+export const MODULE_NAME = 'THEME_MODULE';
+
 export {
   colors,
   gradients,
