@@ -1,9 +1,9 @@
 {
 	"host": "a320qkm25cndib-ats.iot.eu-central-1.amazonaws.com",
 	"port": 8883,
-	"clientId": "CAR_0001",
-	"thingName": "CAR_0001",
-	"certPath": "certs/CAR_0001.cert.pem",
-	"keyPath": "certs/CAR_0001.private.key",
+	"clientId": "car-0",
+	"thingName": "car-0",
+	"certPath": "certs/car-0.cert.pem",
+	"keyPath": "certs/car-0.private.key",
 	"caPath": "certs/root-CA.crt"
 }
