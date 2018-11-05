@@ -6,6 +6,8 @@ const logger = require('morgan');
 const express = require('express');
 const jwt = require('./auth/jwt');
 const config = require('./config');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('../public/swagger.json');
 
 const app = express();
 
@@ -13,8 +15,8 @@ app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '../public')))
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(jwt.jwt());
-
 
 app.use(function catchAuthErrors(err, req, res, next) {
 	if (err.name === 'UnauthorizedError') {
