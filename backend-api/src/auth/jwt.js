@@ -9,7 +9,7 @@ module.exports.generateToken = user => {
       },
       config.jwt.secret,
       {
-        expiresIn: config.expiresIn
+        expiresIn: config.jwt.expiresIn
       }
     );
   };

@@ -1,27 +1,27 @@
 {
   "development": {
-    "username": "root",
-    "password": "admin",
-    "database": "m2m",
-    "host": "127.0.0.1",
+    "username": "username",
+    "password": "password",
+    "database": "database",
+    "host": "host",
     "dialect": "mysql",
     "operatorsAliases": false,
     "freezeTableName": true
   },
   "test": {
-    "username": "m2m",
-    "password": "m2mm2mm2m",
-    "database": "m2m",
-    "host": "m2m.coytjgsabrki.eu-central-1.rds.amazonaws.com",
+    "username": "username",
+    "password": "password",
+    "database": "database",
+    "host": "host",
     "dialect": "mysql",
     "operatorsAliases": false,
     "freezeTableName": true
   },
   "production": {
-    "username": "root",
-    "password": "admin",
-    "database": "m2m",
-    "host": "127.0.0.1",
+    "username": "username",
+    "password": "password",
+    "database": "database",
+    "host": "host",
     "dialect": "mysql",
     "operatorsAliases": false,
     "freezeTableName": true

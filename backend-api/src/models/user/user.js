@@ -11,8 +11,7 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
         username: DataTypes.STRING,
-        firstName: DataTypes.STRING,
-        lastName: DataTypes.STRING,
+        pic: DataTypes.STRING,
         creationDate: DataTypes.DATE
     }, { 'freezeTableName': true, 'timestamps': false });
     return user;
