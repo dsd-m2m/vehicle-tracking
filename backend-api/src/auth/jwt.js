@@ -9,13 +9,13 @@ module.exports.generateToken = user => {
       },
       config.jwt.secret,
       {
-        expiresIn: config.expiresIn
+        expiresIn: config.jwt.expiresIn
       }
     );
   };
 
 module.exports.jwt = () => {
   return expressJwt({ secret: config.jwt.secret }).unless({
-      path: ["/api/auth/login", "/api/ping/public"]
+      path: ["/api-docs", "/api/auth/login", "/api/ping/public"]
   });
 };

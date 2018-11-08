@@ -1,0 +1,90 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Vehicles tracking API",
+    "description": "Backend API for m2m vehicles tracking system",
+    "version": "0.1"
+  },
+  "tags": [
+    {
+      "name": "test",
+      "description": "Test the public and secured endpoints"
+    }
+  ],
+  "servers": [
+    {
+      "url": "http://localhost:5000",
+      "description": "Local development server"
+    }
+  ],
+  "paths": {
+    "/api/ping/public": {
+      "get": {
+        "tags": [
+          "test"
+        ],
+        "description": "Test endpoint, not authentication needed",
+        "responses": {
+          "200": {
+            "description": "Success 'pong' message",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/definitions/GenericResponse"
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ping/secure": {
+      "get": {
+        "tags": [
+          "test"
+        ],
+        "description": "Test endpoint, authentication jwt needed",
+        "responses": {
+          "200": {
+            "description": "Success 'pong' message",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/definitions/GenericResponse"
+                },
+                "examples": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized request",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/definitions/GenericResponse"
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "GenericResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "description": "Flag if the request was valid"
+        },
+        "data": {
+          "type": "string",
+          "description": "Response data"
+        }
+      }
+    }
+  }
+}
