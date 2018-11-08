@@ -3,11 +3,11 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('role', [{
-      id: '0',
+      id: '1',
       roleName: 'vehicle_owner'
     },
     {
-      id: '1',
+      id: '2',
       roleName: 'oem_user'
     }], {});
   },

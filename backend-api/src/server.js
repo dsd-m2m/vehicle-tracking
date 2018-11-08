@@ -1,5 +1,4 @@
 require('dotenv').config('');
-process.env.NODE_ENV = 'development'; // development, test, production
 
 const fs = require('fs');
 const path = require('path');
