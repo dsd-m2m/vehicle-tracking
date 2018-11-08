@@ -1,4 +1,5 @@
 import { authHeader } from '../_helpers';
+const config = { apiUrl: '/api' };
 
 export const userService = {
 	login,
@@ -13,7 +14,7 @@ function login(username, password) {
 		body: JSON.stringify({ username, password }),
 	};
 
-	return fetch(`api/users/authenticate`, requestOptions)
+	return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
 		.then(handleResponse)
 		.then(user => {
 			// login successful if there's a jwt token in the response
@@ -37,7 +38,7 @@ function getAll() {
 		headers: authHeader(),
 	};
 
-	return fetch(`api/users`, requestOptions).then(handleResponse);
+	return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {
