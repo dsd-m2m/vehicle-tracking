@@ -5,7 +5,7 @@ import { Route, Redirect } from 'react-router-dom';
 otherwise it redirects the user to the /login page.*/
 export const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => (
-        localStorage.getItem('user')
+        localStorage.getItem('userData')
             ? <Component {...props} />
             : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
     )} />

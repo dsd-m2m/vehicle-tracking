@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import GoogleLogin from 'react-google-login';
 
 import { PostData } from '../_services';
-import { login } from '../_designs'
 
 
 class LoginPage extends React.Component {
@@ -36,15 +35,15 @@ class LoginPage extends React.Component {
         if (postData) {
             PostData('signup', postData).then((result) => {
                 let responseJson = result;
-                sessionStorage.setItem("userData", JSON.stringify(responseJson));
+                localStorage.setItem("userData", JSON.stringify(responseJson));
                 this.setState({redirect: true});
         });
         } else {}
     }
 
     render() {
-        if (this.state.redirect || sessionStorage.getItem('userData')) {
-            return (<Redirect to={'/home'}/>)
+        if (this.state.redirect || localStorage.getItem('userData')) {
+            return (<Redirect to={'/'}/>)
         }
 
         const responseGoogle = (response) => {

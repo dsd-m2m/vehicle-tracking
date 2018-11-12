@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { GoogleLogout } from 'react-google-login';
 import { userConstants } from '../_constants';
-
+ 
 import '../_designs';
 
 
@@ -21,13 +21,19 @@ class HomePage extends React.Component {
     }
 
     componentDidMount() {
-        let data = JSON.parse(sessionStorage.getItem('userData'));
+        let data = JSON.parse(localStorage.getItem('userData'));
         console.log(data);
         this.setState({name: data.userData.name})
     }
 
+    if(isTokenExpired){
+        this.state.redirect.setState(true);
+    }
+
+
     signout(){
-        localStorage.removeItem('user');
+        localStorage.removeItem('userData');
+        localStorage.removeItem('jwtToken');
         return { type: userConstants.LOGOUT };
     }
 
@@ -38,7 +44,7 @@ class HomePage extends React.Component {
             this.signout();
         }
         
-        if(!sessionStorage.getItem('userData') || this.state.redirect){
+        if(!localStorage.getItem('userData') || this.state.redirect){
             return (<Redirect to={'/login'}/>)
         }
 

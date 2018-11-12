@@ -6,10 +6,6 @@ import { store } from './_helpers';
 import { App } from './App';
 
 
-//setup backend
-
-
-
 
 render(
     <Provider store={store}>
