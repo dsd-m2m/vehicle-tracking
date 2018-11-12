@@ -5,6 +5,7 @@
 	"dependencies": {
 		"history": "^4.6.3",
 		"prop-types": "^15.6.2",
+		"jsonwebtoken": "^8.3.0",
 		"react": "^16.6.1",
 		"react-dom": "^16.6.1",
 		"react-google-login": "^3.2.1",
@@ -16,7 +17,7 @@
 		"redux-thunk": "^2.2.0"
 	},
 	"scripts": {
-		"start": "react-scripts start",
+		"start": "set PORT=8080 && react-scripts start",
 		"build": "react-scripts build && cp -R build/ ../backend-api/src/static",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"

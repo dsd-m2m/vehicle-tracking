@@ -20,7 +20,7 @@ class App extends React.Component {
             dispatch(alertActions.clear());
         });
     }
-//"758979408479-h8rgnvkfhro2o2i3q3idek10r5cbt4u3.apps.googleusercontent.com"
+
     render() {
         const { alert } = this.props;
         return (
