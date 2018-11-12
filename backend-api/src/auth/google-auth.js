@@ -1,22 +1,16 @@
-const config  = require('../config');
+const config = require('../config');
 const { OAuth2Client } = require('google-auth-library');
 var client = new OAuth2Client(config.auth.googleClientId, '', '');
 
-module.exports.getGoogleUser = code => {
+module.exports.getGoogleUser = socialToken => {
   return client
-    .verifyIdToken({ idToken: code, audience: config.auth.googleClientId })
+    .verifyIdToken({ idToken: socialToken, audience: config.auth.googleClientId })
     .then(login => {
       var payload = login.getPayload();
 
       var audience = payload.aud;
       if (audience !== config.auth.googleClientId) {
-        throw new Error(
-          'error while authenticating google user: audience mismatch: wanted [' +
-          config.auth.googleClientId +
-            '] but was [' +
-            audience +
-            ']'
-        );
+        throw new Error(login);
       }
       return {
         name: payload['name'],
@@ -25,13 +19,5 @@ module.exports.getGoogleUser = code => {
         email_verified: payload['email_verified'],
         email: payload['email']
       };
-    })
-    .then(user => {
-      return user;
-    })
-    .catch(err => {
-      throw new Error(
-        'error while authenticating google user: ' + JSON.stringify(err)
-      );
     });
 };

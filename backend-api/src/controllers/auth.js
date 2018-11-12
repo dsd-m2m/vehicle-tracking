@@ -6,61 +6,47 @@ const createToken = user => {
   return jwt.generateToken(user);
 };
 
-const getUser = login => {
-  const type = login.type;
-  switch (type) {
-    case 'google':
-      return googleAuth
-        .getGoogleUser(login.code)
-        .then(response => {
-          const content = {
-            token: createToken(response),
-            user: response
-          };
-          return content;
-        })
-        .catch(e => {
-          throw new Error(e);
-        });
-      break;
-    default:
-      throw new Error('unknow token type [' + type + ']');
-  }
+const getUser = async login => {
+
+  return googleAuth
+    .getGoogleUser(login.social_token)
+    .then(response => {
+      const content = {
+        token: createToken(response),
+        user: response
+      };
+      return content;
+    })
+    .catch(e => {
+      throw new Error("Authentification error");
+    });
 };
 
-const authenticate = login => {
+const authenticate = async login => {
   return getUser(login).then(principal => {
     return principal;
   });
 };
 
-const login = async (req, res) => {
+const login = async (req, res, next) => {
+  const login = req.body;
   try {
-    const login = req.body;
-    authenticate(login).then(credentials => {
-      loggedInUser = credentials.user;
-      User
-        .findOrCreate({
-          where: { email: loggedInUser.email }, defaults: {
-            email: loggedInUser.email,
-            roleId: 1,
-            username: loggedInUser.name,
-            pic: loggedInUser.pic,
-            creationDate: new Date()
-          }
-        })
-        .spread((user, created) => {
-          console.log(user.get({
-            plain: true
-          }));
-          res.json({ success: true, data: { token: createToken(user)}}).end();
-        });
+    credentials = await authenticate(login);
+    loggedInUser = credentials.user;
 
-    });
-  } catch (error) {
-    res.status(401).json({ success: false, error: 'invalid_social_login_token' }).end();
-  } finally {
-  }
+    [user, created] = await User.findOrCreate({
+      where: { email: loggedInUser.email }, defaults: {
+        email: loggedInUser.email,
+        roleId: 1,
+        username: loggedInUser.name,
+        pic: loggedInUser.pic,
+        creationDate: new Date()
+      }
+    }).catch(err => { throw Error("SequelizeError") });
+    return res.json({ success: true, token: createToken(user) }).end();
+  } catch (err) {
+    next(err);
+  };
 };
 
 module.exports.login = login;
