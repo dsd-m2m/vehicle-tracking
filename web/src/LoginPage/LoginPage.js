@@ -18,22 +18,11 @@ class LoginPage extends React.Component {
         this.signup = this.signup.bind(this);
     }
 
-    signup(res, type) {
-        let postData;
+    signup(res) {
+        let socialToken = res.tokenId;
 
-        if (type === 'google' && res.w3.U3) {
-            postData = {
-              name: res.w3.ig,
-              provider: type,
-              email: res.w3.U3,
-              provider_id: res.El,
-              token: res.Zi.access_token,
-              provider_pic: res.w3.Paa
-            };
-        }
-
-        if (postData) {
-            PostData('signup', postData).then((result) => {
+        if (socialToken) {
+            PostData('signup', socialToken).then((result) => {
                 let responseJson = result;
                 localStorage.setItem("userData", JSON.stringify(responseJson));
                 this.setState({redirect: true});
@@ -49,7 +38,7 @@ class LoginPage extends React.Component {
         const responseGoogle = (response) => {
             console.log("google console");
             console.log(response);
-            this.signup(response, 'google');
+            this.signup(response);
         }
         return (
             <div className="user_authorization">
