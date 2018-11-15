@@ -1,0 +1,320 @@
+openapi: 3.0.1
+info:
+  title: Vehicles tracking API
+  description: Backend API for m2m vehicles tracking system
+  version: '1.0.0'
+tags:
+- name: test, user, role, vehicle
+  description: Test the public and secured endpoints
+servers:
+- url: http://localhost:8080
+  description: Local development server
+- url: http://m2m-dev.eu-central-1.elasticbeanstalk.com
+  description: AWS Beanstalk stagging server
+paths:
+  "/api/ping/public":
+    get:
+      tags:
+      - test
+      description: Test endpoint, not authentication needed
+      responses:
+        '200':
+          description: Success 'pong' message
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+  "/api/ping/secure":
+    get:
+      tags:
+      - test
+      description: Test endpoint, authentication jwt needed
+      responses:
+        '200':
+          description: Success 'pong' message
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '401':
+          description: Missing authentication credentials
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+  "/api/user":
+    get:
+      tags:
+      - user
+      description: Get all users
+      responses:
+        '200':
+          description: List of all users
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  "$ref": "#/components/User"
+        '401':
+          description: Missing authentication credentials
+          content:
+            application/json:
+              content:
+                schema:
+                  "$ref": "#/components/GenericResponse"
+        '403':
+          description: Missing admin rights
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+  "/api/role":
+    get:
+      tags:
+      - role
+      description: Get all roles
+      responses:
+        '200':
+          description: List of all roles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/Role"
+        '401':
+          description: Missing authentication credentials
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+  "/api/role/changeUserRole":
+    post:
+      tags:
+      - role
+      parameters:
+      - name: userId
+        in: body
+        description: Id of the user to change the role
+        required: true
+        schema:
+          type: number
+      - name: newRoleId
+        in: body
+        description: Id of the new role
+        required: true
+        schema:
+          type: number
+      description: Change user's role
+      responses:
+        '200':
+          description: User's role changed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '401':
+          description: Missing authentication credentials
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '403':
+          description: Missing admin rights
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+  "/api/user/{id}":
+    get:
+      tags:
+      - user
+      parameters:
+      - name: id
+        in: path
+        schema:
+          type: number
+        description: The user id
+      description: Get user by id
+      responses:
+        '200':
+          description: Get user by id
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/User"
+        '401':
+          description: Missing authentication credentials
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '403':
+          description: Missing admin rights
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+  "/api/vehicle/subscribe":
+    post:
+      tags:
+      - vehicle
+      parameters:
+      - name: vehicleUID
+        in: body
+        schema:
+          type: number
+        description: Unique vehicle UID
+      description: Subscribe the user to the vehicle ata
+      responses:
+        '200':
+          description: User successfully subscribed to the vehicle data
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '401':
+          description: Missing authentication credentials
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '403':
+          description: Missing subscription rights for the vehicle
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+  "/api/vehicle/unsubscribe":
+    post:
+      tags:
+      - vehicle
+      parameters:
+      - name: vehicleId
+        in: body
+        schema:
+          type: number
+        description: Vehicle id (system defined)
+      description: Unsubscribe the user from the vehicle data
+      responses:
+        '200':
+          description: User successfully unsubscribed from the vehicle data
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '401':
+          description: Missing authentication credentials
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '403':
+          description: Missing subscription rights for the vehicle
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+  "/api/vehicle/setCarState":
+    post:
+      tags:
+      - vehicle
+      parameters:
+      - name: newState
+        in: body
+        schema:
+          type: string
+        description: New car state ON/OFF
+      description: Change car's state
+      responses:
+        '200':
+          description: Car's state successfully changed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '401':
+          description: Missing authentication credentials
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+          examples: {}
+        '403':
+          description: Missing subscription rights for the vehicle
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+          examples: {}
+  "/api/vehicle/setHeatingState":
+    post:
+      tags:
+      - vehicle
+      parameters:
+      - name: newStates
+        in: body
+        schema:
+          type: string
+        description: New heating state ON/OFF
+      description: Change heating's state
+      responses:
+        '200':
+          description: Car's heating state successfully changed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '401':
+          description: Missing authentication credentials
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '403':
+          description: Missing subscription rights for the vehicle
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+components:
+  GenericResponse:
+    type: object
+    properties:
+      success:
+        type: boolean
+        description: Flag if the request was valid
+      data:
+        type: string
+        description: Response data
+  User:
+    type: object
+    properties:
+      id:
+        type: number
+        description: Id of the user
+      email:
+        type: string
+        description: Google email address
+      roleId:
+        type: number
+        description: User's role id
+      username:
+        type: string
+        description: Full name
+      pic:
+        type: string
+        description: Url to user's profile picture
+      creationDate:
+        type: string
+        description: Registration date
+  Role:
+    type: object
+    properties:
+      id:
+        type: number
+        description: Id of the role
+      roleName:
+        type: string
+        description: Name of the role

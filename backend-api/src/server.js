@@ -8,7 +8,8 @@ const express = require('express');
 const jwt = require('./auth/jwt');
 const config = require('./config');
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('../public/swagger.json');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./public/swagger.yaml');
 
 const app = express();
 
@@ -27,7 +28,7 @@ app.use(function (req, res, next) {
 	return res.status(404).send({ success: false, data: 'Resource not found' });
 });
 app.use(function (err, req, res, next) {
-	console.log(err);
+	console.log("ERROR:",err.message);
 	if (err.name === 'UnauthorizedError') {
 		res.status(401).send({ success: false, data: 'Missing authentication credentials' });
 	} else {
