@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
         userId: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             references: {
                 model: 'user',
                 key: 'id'
@@ -12,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         vehicleId: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             references: {
                 model: 'vehicle',
                 key: 'id'

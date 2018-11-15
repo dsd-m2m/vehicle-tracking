@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
         email: DataTypes.STRING,
         roleId: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             references: {
                 model: 'role',
                 key: 'id'
