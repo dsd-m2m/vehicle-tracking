@@ -17,12 +17,13 @@ device.on('connect', () => {
 	console.log('\n======Emulating Sensor Data========\n');
 	setInterval(() => {
 		//Generate Random Sensor Data
-		var temperature = Math.floor(Math.random() * 110 + 1);
-		var rpm = Math.floor(Math.random() * 1000 + 1);
+		const carSpeed = Math.floor(Math.random() * 110 + 1);
+		const MotorRpm = Math.floor(Math.random() * 1000 + 1);
+		const timestamp = Date.now();
 
-		const data = { temperature, rpm }; //JSON Data
+		const data = { carSpeed, MotorRpm, timestamp }; //JSON Data
 		device.publish('tcu', JSON.stringify(data)); //Publish data to AWS as STRING
-	}, 5000);
+	}, 3000);
 });
 
 //Read data from Topic, you have to subscribe when connected:
