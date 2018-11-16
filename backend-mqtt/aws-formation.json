@@ -159,8 +159,18 @@
             "Type": "AWS::IoT::TopicRule",
             "Properties": {
                 "TopicRulePayload": {
-                    "Sql": "SELECT * FROM 'tcu'",
-                    "Actions": []
+                    "Sql": "SELECT clientid() AS car_id, timestamp() AS timestamp, * FROM 'tcu'",
+                    "Actions": [{
+                        "dynamoDB": {
+                            "table": "tcu"
+                        }
+                    }],
+                    "ErrorAction": {
+                        "S3": {
+                            "bucket": "tcu-error-log",
+                            "key": "${clientid() + '-' + timestamp()}"
+                        }
+                    }
                 }
             },
             "Metadata": {
