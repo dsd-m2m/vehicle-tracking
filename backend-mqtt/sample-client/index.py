@@ -1,8 +1,6 @@
-
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
-import logging
-import time
 import json
+import time
 
 with open('config.json') as f:
     config = json.load(f)
