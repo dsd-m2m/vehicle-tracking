@@ -23,6 +23,5 @@ deploy:
   env: 'm2m-dev'
   bucket_name: 'elasticbeanstalk-eu-central-1-rimac-m2m'
   on:
-    branch: develop
     branch: travis
 
