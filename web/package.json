@@ -1,0 +1,35 @@
+{
+	"name": "public",
+	"version": "0.1.0",
+	"private": true,
+	"dependencies": {
+		"history": "^4.6.3",
+		"prop-types": "^15.6.2",
+		"jsonwebtoken": "^8.3.0",
+		"react": "^16.6.1",
+		"react-dom": "^16.6.1",
+		"react-google-login": "^3.2.1",
+		"react-redux": "^5.0.5",
+		"react-router-dom": "^4.1.2",
+		"react-scripts": "2.1.1",
+		"redux": "^3.7.2",
+		"redux-logger": "^3.0.6",
+		"redux-thunk": "^2.2.0"
+	},
+	"scripts": {
+		"start": "set PORT=8081 && react-scripts start",
+		"build": "react-scripts build && cp -R build/* ../backend-api/public",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject"
+	},
+	"eslintConfig": {
+		"extends": "react-app"
+	},
+	"browserslist": [
+		">0.2%",
+		"not dead",
+		"not ie <= 11",
+		"not op_mini all"
+	],
+	"proxy": "http://localhost:8080"
+}
