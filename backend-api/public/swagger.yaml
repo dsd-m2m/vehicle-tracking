@@ -4,7 +4,7 @@ info:
   description: Backend API for m2m vehicles tracking system
   version: '1.0.0'
 tags:
-- name: test, user, role, vehicle
+- name: test, auth, user, role, vehicle, sensorData
   description: Test the public and secured endpoints
 servers:
 - url: http://localhost:8080
@@ -42,6 +42,32 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/GenericResponse"
+  "/api/auth/login":
+    post:
+      tags:
+      - auth
+      description: Authenticate the user, using the google provided (oauth2) social token
+      parameters:
+      - name: social_token
+        in: body
+        schema:
+          type: string
+        description: Social token provided by google oauth2
+      description: Get user by id
+      responses:
+        '200':
+          description: The user is successfully authenticated and the new JWT token is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  "$ref": "#/components/User"
+        '401':
+          description: Missing authentication credentials
+          content:
+            application/json:
+                  "$ref": "#/components/LoginResult"
   "/api/user":
     get:
       tags:
@@ -278,6 +304,46 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/GenericResponse"
+  "/api/sensorData/{vin}":
+    post:
+      tags:
+      - sensorData
+      parameters:
+      - name: vin
+        in: path
+        schema:
+          type: string
+        description: Vehicle identifier
+      - name: startTime
+        in: body
+        schema:
+          type: string
+        description: Starting point of the requested timeframe
+      - name: endTime
+        in: body
+        schema:
+          type: string
+        description: Ending point of the requested timeframe
+      description: Fetch all the historical data for one vehicle, for the requested timeframe
+      responses:
+        '200':
+          description: Get all the data
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/SensorData"
+        '401':
+          description: Missing authentication credentials
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '403':
+          description: Missing admin rights
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
 components:
   GenericResponse:
     type: object
@@ -318,3 +384,48 @@ components:
       roleName:
         type: string
         description: Name of the role
+  LoginResult: 
+    type: object
+    properties:
+      success:
+        type: boolean
+        description: Flag if the request was valid
+      token:
+        type: string
+        description: Newly generated JWT token which should be placed in the Authentication header of every seqent request
+  SensorData:
+    type: object
+    properties:
+      vin:
+        type: string
+        description: Unique vehicle identifier
+      timestamp:
+        type: string
+        description: Timestamp of the data sampling
+      createdAt:
+        type: string
+        description: Timestamp of the db record creation
+      longitude:
+        type: number
+        description: Vehicle position longitude
+      altitude:
+        type: number
+        description: Vehicle position altitude
+      latitude:
+        type: number
+        description: Vehicle position latitude
+      carSpeed:
+        type: number
+        description: Vehicle speed
+      motorRPM:
+        type: number
+        description: Motor's revolutions per second
+      torqueMotor:
+        type: number
+        description: Motor's torque
+      tempOilMotor:
+        type: number
+        description: Temperature of the motor's oil
+      powerMotorTotal:
+        type: number
+        description: Total power of the vehicle's motor
