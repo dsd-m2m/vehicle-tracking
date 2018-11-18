@@ -8,27 +8,16 @@ const subscribe = async (req, res) => {
         return res.status(400).json({ success: false, data: "Invalid vehicle UID" });
     }
     userId = req.user.sub;
-    [vehicle, created] = await Vehicle
-        .findOrCreate({
-            where: {
-                vin: vin
-            },
-            defaults: {
-                vin: vin
-            }
-        }).catch(err => {
-            throw Error("SequelizeError");
-        });
 
     [userVehicle, created] = await UserVehicle
         .findOrCreate({
             where: {
                 userId: userId,
-                vehicleId: vehicle.id
+                vin: vin
             },
             defaults: {
                 userId: userId,
-                vehicleId: vehicle.id,
+                vin: vin,
                 creationDate: new Date()
             }
         }).catch(err => {
@@ -40,30 +29,17 @@ const subscribe = async (req, res) => {
 };
 
 const unsubscribe = async (req, res) => {
-    vehicleId = req.body.vehicleId;
+    vin = req.body.vin;
     userId = req.user.sub;
-    if (!vehicleId) {
+    if (!vin) {
         return res.status(400).json({ success: false, data: "Invalid vehicle id" });
     }
-    const vehicle = await Vehicle
-        .findOne({
-            where: {
-                id: vehicleId
-            }
-        }).catch(err => {
-            throw Error("SequelizeError");
-        });
 
-    if (!vehicle) {
-        return res.status(200).json({
-            success: false, data: "Invalid vehicle id"
-        });
-    }
     userVehicle = await UserVehicle
         .destroy({
             where: {
                 userId: userId,
-                vehicleId: vehicle.id
+                vin: vind
             }
         }).catch(err => {
             throw Error("SequelizeError");

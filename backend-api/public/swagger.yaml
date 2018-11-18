@@ -191,11 +191,11 @@ paths:
       tags:
       - vehicle
       parameters:
-      - name: vehicleId
+      - name: vin
         in: body
         schema:
           type: number
-        description: Vehicle id (system defined)
+        description: Unique vehicle identifier
       description: Unsubscribe the user from the vehicle data
       responses:
         '200':

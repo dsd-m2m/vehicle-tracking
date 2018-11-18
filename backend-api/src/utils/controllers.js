@@ -41,27 +41,17 @@ function requireCarSubscription() {
 	return async function (req, res, next) {
 		try {
 			userId = req.user.sub;
-			vehicleId = req.body.vehicleId;
+			vin = req.body.vin;
 
-			const vehicle = await Vehicle
-				.findOne({
-					where: {
-						id: vehicleId
-					}
-				}).catch(err => {
-					throw Error("SequelizeError");
-				});
-
-
-			if (!vehicle) {
-				return res.status(403).json({ success: false, data: "Vehicle is not registered in the system" });
+			if (!vin) {
+				return res.status(403).json({ success: false, data: "Invalid vehicle id" });
 			}
 
 			userVehicle = await UserVehicle
 				.findOne({
 					where: {
 						userId: userId,
-						vehicleId: vehicle.id
+						vin: vin
 					}
 				}).catch(err => {
 					throw Error("SequelizeError");

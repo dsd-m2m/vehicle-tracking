@@ -2,8 +2,8 @@
 module.exports = (sequelize, DataTypes) => {
 
     var userVehicle = sequelize.define('user_vehicle', {
-        id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
         userId: {
+            primaryKey: true,
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
@@ -11,15 +11,11 @@ module.exports = (sequelize, DataTypes) => {
                 key: 'id'
             }
         },
-        vehicleId: {
-            type: DataTypes.INTEGER,
+        vin: {
+            primaryKey: true,
+            type: DataTypes.STRING,
             allowNull: false,
-            references: {
-                model: 'vehicle',
-                key: 'id'
-            }
         },
-        creationDate: DataTypes.DATE
-    }, { 'freezeTableName': true, 'timestamps': false });
+    }, { 'freezeTableName': true });
     return userVehicle;
 };
