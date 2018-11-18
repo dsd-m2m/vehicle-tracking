@@ -1,26 +1,26 @@
 const Vehicle = require('../models/user').vehicle;
-const UserSubscription = require('../models/user').userSubscription;
+const UserVehicle = require('../models/user').user_vehicle;
 
 const subscribe = async (req, res) => {
-    vehicleUID = req.body.vehicleUID;
+    vin = req.body.vin;
 
-    if (!vehicleUID) {
+    if (!vin) {
         return res.status(400).json({ success: false, data: "Invalid vehicle UID" });
     }
     userId = req.user.sub;
     [vehicle, created] = await Vehicle
         .findOrCreate({
             where: {
-                vehicleUID: vehicleUID
+                vin: vin
             },
             defaults: {
-                vehicleUID: vehicleUID
+                vin: vin
             }
         }).catch(err => {
             throw Error("SequelizeError");
         });
 
-    [userSubscription, created] = await UserSubscription
+    [userVehicle, created] = await UserVehicle
         .findOrCreate({
             where: {
                 userId: userId,
@@ -59,7 +59,7 @@ const unsubscribe = async (req, res) => {
             success: false, data: "Invalid vehicle id"
         });
     }
-    userSubscription = await UserSubscription
+    userVehicle = await UserVehicle
         .destroy({
             where: {
                 userId: userId,
@@ -68,7 +68,7 @@ const unsubscribe = async (req, res) => {
         }).catch(err => {
             throw Error("SequelizeError");
         })
-    if (!userSubscription) {
+    if (!userVehicle) {
         return res.status(200).json({ success: false, data: "User is not subscribed to this vehicle" });
 
     }
@@ -76,18 +76,12 @@ const unsubscribe = async (req, res) => {
 };
 
 // TO DO
-const setHeatingState = async (req, res) => {
+const command = async (req, res) => {
+    commandName = req.params.commandName;
     newState = req.body.newState;
-    res.status(200).json({ success: true });
-};
-
-// TO DO
-const setCarState = async (req, res) => {
-    newState = req.body.newState;
-    res.status(200).json({ success: true });
+    return res.status(200).json({ success: true });
 };
 
 module.exports.unsubscribe = unsubscribe;
 module.exports.subscribe = subscribe;
-module.exports.setHeatingState = setHeatingState;
-module.exports.setCarState = setCarState;
+module.exports.command = command;

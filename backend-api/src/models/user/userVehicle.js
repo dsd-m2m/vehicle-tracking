@@ -1,7 +1,7 @@
 
 module.exports = (sequelize, DataTypes) => {
 
-    var userSubscription = sequelize.define('userSubscription', {
+    var userVehicle = sequelize.define('user_vehicle', {
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
         userId: {
             type: DataTypes.INTEGER,
@@ -21,5 +21,5 @@ module.exports = (sequelize, DataTypes) => {
         },
         creationDate: DataTypes.DATE
     }, { 'freezeTableName': true, 'timestamps': false });
-    return userSubscription;
+    return userVehicle;
 };

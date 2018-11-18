@@ -1,4 +1,4 @@
-const UserSubscription = require('../models/user').userSubscription;
+const UserVehicle = require('../models/user').userVehicle;
 const Vehicle = require('../models/user').vehicle;
 const User = require('../models/user').user;
 const RoleEnum = require('./enums/role');
@@ -57,7 +57,7 @@ function requireCarSubscription() {
 				return res.status(403).json({ success: false, data: "Vehicle is not registered in the system" });
 			}
 
-			userSubscription = await UserSubscription
+			userVehicle = await UserVehicle
 				.findOne({
 					where: {
 						userId: userId,
@@ -67,7 +67,7 @@ function requireCarSubscription() {
 					throw Error("SequelizeError");
 				});
 
-			if (userSubscription) {
+			if (userVehicle) {
 				next();
 			} else {
 				return res.status(403).json({ success: false, data: "User is not subscribed to this car" });

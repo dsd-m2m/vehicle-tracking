@@ -161,12 +161,12 @@ paths:
       tags:
       - vehicle
       parameters:
-      - name: vehicleUID
+      - name: vin
         in: body
         schema:
           type: number
-        description: Unique vehicle UID
-      description: Subscribe the user to the vehicle ata
+        description: Unique vehicle identifier
+      description: Subscribe the user to the vehicle data
       responses:
         '200':
           description: User successfully subscribed to the vehicle data
@@ -216,7 +216,7 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/GenericResponse"
-  "/api/vehicle/setCarState":
+  "/api/vehicle/command/carState":
     post:
       tags:
       - vehicle
@@ -248,7 +248,7 @@ paths:
               schema:
                 "$ref": "#/components/GenericResponse"
           examples: {}
-  "/api/vehicle/setHeatingState":
+  "/api/vehicle/command/heatingState":
     post:
       tags:
       - vehicle
