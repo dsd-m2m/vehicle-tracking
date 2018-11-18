@@ -305,7 +305,7 @@ paths:
               schema:
                 "$ref": "#/components/GenericResponse"
   "/api/sensorData/{vin}":
-    post:
+    get:
       tags:
       - sensorData
       parameters:
@@ -315,12 +315,12 @@ paths:
           type: string
         description: Vehicle identifier
       - name: startTime
-        in: body
+        in: path
         schema:
           type: string
         description: Starting point of the requested timeframe
       - name: endTime
-        in: body
+        in: path
         schema:
           type: string
         description: Ending point of the requested timeframe

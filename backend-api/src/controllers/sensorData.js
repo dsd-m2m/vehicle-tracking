@@ -1,7 +1,7 @@
 const getAll = async (req, res) => {
     vin = req.params.vin;
-    startTime = req.body.startTime;
-    endTime = req.body.endTime;
+    startTime = req.params.startTime;
+    endTime = req.params.endTime;
     return res.status(200).json({ success: true });
 };
 
