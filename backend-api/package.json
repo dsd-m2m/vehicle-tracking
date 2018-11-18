@@ -5,7 +5,8 @@
 	"main": "./src/server.js",
 	"scripts": {
 		"start": "node ./src/server.js",
-		"dev": "nodemon ./src/server.js"
+		"dev": "nodemon ./src/server.js",
+		"lint": "./node_modules/.bin/eslint ./src --fix"
 	},
 	"author": "",
 	"license": "ISC",
@@ -24,6 +25,11 @@
 		"yamljs": "^0.3.0"
 	},
 	"devDependencies": {
-		"nodemon": "^1.18.4"
+		"eslint": "^5.3.0",
+		"eslint-config-airbnb-base": "^13.1.0",
+		"eslint-config-prettier": "^3.3.0",
+		"eslint-plugin-import": "^2.14.0",
+		"nodemon": "^1.18.4",
+		"prettier": "1.15.2"
 	}
 }

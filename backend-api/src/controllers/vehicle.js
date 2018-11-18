@@ -1,93 +1,62 @@
-const Vehicle = require('../models/user').vehicle;
-const UserSubscription = require('../models/user').userSubscription;
+/* eslint-disable no-console */
+const UserVehicle = require('../models/user').user_vehicle;
 
 const subscribe = async (req, res) => {
-    vehicleUID = req.body.vehicleUID;
+  const { vin } = req.body.vin;
 
-    if (!vehicleUID) {
-        return res.status(400).json({ success: false, data: "Invalid vehicle UID" });
-    }
-    userId = req.user.sub;
-    [vehicle, created] = await Vehicle
-        .findOrCreate({
-            where: {
-                vehicleUID: vehicleUID
-            },
-            defaults: {
-                vehicleUID: vehicleUID
-            }
-        }).catch(err => {
-            throw Error("SequelizeError");
-        });
+  if (!vin) {
+    return res.status(400).json({ success: false, data: 'Invalid vehicle UID' });
+  }
+  const userId = req.user.sub;
 
-    [userSubscription, created] = await UserSubscription
-        .findOrCreate({
-            where: {
-                userId: userId,
-                vehicleId: vehicle.id
-            },
-            defaults: {
-                userId: userId,
-                vehicleId: vehicle.id,
-                creationDate: new Date()
-            }
-        }).catch(err => {
-            throw Error("SequelizeError");
-        })
+  await UserVehicle
+    .findOrCreate({
+      where: {
+        userId,
+        vin,
+      },
+      defaults: {
+        userId,
+        vin,
+        creationDate: new Date(),
+      },
+    }).catch(() => {
+      throw Error('SequelizeError');
+    });
 
-    res.status(200).json({ success: true, data: "User is successfully subscribed to the vehicle" });
-
+  return res.status(200).json({ success: true, data: 'User is successfully subscribed to the vehicle' });
 };
 
 const unsubscribe = async (req, res) => {
-    vehicleId = req.body.vehicleId;
-    userId = req.user.sub;
-    if (!vehicleId) {
-        return res.status(400).json({ success: false, data: "Invalid vehicle id" });
-    }
-    const vehicle = await Vehicle
-        .findOne({
-            where: {
-                id: vehicleId
-            }
-        }).catch(err => {
-            throw Error("SequelizeError");
-        });
+  const { vin } = req.body.vin;
+  const { userId } = req.user.sub;
+  if (!vin) {
+    return res.status(400).json({ success: false, data: 'Invalid vehicle id' });
+  }
 
-    if (!vehicle) {
-        return res.status(200).json({
-            success: false, data: "Invalid vehicle id"
-        });
-    }
-    userSubscription = await UserSubscription
-        .destroy({
-            where: {
-                userId: userId,
-                vehicleId: vehicle.id
-            }
-        }).catch(err => {
-            throw Error("SequelizeError");
-        })
-    if (!userSubscription) {
-        return res.status(200).json({ success: false, data: "User is not subscribed to this vehicle" });
-
-    }
-    res.status(200).json({ success: true, data: "User is successfully unsubscribed from the vehicle" });
+  const userVehicle = await UserVehicle
+    .destroy({
+      where: {
+        userId,
+        vin,
+      },
+    }).catch(() => {
+      throw Error('SequelizeError');
+    });
+  if (!userVehicle) {
+    return res.status(200).json({ success: false, data: 'User is not subscribed to this vehicle' });
+  }
+  return res.status(200).json({ success: true, data: 'User is successfully unsubscribed from the vehicle' });
 };
 
 // TO DO
-const setHeatingState = async (req, res) => {
-    newState = req.body.newState;
-    res.status(200).json({ success: true });
-};
-
-// TO DO
-const setCarState = async (req, res) => {
-    newState = req.body.newState;
-    res.status(200).json({ success: true });
+const command = async (req, res) => {
+  console.log(req.params);
+  return res.status(200).json({ success: true });
+  // const { commandName } = req.params.commandName;
+  // const { newState } = req.body.newState;
 };
 
 module.exports.unsubscribe = unsubscribe;
 module.exports.subscribe = subscribe;
-module.exports.setHeatingState = setHeatingState;
-module.exports.setCarState = setCarState;
+module.exports.command = command;
