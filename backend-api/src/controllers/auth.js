@@ -2,69 +2,60 @@ const jwt = require('../auth/jwt');
 const googleAuth = require('../auth/google-auth');
 const User = require('../models/user').user;
 const RoleEnum = require('../utils/enums/role');
-const createToken = user => {
-  return jwt.generateToken(user);
-};
 
-const getUser = async login => {
+const createToken = user => jwt.generateToken(user);
 
-  return googleAuth
-    .getGoogleUser(login.social_token)
-    .then(response => {
-      const content = {
-        token: createToken(response),
-        user: response
-      };
-      return content;
-    })
-    .catch(e => {
-      throw new Error("Authentification error");
-    });
-};
-
-const authenticate = async login => {
-  return getUser(login).then(principal => {
-    return principal;
+const getUser = async login => googleAuth
+  .getGoogleUser(login.social_token)
+  .then((response) => {
+    const content = {
+      token: createToken(response),
+      user: response,
+    };
+    return content;
+  })
+  .catch(() => {
+    throw new Error('Authentification error');
   });
-};
+
 
 const login = async (req, res, next) => {
-  const login = req.body;
+  const loginData = req.body;
   try {
-    credentials = await authenticate(login);
-    loggedInUser = credentials.user;
+    const credentials = await getUser(loginData).catch(() => {
+      throw new Error('Authentification error');
+    });
+    const loggedInUser = credentials.user;
 
-    root_admin_email = process.env.ROOT_ADMIN;
+    const rootAdminEmail = process.env.ROOT_ADMIN;
 
-    if (loggedInUser.email == root_admin_email) {
+    let roleId = RoleEnum.vehicle_owner;
+    if (loggedInUser.email === rootAdminEmail) {
       roleId = RoleEnum.oem_user;
-    } else {
-      roleId = RoleEnum.vehicle_owner;
     }
 
-    [user, created] = await User.findOrCreate({
-      where: { email: loggedInUser.email }, defaults: {
+    const [user, created] = await User.findOrCreate({
+      where: { email: loggedInUser.email },
+      defaults: {
         email: loggedInUser.email,
-        roleId: roleId,
+        roleId,
         username: loggedInUser.name,
         pic: loggedInUser.pic,
-        creationDate: new Date()
-      }
+        creationDate: new Date(),
+      },
     })
-      .catch(err => { throw Error("SequelizeError") });
-      
-    if (!created && roleId == RoleEnum.oem_user && user.roleId == RoleEnum.vehicle_owner) {
+      .catch(() => { throw Error('SequelizeError'); });
+
+    if (!created && roleId === RoleEnum.oem_user && user.roleId === RoleEnum.vehicle_owner) {
       user.roleId = RoleEnum.oem_user;
-
       await user.save({
-        fields: ['roleId']
-      });
+        fields: ['roleId'],
+      }).catch(() => { throw Error('SequelizeError'); });
     }
-
     return res.json({ success: true, token: createToken(user) }).end();
   } catch (err) {
-    next(err);
-  };
+    return next(err);
+  }
 };
 
 module.exports.login = login;
