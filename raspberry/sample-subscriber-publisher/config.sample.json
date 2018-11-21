@@ -1,0 +1,9 @@
+{
+	"host": "HOST_URL",
+	"port": 8883,
+	"clientId": "CAR_ID",
+	"thingName": "CAR_ID",
+	"certPath": "certs/CAR_ID.cert.pem",
+	"keyPath": "certs/CAR_ID.private.key",
+	"caPath": "certs/root-CA.crt"
+}
