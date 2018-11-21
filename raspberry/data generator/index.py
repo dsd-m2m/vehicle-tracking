@@ -1,7 +1,7 @@
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 import json
 import time
-import simplejson
+import simplejson #for decimal support
 
 from faker import Faker
 
