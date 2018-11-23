@@ -242,16 +242,31 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/GenericResponse"
-  "/api/vehicle/command/carState":
+  "/api/vehicle/command":
     post:
       tags:
       - vehicle
       parameters:
-      - name: newState
+      - name: vin
         in: body
         schema:
           type: string
-        description: New car state ON/OFF
+        description: Vehicle identifier
+      - name: on
+        in: body
+        schema:
+          type: boolean
+        description: New car running state (true - on, false - off)
+      - name: heating
+        in: body
+        schema:
+          type: boolean
+        description: New car's heating state (true - on, false - off)
+      - name: fan
+        in: body
+        schema:
+          type: boolean
+        description: New car's fan state (true - on, false - off)
       description: Change car's state
       responses:
         '200':
@@ -273,37 +288,6 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/GenericResponse"
-          examples: {}
-  "/api/vehicle/command/heatingState":
-    post:
-      tags:
-      - vehicle
-      parameters:
-      - name: newStates
-        in: body
-        schema:
-          type: string
-        description: New heating state ON/OFF
-      description: Change heating's state
-      responses:
-        '200':
-          description: Car's heating state successfully changed
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/GenericResponse"
-        '401':
-          description: Missing authentication credentials
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/GenericResponse"
-        '403':
-          description: Missing subscription rights for the vehicle
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/GenericResponse"
   "/api/sensorData/{vin}":
     get:
       tags:
@@ -314,20 +298,22 @@ paths:
         schema:
           type: string
         description: Vehicle identifier
-      - name: startTime
-        in: path
+      - name: start
+        in: query
+        required: false
         schema:
-          type: string
-        description: Starting point of the requested timeframe
-      - name: endTime
-        in: path
+          type: number
+        description: Starting point of the requested timeframe; If not provided, value '0' is used as the initial point of the search interval
+      - name: end
+        in: query
+        required: false
         schema:
-          type: string
-        description: Ending point of the requested timeframe
-      description: Fetch all the historical data for one vehicle, for the requested timeframe
+          type: number
+        description: Ending point of the requested timeframe; If not provided, current time is used as the end point of the search interval
+      description: Get all historical data for a single vehicle, for the requested timeframe
       responses:
         '200':
-          description: Get all the data
+          description: Get requested data
           content:
             application/json:
               schema:
@@ -338,8 +324,8 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/GenericResponse"
-        '403':
-          description: Missing admin rights
+        '404':
+          description: Resource is not found
           content:
             application/json:
               schema:

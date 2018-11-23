@@ -51,10 +51,8 @@ const unsubscribe = async (req, res) => {
 
 // TO DO
 const command = async (req, res) => {
-  console.log(req.params);
+  console.log(req.body);
   return res.status(200).json({ success: true });
-  // const { commandName } = req.params.commandName;
-  // const { newState } = req.body.newState;
 };
 
 module.exports.unsubscribe = unsubscribe;

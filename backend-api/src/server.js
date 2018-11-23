@@ -11,10 +11,17 @@ const logger = require('morgan');
 const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
+const dynamo = require('dynamodb');
 const jwt = require('./auth/jwt');
 const config = require('./config');
 
 const swaggerDocument = YAML.load('./public/swagger.yaml');
+
+dynamo.AWS.config.update({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION
+});
 
 const app = express();
 
