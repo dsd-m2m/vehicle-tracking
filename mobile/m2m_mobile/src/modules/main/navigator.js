@@ -1,24 +1,35 @@
-import { createStackNavigator } from 'react-navigation';
+import {
+  createStackNavigator,
+  createSwitchNavigator,
+} from 'react-navigation';
 
 import { Navigator as HomeNavigator } from '~/modules/home';
+import { Navigator as AuthNavigator } from '~/modules/auth';
+import { Navigator as LoadingNavigator } from '~/modules/loading';
 
-const appNavigatorRoutes = { HomeNavigator: { screen: HomeNavigator } };
+const appNavigatorRoutes = {
+  Home: { screen: HomeNavigator },
+  Auth: { screen: AuthNavigator },
+};
 
 const appNavigatorConfig = {
-  initialRouteName: 'HomeNavigator',
+  initialRouteName: 'Home',
   animationEnabled: false,
   headerMode: 'none',
 };
 
 const AppNavigator = createStackNavigator(appNavigatorRoutes, appNavigatorConfig);
 
-const rootNavigatorRoutes = { AppNavigator: { screen: AppNavigator } };
+const rootNavigatorRoutes = {
+  App: { screen: AppNavigator },
+  Loading: { screen: LoadingNavigator },
+};
 
 const rootStackNavigatorConfig = {
-  initialRouteName: 'AppNavigator',
+  initialRouteName: 'Loading',
   animationEnabled: false,
   mode: 'modal',
   headerMode: 'none',
 };
 
-export default createStackNavigator(rootNavigatorRoutes, rootStackNavigatorConfig);
+export default createSwitchNavigator(rootNavigatorRoutes, rootStackNavigatorConfig);

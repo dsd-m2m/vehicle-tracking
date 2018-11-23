@@ -5,23 +5,23 @@ import {
   HeaderRight,
   styles,
 } from '~/modules/navigation';
-import { HomeScreen } from './screens';
+import { AuthScreen } from './screens';
 
-export const routes = { HOME: 'HOME' };
+export const routes = { AUTH: 'AUTH' };
 
 export default createStackNavigator(
   {
-    [routes.HOME]: {
-      name: routes.HOME,
-      screen: HomeScreen,
+    [routes.AUTH]: {
+      name: routes.AUTH,
+      screen: AuthScreen,
       navigationOptions: {
         headerStyle: styles.header,
-        title: 'M2M Mobile',
+        title: 'Authorization',
         headerLeft: <HeaderLeft iconName="settings" />,
         headerRight: <HeaderRight iconName="notifications" />,
         headerTitleStyle: styles.headerTitle,
       },
     },
   },
-  { initialRouteName: routes.HOME },
+  { initialRouteName: routes.AUTH },
 );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 
-export default function LoadingScreen() {
+export default function LocationScreen() {
   return (
     <View />
   );

@@ -1,4 +1,6 @@
-export const MODULE_NAME = 'HOME_MODULE';
+export { MODULE_NAME } from './const';
+
+export { reducer } from './redux';
 
 export {
   default as Navigator,

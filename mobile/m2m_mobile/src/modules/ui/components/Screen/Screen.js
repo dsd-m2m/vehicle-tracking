@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import PropTypes from 'prop-types';
-import StatusBar from '../StatusBar';
+import { StatusBar } from '../StatusBar';
 import { styles } from './styles';
 
 export default function Screen({ children }) {
