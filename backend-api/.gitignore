@@ -697,3 +697,6 @@ ASALocalRun/
 
 
 # End of https://www.gitignore.io/api/git,node,macos,linux,python,windows,intellij,visualstudio
+
+public/*
+!public/swagger.yaml

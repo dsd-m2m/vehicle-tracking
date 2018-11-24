@@ -90,7 +90,7 @@
                             ],
                             "Resource": [
                                 "arn:aws:iot:eu-central-1:905541657615:client/basicPubSub",
-                                "arn:aws:iot:eu-central-1:905541657615:client/car-*"
+                                "arn:aws:iot:eu-central-1:905541657615:client/*"
                             ]
                         }
                     ]
@@ -126,7 +126,7 @@
             "Properties": {
                 "AttributeDefinitions": [
                     {
-                        "AttributeName": "car_id",
+                        "AttributeName": "vin",
                         "AttributeType": "S"
                     },
                     {
@@ -136,7 +136,7 @@
                 ],
                 "KeySchema": [
                     {
-                        "AttributeName": "car_id",
+                        "AttributeName": "vin",
                         "KeyType": "HASH"
                     },
                     {
@@ -159,8 +159,18 @@
             "Type": "AWS::IoT::TopicRule",
             "Properties": {
                 "TopicRulePayload": {
-                    "Sql": "SELECT * FROM 'tcu'",
-                    "Actions": []
+                    "Sql": "SELECT clientid() AS vin, timestamp() AS createdAt, * FROM 'tcu'",
+                    "Actions": [{
+                        "dynamoDB": {
+                            "table": "sensor_data"
+                        }
+                    }],
+                    "ErrorAction": {
+                        "S3": {
+                            "bucket": "tcu-error-log",
+                            "key": "${clientid() + '-' + timestamp()}"
+                        }
+                    }
                 }
             },
             "Metadata": {

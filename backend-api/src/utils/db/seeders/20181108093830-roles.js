@@ -1,16 +1,15 @@
-'use strict';
+/* eslint-disable no-unused-vars */
+
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('role', [{
-      id: '1',
-      roleName: 'vehicle_owner'
-    },
-    {
-      id: '2',
-      roleName: 'oem_user'
-    }], {});
+  up: (queryInterface, Sequelize) => queryInterface.bulkInsert('role', [{
+    id: '1',
+    roleName: 'vehicle_owner',
   },
+  {
+    id: '2',
+    roleName: 'oem_user',
+  }], {}),
 
   down: (queryInterface, Sequelize) => {
     /*
@@ -20,5 +19,5 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('People', null, {});
     */
-  }
+  },
 };

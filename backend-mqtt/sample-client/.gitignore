@@ -1,2 +1,5 @@
 config.json
 /certs/car-*
+*.key
+*.crt
+*.pem

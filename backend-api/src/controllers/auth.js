@@ -1,65 +1,60 @@
 const jwt = require('../auth/jwt');
 const googleAuth = require('../auth/google-auth');
 const User = require('../models/user').user;
+const RoleEnum = require('../utils/enums/role');
 
-const createToken = user => {
-  return jwt.generateToken(user);
-};
+const createToken = user => jwt.generateToken(user);
 
-const getUser = login => {
-  const type = login.type;
-  switch (type) {
-    case 'google':
-      return googleAuth
-        .getGoogleUser(login.code)
-        .then(response => {
-          const content = {
-            token: createToken(response),
-            user: response
-          };
-          return content;
-        })
-        .catch(e => {
-          throw new Error(e);
-        });
-      break;
-    default:
-      throw new Error('unknow token type [' + type + ']');
-  }
-};
-
-const authenticate = login => {
-  return getUser(login).then(principal => {
-    return principal;
+const getUser = async login => googleAuth
+  .getGoogleUser(login.social_token)
+  .then((response) => {
+    const content = {
+      token: createToken(response),
+      user: response,
+    };
+    return content;
+  })
+  .catch(() => {
+    throw new Error('Authentification error');
   });
-};
 
-const login = async (req, res) => {
+
+const login = async (req, res, next) => {
+  const loginData = req.body;
   try {
-    const login = req.body;
-    authenticate(login).then(credentials => {
-      loggedInUser = credentials.user;
-      User
-        .findOrCreate({
-          where: { email: loggedInUser.email }, defaults: {
-            email: loggedInUser.email,
-            roleId: 1,
-            username: loggedInUser.name,
-            pic: loggedInUser.pic,
-            creationDate: new Date()
-          }
-        })
-        .spread((user, created) => {
-          console.log(user.get({
-            plain: true
-          }));
-          res.json({ success: true, data: { token: createToken(user)}}).end();
-        });
-
+    const credentials = await getUser(loginData).catch(() => {
+      throw new Error('Authentification error');
     });
-  } catch (error) {
-    res.status(401).json({ success: false, error: 'invalid_social_login_token' }).end();
-  } finally {
+    const loggedInUser = credentials.user;
+
+    const rootAdminEmail = process.env.ROOT_ADMIN;
+
+    let roleId = RoleEnum.vehicle_owner;
+    if (loggedInUser.email === rootAdminEmail) {
+      roleId = RoleEnum.oem_user;
+    }
+
+    const [user, created] = await User.findOrCreate({
+      where: { email: loggedInUser.email },
+      defaults: {
+        email: loggedInUser.email,
+        roleId,
+        username: loggedInUser.name,
+        pic: loggedInUser.pic,
+        creationDate: new Date(),
+      },
+    })
+      .catch(() => { throw Error('SequelizeError'); });
+
+    if (!created && roleId === RoleEnum.oem_user && user.roleId === RoleEnum.vehicle_owner) {
+      user.roleId = RoleEnum.oem_user;
+      await user.save({
+        fields: ['roleId'],
+      }).catch(() => { throw Error('SequelizeError'); });
+    }
+    return res.json({ success: true, token: createToken(user) }).end();
+  } catch (err) {
+    return next(err);
   }
 };
 
