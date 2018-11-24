@@ -1,5 +1,16 @@
+html {
+ 
+    background-image: url('../pictures/car3.gif');
+}
+
 .user_authorization{
     position: absolute;
-   right: 5%;
-   top:5%;
+    right: 4%;
+    top:5%;
+}
+
+.srvDown{
+	position: absolute; 
+    right:35%;
+    top:20%;
 }

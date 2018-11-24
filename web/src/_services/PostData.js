@@ -1,22 +1,28 @@
-import { alertActions } from '../_actions';
+//import { alertActions } from '../_actions';
 
 
-export function PostData(type, userData) {
-	let BaseURL = 'https://localhost:5000/api/auth/login';
-	fetch(BaseURL, {
-    	method: 'POST',
-   		Authorization: userData.token
-	})
-	.then((response) => {
-		const { dispatch }=this.props;
+export function PostData(type, socialToken) {
+	let BaseURL = '/api/auth/login';
 
-		if (response.payload.status !== 200){
-			dispatch(alertActions.error(response.payload.status.toString()));
-		}
-
-		else{
-			localStorage.setItem('jwtToken',response.payload.data.token);
-			return dispatch(alertActions.success(response.payload.status.toString()));	
-		}
-	});	
+	return new Promise((resolve,reject) =>{
+		fetch(BaseURL, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				"social_token": socialToken
+			})	
+		})
+			.then((response) => {
+				if(!response.ok) throw response.status;
+    			else return response.json();
+			})
+			.then((resp)=> {
+					//console.log(resp);	
+					resolve(resp);	
+			})
+			.catch((error)=> {
+				console.log("Problem with fetching from server");
+				reject(error);
+			});
+	});
 }
