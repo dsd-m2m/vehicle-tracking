@@ -3,7 +3,7 @@
 /* eslint-disable global-require */
 /* eslint-disable array-callback-return */
 require('dotenv').config('');
-
+const AWS = require('aws-sdk');
 const fs = require('fs');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -16,6 +16,14 @@ const jwt = require('./auth/jwt');
 const config = require('./config');
 
 const swaggerDocument = YAML.load('./public/swagger.yaml');
+
+AWS.config.update(
+  {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_REGION
+  }
+);
 
 dynamo.AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
