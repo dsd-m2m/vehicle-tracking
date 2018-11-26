@@ -21,6 +21,8 @@ deploy:
     app: 'rimac-m2m'
     env: 'm2m-dev'
     bucket_name: 'elasticbeanstalk-eu-central-1-rimac-m2m'
+    on:
+      branch: develop
   - provider: s3
     access_key_id: $ACCESSKEYID
     secret_access_key: $SECRETACCESSKEY
@@ -29,6 +31,6 @@ deploy:
     bucket: "m2m-dev"
     local_dir: web/build
     skip_cleanup: true
-  on:
-    branch: develop
+    on:
+      branch: develop
 
