@@ -8,6 +8,7 @@ import '../_designs/design.css';
 import { userActions } from '../_actions';
 import { GetData } from '../_services';
 
+
 class UsersPage extends React.Component {
 
     constructor(props){
@@ -16,8 +17,12 @@ class UsersPage extends React.Component {
         	name:'',
             users:[],
             redirect:false,
+            listVehicles:false,
         };
         this.signout = this.signout.bind(this);
+        this.getUsers = this.getUsers.bind(this);
+        this.getVehicles = this.getVehicles.bind(this);
+        
     }
 
     componentDidMount() {
@@ -34,33 +39,34 @@ class UsersPage extends React.Component {
         return (<Redirect to={'/login'}/>); 
     }
 
-
-    render(){
-        if(userActions.isTokenExpired()){
-            this.setState({redirect: true});
-        }
-
-        if(!localStorage.getItem('userData') || this.state.redirect){
-            return (<Redirect to={'/login'}/>)
-        }
-    	const logout = (response) => {
-            console.log("logging out!");
-            this.signout();
-        }
-        
-        const getUsers =()=>{
-        	let jwt= JSON.parse(localStorage.getItem('jwt'));
-        	//console.log(jwt);
-        	GetData('user',jwt).then((result) => {
+     getUsers(){
+            GetData('user').then((result) => {
                 let responseJson = result;
                 console.log(responseJson);
                 localStorage.setItem("users_list",JSON.stringify(responseJson));
-                this.setState({users:JSON.parse(localStorage.getItem('users_list'))});
             }).catch(e => {
                 console.log(e);
-            }); 
-        }
+            });           
+    }
 
+    getVehicles(){
+            GetData('vehicle').then((result)=>{
+                let responseJson = result;
+                console.log(responseJson);
+                localStorage.setItem("vehicles_list",JSON.stringify(responseJson));
+                this.setState({listVehicles:true});
+            }).catch(e => {
+                console.log(e);
+            });
+}
+
+
+    render(){
+        if(!localStorage.getItem('userData') || this.state.redirect ||userActions.isTokenExpired()){
+            return (<Redirect to={'/login'}/>)
+        }else if(this.state.listVehicles){
+            return (<Redirect to={'/vehicles'}/>)
+        }
         return (
             <div className="Hpage">
                 <div className="welcoming">
@@ -70,7 +76,10 @@ class UsersPage extends React.Component {
                     <h2>Users</h2>
                             {this.state.users.map(function(user,index){
                                     return( <ol key={index}>
-                                            {index+1}.UserID:{user.id}<br/>Username:{user.username}<br/>Email:"{user.email}"<br/>Role:{user.id===1?'Vehicle owner':'OEM user'}
+                                            {index+1}.UserID:{user.id}<br/>
+                                            Username:{user.username}<br/>
+                                            Email:"{user.email}"<br/>
+                                            Role:{user.roleId===1?'Vehicle owner':'OEM user'}
                                             </ol>
                                     )
 
@@ -80,14 +89,14 @@ class UsersPage extends React.Component {
                 	<Link to="/">Home</Link>
                 	<a href="https://www.fer.unizg.hr/rasip/dsd/projects/m2m">About</a>
                     <a href="mailto:tomislav.skokovic@fer.hr">Contact</a>
-                    <Link to="/vehicles">Vehicles</Link>
-                    <Link to="/users" onClick={getUsers}>Users</Link>
+                    <span onClick={this.getVehicles}>Vehicles</span>
+                    <Link to="/users" onClick={this.getUsers}>Users</Link>
                 </div>
 
                 <div className="user_authorization">
                     <GoogleLogout
                     buttonText="Logout"
-                    onLogoutSuccess={logout}
+                    onLogoutSuccess={this.signout}
                     >
                     </GoogleLogout>
                 </div>

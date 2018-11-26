@@ -1,14 +1,3 @@
-html{
-	height: 100%;
-	background-color:#d4d4dc!important;
-}
-
-.Hpage {
-	height: 100%;
-    background-color:#d4d4dc!important;
-}
-
-
 .welcoming{
    position: absolute;
    font-size: 15px;
@@ -29,6 +18,19 @@ color:white;
 }
 
 .UsersList ol{
+	font-size: 18px;
+	font-weight: bold;
+
+}
+
+.VehiclesList{
+	position: absolute;
+	left:10%;
+	top:15%;
+color:white;
+}
+
+.VehiclesList ol{
 	font-size: 18px;
 	font-weight: bold;
 
