@@ -11,6 +11,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"aws-sdk": "^2.361.0",
 		"body-parser": "^1.18.3",
 		"dotenv": "^6.1.0",
 		"dynamodb": "^1.1.2",

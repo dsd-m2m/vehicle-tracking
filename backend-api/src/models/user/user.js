@@ -15,5 +15,11 @@ module.exports = (sequelize, DataTypes) => {
     username: DataTypes.STRING,
     pic: DataTypes.STRING,
   }, { freezeTableName: true });
+
+  user.associate = models => {
+    user.hasMany(models.user_vehicle)
+    //user.belongsToMany(models.user_vehicle, {through: models.user_vehicle, foreignKey: "userId" })
+}
+
   return user;
 };

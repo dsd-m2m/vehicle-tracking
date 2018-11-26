@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
+const AWS = require('aws-sdk');
+const _ = require('lodash');
 const UserVehicle = require('../models/user').user_vehicle;
 
 const subscribe = async (req, res) => {
@@ -55,6 +57,21 @@ const command = async (req, res) => {
   return res.status(200).json({ success: true });
 };
 
+
+const get = async (req, res, next) => {
+
+  const iot = new AWS.Iot();
+  iot.listThings((err, data) => {
+    if (err) {
+      return next(err);
+    }
+    const resp = _.map(data.things, 'thingName') || [];
+    return res.status(200).json(resp);
+  });
+};
+
 module.exports.unsubscribe = unsubscribe;
 module.exports.subscribe = subscribe;
 module.exports.command = command;
+module.exports.get = get;
+
