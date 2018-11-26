@@ -29,7 +29,7 @@ deploy:
     region: 'eu-central-1'
     acl: public_read
     bucket: "m2m-dev"
-    local_dir: web/build
+    local_dir: ../web/build
     skip_cleanup: true
     on:
       branch: develop
