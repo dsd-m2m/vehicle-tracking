@@ -1,15 +1,25 @@
 import React from 'react';
-import { render } from 'react-dom';
+import thunkMiddleware from 'redux-thunk';
+import ReactDom from 'react-dom';
+
 import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import { createBrowserHistory } from 'history';
+import { createLogger } from 'redux-logger';
 
-import { store } from './_helpers';
-import { App } from './App';
+import rootReducer from './_reducers';
+import App from './App';
 
+const history = createBrowserHistory();
+const loggerMiddleware = createLogger();
+const store = createStore(
+	rootReducer,
+	applyMiddleware(thunkMiddleware, loggerMiddleware),
+);
 
-
-render(
-    <Provider store={store}>
-        <App />
-    </Provider>,
-    document.getElementById('app')
+ReactDom.render(
+	<Provider store={store}>
+		<App history={history} />
+	</Provider>,
+	document.getElementById('app'),
 );
