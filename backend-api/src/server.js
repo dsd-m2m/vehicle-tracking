@@ -3,6 +3,7 @@
 /* eslint-disable global-require */
 /* eslint-disable array-callback-return */
 require('dotenv').config('');
+require('./stream');
 const AWS = require('aws-sdk');
 const fs = require('fs');
 const path = require('path');

@@ -14,7 +14,8 @@ const getUser = async login => googleAuth
     };
     return content;
   })
-  .catch(() => {
+  .catch((err) => {
+    console.log(err);
     throw new Error('Authentification error');
   });
 
