@@ -387,6 +387,11 @@ components:
       creationDate:
         type: string
         description: Registration date
+      vehicles:
+        type: array
+        items: string
+        description: Subscribed vehicles ids
+
   Role:
     type: object
     properties:
