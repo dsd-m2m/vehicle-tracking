@@ -1,6 +1,7 @@
 {
 	"name": "public",
 	"version": "0.1.0",
+	"homepage": "./",
 	"private": true,
 	"dependencies": {
 		"history": "^4.6.3",
