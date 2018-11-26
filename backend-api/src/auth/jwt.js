@@ -13,5 +13,5 @@ module.exports.generateToken = user => jsonwebtoken.sign(
 );
 
 module.exports.jwt = () => expressJwt({ secret: config.jwt.secret }).unless({
-  path: ['/api-docs', '/api/auth/login', '/api/ping/public'],
+  path: ['/api-docs', '/api/auth/login', '/api/auth/login/mobile', '/api/ping/public'],
 });
