@@ -12,8 +12,6 @@ const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const dynamo = require('dynamodb');
-const cors = require('cors');
-
 const jwt = require('./auth/jwt');
 const config = require('./config');
 
@@ -34,7 +32,7 @@ dynamo.AWS.config.update({
 });
 
 const app = express();
-app.use(cors({ maxAge: 1728000 }));
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
