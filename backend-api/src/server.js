@@ -13,10 +13,17 @@ const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const dynamo = require('dynamodb');
+
+const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+
 const jwt = require('./auth/jwt');
 const config = require('./config');
 
 const swaggerDocument = YAML.load('./public/swagger.yaml');
+
+
 
 AWS.config.update(
   {
@@ -32,7 +39,7 @@ dynamo.AWS.config.update({
   region: process.env.AWS_REGION
 });
 
-const app = express();
+
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -55,6 +62,9 @@ app.use((err, req, res) => {
   }
 });
 
-const server = app.listen(config.server.port, () => {
+server.listen(config.server.port, () => {
   console.log(`Server is listening on http://localhost:${server.address().port}`);
 });
+
+require('./stream/index')(io);
+require('./stream/data_generator')(io);
