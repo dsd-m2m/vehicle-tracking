@@ -14,6 +14,7 @@
 		"aws-iot-device-sdk": "^2.2.1",
 		"aws-sdk": "^2.361.0",
 		"body-parser": "^1.18.3",
+		"cors": "^2.8.5",
 		"dotenv": "^6.1.0",
 		"dynamodb": "^1.1.2",
 		"express": "^4.16.4",
