@@ -17,5 +17,5 @@ module.exports = (io) => {
                     return io.emit(testVin, tcuData);
                 });
         }
-    }, 2000);
+    }, 1000);
 };
