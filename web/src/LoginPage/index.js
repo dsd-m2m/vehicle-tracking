@@ -2,8 +2,6 @@ import React from 'react';
 import { GoogleLogin } from 'react-google-login';
 
 import api from '../api';
-import '../_designs/login.css';
-import '../_designs/design.css';
 
 class LoginPage extends React.Component {
 	constructor(props) {

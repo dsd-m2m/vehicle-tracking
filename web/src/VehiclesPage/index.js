@@ -1,7 +1,5 @@
 import React from 'react';
 
-import '../_designs/home.css';
-import '../_designs/design.css';
 import api from '../api';
 
 class VehiclesPage extends React.Component {

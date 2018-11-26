@@ -1,9 +1,6 @@
 import React from 'react';
 import api from '../api';
 
-import '../_designs/home.css';
-import '../_designs/design.css';
-
 class UsersPage extends React.Component {
 	constructor(props) {
 		super(props);

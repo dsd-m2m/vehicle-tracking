@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, Switch, Link } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { GoogleLogout } from 'react-google-login';
 
@@ -9,6 +9,10 @@ import LoginPage from './LoginPage';
 import VehiclesPage from './VehiclesPage';
 import UsersPage from './UsersPage';
 import SideBar from './_components/SideBar';
+
+import './_designs/login.css';
+import './_designs/home.css';
+import './_designs/design.css';
 
 class App extends React.Component {
 	signout = () => {
