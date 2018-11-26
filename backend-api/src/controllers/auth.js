@@ -14,8 +14,8 @@ const getUser = async (login, isMobile) => googleAuth
     };
     return content;
   })
-  .catch(() => {
-    throw new Error('Authentification error');
+  .catch((err) => {
+    throw new Error(`Authentification error: ${  err.message}`);
   });
 
 const processLogin = async (req, res, next, loggedInUser) => {
@@ -42,7 +42,7 @@ const processLogin = async (req, res, next, loggedInUser) => {
     user.roleId = RoleEnum.oem_user;
     await user.save({
       fields: ['roleId'],
-    }).catch(() => { throw Error('SequelizeError'); });
+    }).catch(() => { throw Error('SequelizeError:'); });
   }
   return res.json({ success: true, token: createToken(user) }).end();
 }
@@ -50,8 +50,8 @@ const processLogin = async (req, res, next, loggedInUser) => {
 const loginMobile = async (req, res, next) => {
   const loginData = req.body;
   try {
-    const credentials = await getUser(loginData, true).catch(() => {
-      throw new Error('Authentification error');
+    const credentials = await getUser(loginData, true).catch((err) => {
+      throw new Error(`Authentification error: ${  err.message}`);
     });
     const loggedInUser = credentials.user;
 

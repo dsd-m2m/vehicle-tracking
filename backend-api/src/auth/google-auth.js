@@ -16,7 +16,7 @@ module.exports.getGoogleUser = (socialToken, isMobile) => {
 
       const audience = payload.aud;
       if (audience !== googleClientId) {
-        throw new Error(login);
+        throw new Error(`Invalid audience: ${  audience}`);
       }
       return {
         name: payload.name,
