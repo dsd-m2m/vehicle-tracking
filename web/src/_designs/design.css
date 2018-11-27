@@ -4,14 +4,13 @@
 	border-top:thin #bd8c7d solid;
 	left:20%;
 	right:0%;
-	padding-bottom:5%;
-	
 }
 
 #header{
 	background-color: #888888;
     padding: 15px;
 	top:0;
+    margin-bottom: 5px;
 }
 #header h1{
 	font-size:30px;

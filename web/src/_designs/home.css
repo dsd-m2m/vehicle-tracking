@@ -9,12 +9,15 @@
     position: absolute;
     right: 4%;
     top:5%;
+    margin-top:5px;
+    margin-right:5px;
 }
 .UsersList{
 	position: absolute;
 	left:10%;
 	top:15%;
-color:white;
+	color:white;
+	margin:25px 50px 50px 25px;
 }
 
 .UsersList ol{
@@ -27,11 +30,11 @@ color:white;
 	position: absolute;
 	left:10%;
 	top:15%;
-color:white;
+    color:white;
+    margin:25px 50px 50px 25px;
 }
 
 .VehiclesList ol{
 	font-size: 18px;
 	font-weight: bold;
-
 }

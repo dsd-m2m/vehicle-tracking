@@ -22,6 +22,7 @@ class LoginPage extends React.Component {
 					localStorage.setItem('userData', res.w3.ig);
 					localStorage.setItem('jwt', data.token);
 					this.props.history.push('/');
+					console.log(localStorage.getItem('userData'));
 				})
 				.catch(e => {
 					this.setState({ loginError: true });
