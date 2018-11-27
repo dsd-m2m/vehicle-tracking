@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
@@ -51,7 +52,7 @@ fs.readdirSync(path.join(__dirname, 'routes')).map((file) => {
 });
 
 app.use((req, res) => res.status(404).send({ success: false, data: 'Resource not found' }));
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   console.log('ERROR:', err.message);
   if (err.name === 'UnauthorizedError') {
     res.status(401).send({ success: false, data: 'Missing authentication credentials' });
