@@ -4,7 +4,7 @@ const _ = require('lodash');
 const UserVehicle = require('../models/user').user_vehicle;
 
 const subscribe = async (req, res) => {
-  const { vin } = req.body.vin;
+  const { vin } = req.body;
 
   if (!vin) {
     return res.status(400).json({ success: false, data: 'Invalid vehicle UID' });
@@ -30,7 +30,7 @@ const subscribe = async (req, res) => {
 };
 
 const unsubscribe = async (req, res) => {
-  const { vin } = req.body.vin;
+  const { vin } = req.body;
   const { userId } = req.user.sub;
   if (!vin) {
     return res.status(400).json({ success: false, data: 'Invalid vehicle id' });

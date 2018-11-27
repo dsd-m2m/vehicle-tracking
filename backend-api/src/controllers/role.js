@@ -7,8 +7,7 @@ const getAll = async (req, res) => {
 };
 
 const changeUserRole = async (req, res) => {
-  const { userId } = req.body.userId;
-  const { newRoleId } = req.body.newRoleId;
+  const { userId, newRoleId} = req.body;
 
   const { newRole } = await Role.findOne({ where: { id: newRoleId } });
   if (!newRole) {
