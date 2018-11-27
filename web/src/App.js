@@ -25,6 +25,7 @@ class App extends React.Component {
 	render() {
 		const { alert } = this.props;
 		const name = localStorage.getItem('userData');
+		console.log(name);
 		return (
 			<div className="jumbotron">
 				<div className="container">
@@ -44,7 +45,7 @@ class App extends React.Component {
 
 					{name && (
 						<div className="user_authorization">
-							<GoogleLogout buttonText="Logout" onLogoutSuccess={this.signout} />
+							<GoogleLogout buttonText="Logout" onLogoutSuccess={this.signout}></GoogleLogout>
 						</div>
 					)}
 				</div>

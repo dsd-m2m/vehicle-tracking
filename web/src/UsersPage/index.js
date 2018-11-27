@@ -13,7 +13,7 @@ class UsersPage extends React.Component {
 	componentDidMount() {
 		this.getUsers();
 	}
-
+	
 	getUsers = () => {
 		api('GET', 'user')
 			.then(res => this.setState({ users: res.data }))
