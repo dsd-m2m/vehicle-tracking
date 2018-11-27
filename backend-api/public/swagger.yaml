@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   title: Vehicles tracking API
   description: Backend API for m2m vehicles tracking system
-  version: '1.0.1'
+  version: '1.0.2'
 tags:
 - name: test, auth, user, role, vehicle, sensorData
   description: Test the public and secured endpoints
