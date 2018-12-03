@@ -9,6 +9,8 @@ import LoginPage from './LoginPage';
 import VehiclesPage from './VehiclesPage';
 import UsersPage from './UsersPage';
 import SideBar from './_components/SideBar';
+import ContactPage from './ContactPage';
+import AboutPage from './AboutPage';
 
 import './_designs/login.css';
 import './_designs/home.css';
@@ -39,6 +41,8 @@ class App extends React.Component {
 								<Route path="/login" component={LoginPage} />
 								<PrivateRoute path="/vehicles" exact component={VehiclesPage} />
 								<PrivateRoute path="/users" exact component={UsersPage} />
+								<Route path="/contact" exact component={ContactPage}/>
+								<Route path="/about" exact component={AboutPage}/>
 							</Switch>
 						</div>
 					</Router>
