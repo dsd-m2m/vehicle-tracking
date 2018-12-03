@@ -1,5 +1,6 @@
 import React from 'react';
 import { GoogleLogin } from 'react-google-login';
+import { Link } from 'react-router-dom';
 
 import api from '../api';
 
@@ -44,8 +45,8 @@ class LoginPage extends React.Component {
 		return (
 			<div className="Lpage">
 				<div className="sidenav">
-					<a href="https://www.fer.unizg.hr/rasip/dsd/projects/m2m">About</a>
-					<a href="mailto:tomislav.skokovic@fer.hr">Contact</a>
+					<Link to="/about">About</Link>
+					<Link to="/contact">Contact</Link>
 				</div>
 				<div className="user_authorization">
 					<GoogleLogin

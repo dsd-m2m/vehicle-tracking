@@ -8,8 +8,8 @@ const SideBar = ({ name }) => (
 		{name && <div className="welcoming">Welcome {name}</div>}
 		<div className="sidenav">
 			<Link to="/">Home</Link>
-			<a href="https://www.fer.unizg.hr/rasip/dsd/projects/m2m">About</a>
-			<a href="mailto:tomislav.skokovic@fer.hr">Contact</a>
+			<Link to="/about">About</Link>
+		    <Link to="/contact">Contact</Link>
 			<Link to="/vehicles">Vehicles</Link>
 			<Link to="/users">Users</Link>
 		</div>
