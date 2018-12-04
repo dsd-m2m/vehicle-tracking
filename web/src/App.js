@@ -17,13 +17,6 @@ import './_designs/home.css';
 import './_designs/design.css';
 
 class App extends React.Component {
-	signout = () => {
-		localStorage.removeItem('userData');
-		localStorage.removeItem('jwt');
-		this.props.history.push('/login');
-		console.log('signed out');
-	};
-
 	render() {
 		const { alert } = this.props;
 		const name = localStorage.getItem('userData');
@@ -37,8 +30,8 @@ class App extends React.Component {
 							<SideBar name={name}/>
 
 							<Switch>
-								<PrivateRoute exact path="/" component={HomePage} />
 								<Route path="/login" component={LoginPage} />
+								<PrivateRoute exact path="/" component={HomePage} />
 								<PrivateRoute path="/vehicles" exact component={VehiclesPage} />
 								<PrivateRoute path="/users" exact component={UsersPage} />
 								<Route path="/contact" exact component={ContactPage}/>
@@ -46,12 +39,6 @@ class App extends React.Component {
 							</Switch>
 						</div>
 					</Router>
-
-					{name && (
-						<div className="user_authorization">
-							<GoogleLogout buttonText="Logout" onLogoutSuccess={this.signout}></GoogleLogout>
-						</div>
-					)}
 				</div>
 			</div>
 		);

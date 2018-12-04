@@ -1,5 +1,6 @@
 import React from 'react';
 import api from '../api';
+import Header from '../_components/Header';
 
 class AboutPage extends React.Component {
 	constructor(props) {

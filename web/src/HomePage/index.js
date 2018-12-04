@@ -1,8 +1,11 @@
 import React from 'react';
+import Header from '../_components/Header';
 
 class HomePage extends React.Component {
 	render() {
-		return <div>HOMEPAGE</div>;
+		return <div>
+			<Header/>
+		</div>;
 	}
 }
 
