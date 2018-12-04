@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 otherwise it redirects the user to the /login page.*/
 const SideBar = ({ name }) => (
 	<>
-		{name && <div className="welcoming">Welcome {name}</div>}
 		<div className="sidenav">
 			<Link to="/">Home</Link>
 			<Link to="/about">About</Link>

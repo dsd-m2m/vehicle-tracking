@@ -1,6 +1,7 @@
 import React from 'react';
 
 import api from '../api';
+import Header from '../_components/Header';
 
 class VehiclesPage extends React.Component {
 	constructor(props) {
@@ -25,16 +26,19 @@ class VehiclesPage extends React.Component {
 
 	render() {
 		return (
-			<div className="VehiclesList">
-				<h2>Vehicles</h2>
-				{this.state.vehicles.map((vehicle, index) =>{
-					return (
-						<ol key={index}>
-							{index + 1}.VehicleID:{vehicle}
-							<br />
-						</ol>
-					);
-				})}
+			<div>
+			 	<Header/>
+				<div className="VehiclesList">
+					<h2>Vehicles</h2>
+					{this.state.vehicles.map((vehicle, index) =>{
+						return (
+							<ol key={index}>
+								{index + 1}.VehicleID:{vehicle}
+								<br />
+							</ol>
+						);
+					})}
+				</div>
 			</div>
 		);
 	}
