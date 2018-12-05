@@ -6,4 +6,9 @@ export {
   StatusBar,
   Text,
   TextInput,
+  Button,
+  TextButton,
+  HorizontalLine,
+  TextItem,
+  ModalDialog
 } from './components';

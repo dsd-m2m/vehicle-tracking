@@ -5,10 +5,7 @@
     "jest": true
   },
   "rules": {
-    "arrow-parens": [
-      "error",
-      "as-needed"
-    ],
+    "arrow-parens": ["error", "as-needed"],
     "react/jsx-max-props-per-line": [
       "error",
       {
@@ -19,24 +16,17 @@
     "react/jsx-filename-extension": [
       "error",
       {
-        "extensions": [
-          ".js",
-          ".jsx"
-        ]
+        "extensions": [".js", ".jsx"]
       }
     ],
-    "curly": [
-      "error",
-      "all"
-    ],
+    "curly": ["error", "all"],
     "global-require": "off",
+    "comma-dangle": "off",
+    "no-trailing-spaces": "off",
     "no-console": [
       "error",
       {
-        "allow": [
-          "warn",
-          "error"
-        ]
+        "allow": ["warn", "error"]
       }
     ],
     "no-use-before-define": [
@@ -72,9 +62,7 @@
     "react/prop-types": [
       "error",
       {
-        "ignore": [
-          "navigation"
-        ]
+        "ignore": ["navigation"]
       }
     ]
   }
