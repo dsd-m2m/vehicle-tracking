@@ -3,7 +3,11 @@ const User = require('../models/user').user;
 
 const get = async (req, res) => {
   const { id } = req.params;
-  db.sequelize.query(
+  if (!id) {
+    return res.status(400).json({ message: 'Undefined user id' });
+  }
+
+  return db.sequelize.query(
     `${'(SELECT * , ' +
     '(SELECT CONCAT("[", group_concat(DISTINCT vin ORDER BY vin SEPARATOR ","),"]")'
     + 'FROM `user_vehicle`'
@@ -27,8 +31,8 @@ const all = async (req, res) => {
 
 const remove = async (req, res) => {
   const { id } = req.params;
-  if (!id || id === 'undefined') {
-    return res.status(400).json({ message: 'Invalid user id' });
+  if (!id) {
+    return res.status(400).json({ message: 'Undefined user id' });
   }
 
   const user = await User
@@ -46,6 +50,4 @@ const remove = async (req, res) => {
   return res.status(200).json({ message: 'User is successfully deleted' });
 }
 
-module.exports.get = get;
-module.exports.all = all;
-module.exports.remove = remove;
+module.exports = { get, all, remove };

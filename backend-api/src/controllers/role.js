@@ -27,7 +27,7 @@ const changeUserRole = async (req, res) => {
     throw Error('SequelizeError');
   });
   if (!user) {
-    return res.status(400).json({ message: "User doesn't exist" });
+    return res.status(400).json({ message: "User is not registered in the system" });
   }
 
   user.roleId = newRoleId;
@@ -40,5 +40,4 @@ const changeUserRole = async (req, res) => {
   return res.status(200).json({ message: 'User role succesfully updated' });
 };
 
-module.exports.all = all;
-module.exports.changeUserRole = changeUserRole;
+module.exports = { all, changeUserRole };

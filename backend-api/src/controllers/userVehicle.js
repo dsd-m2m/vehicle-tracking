@@ -8,8 +8,8 @@ const subscribe = async (req, res) => {
   const { vin } = req.params;
   const userId = req.user.sub;
 
-  if (!vin || vin === 'undefined') {
-    return res.status(400).json({ message: 'Invalid vehicle identifer' });
+  if (!vin) {
+    return res.status(400).json({ message: 'Undefined vehicle identifer' });
   }
   const vehicle = await Vehicle
     .findOne({ where: { vin } }).catch(() => {
@@ -17,7 +17,7 @@ const subscribe = async (req, res) => {
     });
 
   if (!vehicle) {
-    return res.status(400).json({ message: 'Invalid vehicle identifer' });
+    return res.status(400).json({ message: 'Vehicle is not registered in the system' });
   }
 
   await UserVehicle
@@ -42,8 +42,8 @@ const unsubscribe = async (req, res) => {
   const { vin } = req.params;
   const { userId } = req.user.sub;
 
-  if (!vin || vin === 'undefined') {
-    return res.status(400).json({ message: 'Invalid vehicle identifer' });
+  if (!vin) {
+    return res.status(400).json({ message: 'Undefined vehicle identifer' });
   }
 
   const vehicle = await Vehicle
@@ -52,7 +52,7 @@ const unsubscribe = async (req, res) => {
     });
 
   if (!vehicle) {
-    return res.status(400).json({ message: 'Invalid vehicle identifer' });
+    return res.status(400).json({ message: 'Vehicle is not registered in the system' });
   }
   const userVehicle = await UserVehicle
     .destroy({
@@ -88,8 +88,4 @@ const get = async (req, res, next) => {
   });
 };
 
-module.exports.unsubscribe = unsubscribe;
-module.exports.subscribe = subscribe;
-module.exports.command = command;
-module.exports.get = get;
-
+module.exports = { get, unsubscribe, subscribe, command };

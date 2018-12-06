@@ -76,5 +76,4 @@ const loginWeb = async (req, res, next) => {
   }
 };
 
-module.exports.loginWeb = loginWeb;
-module.exports.loginMobile = loginMobile;
+module.exports = { loginWeb, loginMobile };

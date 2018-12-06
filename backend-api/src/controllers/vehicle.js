@@ -2,8 +2,8 @@ const Vehicle = require('../models/user').vehicle;
 
 const get = async (req, res) => {
     const { vin } = req.params;
-    if (!vin || vin === 'undefined') {
-        return res.status(400).json({ message: 'Invalid vehicle id' });
+    if (!vin) {
+        return res.status(400).json({ message: 'Undefined vehicle id' });
     }
     const vehicle = await Vehicle
         .findOne({ where: { vin } }).catch(() => {
@@ -11,7 +11,7 @@ const get = async (req, res) => {
         });
 
     if (!vehicle) {
-        return res.status(400).json({ message: 'Invalid vehicle id' });
+        return res.status(400).json({ message: 'Vehicle is not registered in the system' });
     }
 
     return res.status(200).json(vehicle);
@@ -45,9 +45,9 @@ const create = async (req, res) => {
 
 const update = async (req, res) => {
     const { vin } = req.params;
-    const { model, manufacturer, manufactureYear  } = req.body
-    if (!vin || vin === 'undefined') {
-        return res.status(400).json({ message: 'Invalid vehicle id' });
+    const { model, manufacturer, manufactureYear } = req.body
+    if (!vin) {
+        return res.status(400).json({ message: 'Undefined vehicle id' });
     }
 
     await Vehicle
@@ -66,8 +66,8 @@ const update = async (req, res) => {
 
 const remove = async (req, res) => {
     const { vin } = req.params;
-    if (!vin || vin === 'undefined') {
-        return res.status(400).json({ message: 'Invalid vehicle id' });
+    if (!vin) {
+        return res.status(400).json({ message: 'Undefined vehicle id' });
     }
 
     const vehicle = await Vehicle
@@ -85,8 +85,4 @@ const remove = async (req, res) => {
     return res.status(200).json({ message: 'Vehicle is successfully deleted' });
 }
 
-module.exports.get = get;
-module.exports.all = all;
-module.exports.create = create;
-module.exports.update = update;
-module.exports.remove = remove;
+module.exports = { get, all, create, update, remove };

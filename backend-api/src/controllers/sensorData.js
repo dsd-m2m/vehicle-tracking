@@ -6,8 +6,8 @@ const SensorData = require('../models/sensor/sensorData');
 const all = async (req, res, next) => {
   const { vin } = req.params;
 
-  if (!vin || vin === 'undefined') {
-    return res.status(400).json({ message: 'Invalid vehicle id' });
+  if (!vin) {
+    return res.status(400).json({ message: 'Undefined vehicle id' });
   }
   const start = parseInt(req.query.start, 10) || 0;
   const end = parseInt(req.query.end, 10) || moment().valueOf();
@@ -23,4 +23,4 @@ const all = async (req, res, next) => {
     });
 };
 
-module.exports.all = all;
+module.exports = { all };
