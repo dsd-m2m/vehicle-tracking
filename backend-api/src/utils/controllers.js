@@ -26,9 +26,9 @@ function requireAdmin() {
       if (user.roleId === RoleEnum.oem_user) {
         return next();
       }
-      return res.status(403).json({ success: false, data: 'Admin rights are needed' });
+      return res.status(403).json({ message: 'Admin rights are needed' });
     } catch (err) {
-      return res.status(500).json({ success: false, data: err.message });
+      return res.status(500).json({ message: err.message });
     }
   };
 }
@@ -36,31 +36,27 @@ function requireAdmin() {
 
 function requireCarSubscription() {
   return async function requireCarSubscriptionInner(req, res, next) {
-    try {
-      const userId = req.user.sub;
-      const { vin } = req.body.vin;
+    const userId = req.user.sub;
+    const { vin } = req.params.vin;
 
-      if (!vin) {
-        return res.status(403).json({ success: false, data: 'Invalid vehicle id' });
-      }
-
-      const userVehicle = await UserVehicle
-        .findOne({
-          where: {
-            userId,
-            vin,
-          },
-        }).catch(() => {
-          throw Error('SequelizeError');
-        });
-
-      if (userVehicle) {
-        return next();
-      }
-      return res.status(403).json({ success: false, data: 'User is not subscribed to this car' });
-    } catch (err) {
-      return res.status(500).json({ success: false, data: err.message });
+    if (!vin) {
+      return res.status(400).json({ message: 'Invalid vehicle id' });
     }
+
+    const userVehicle = await UserVehicle
+      .findOne({
+        where: {
+          userId,
+          vin,
+        },
+      }).catch(() => {
+        throw Error('SequelizeError');
+      });
+
+    if (userVehicle) {
+      return next();
+    }
+    return res.status(403).json({ message: 'User is not subscribed to this car' });
   };
 }
 

@@ -2,30 +2,43 @@ const User = require('../models/user').user;
 const Role = require('../models/user').role;
 
 
-const getAll = async (req, res) => {
-  Role.findAll().then(items => res.status(200).json(items));
+const all = async (req, res) => {
+
+  const roles = await Role
+    .findAll().catch(() => {
+      throw Error('SequelizeError');
+    });
+
+  return res.status(200).json(roles);
 };
 
 const changeUserRole = async (req, res) => {
-  const { userId, newRoleId} = req.body;
+  const { userId, newRoleId } = req.body;
 
-  const { newRole } = await Role.findOne({ where: { id: newRoleId } });
+  const newRole = await Role.findOne({ where: { id: newRoleId } }).catch(() => {
+    throw Error('SequelizeError');
+  });
+
   if (!newRole) {
-    return res.status(400).json({ success: true, data: "Role doesn't exist" });
+    return res.status(400).json({ message: "Role doesn't exist" });
   }
 
-  const user = await User.findOne({ where: { id: userId } });
+  const user = await User.findOne({ where: { id: userId } }).catch(() => {
+    throw Error('SequelizeError');
+  });
   if (!user) {
-    return res.status(400).json({ success: true, data: "User doesn't exist" });
+    return res.status(400).json({ message: "User doesn't exist" });
   }
 
   user.roleId = newRoleId;
   await user.save({
     fields: ['roleId'],
+  }).catch(() => {
+    throw Error('SequelizeError');
   });
 
-  return res.status(200).json({ success: true, data: 'User role succesfully updated' }).end();
+  return res.status(200).json({ message: 'User role succesfully updated' });
 };
 
-module.exports.getAll = getAll;
+module.exports.all = all;
 module.exports.changeUserRole = changeUserRole;

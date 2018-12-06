@@ -1,7 +1,3 @@
 
-exports.pingPublic = async (req, res) => {
-  res.status(200).json({ success: true, data: 'Pong from server (Public)' }).end();
-};
-exports.pingSecure = async (req, res) => {
-  res.status(200).json({ success: true, data: 'Pong from server (Secure)' }).end();
-};
+exports.pingPublic = async (req, res) => res.status(200).json({ message: 'Pong from server (Public)' });
+exports.pingSecure = async (req, res) => res.status(200).json({ message: 'Pong from server (Secure)' });
