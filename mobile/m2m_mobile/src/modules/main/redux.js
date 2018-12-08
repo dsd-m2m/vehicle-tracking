@@ -8,7 +8,10 @@ import thunk from 'redux-thunk';
 
 import { MODULE_NAME as HOME_MODULE } from '~/modules/home';
 import { MODULE_NAME as APP_INFO_MODULE } from '~/modules/app-info';
-import { MODULE_NAME as AUTH_MODULE } from '~/modules/auth';
+import {
+  MODULE_NAME as AUTH_MODULE,
+  reducer as authReducer,
+} from '~/modules/auth';
 import { MODULE_NAME as CAR_INFO_MODULE } from '~/modules/car-info';
 import { MODULE_NAME as LOADING_MODULE } from '~/modules/loading';
 import { MODULE_NAME as LOCATION_MODULE } from '~/modules/location';
@@ -21,7 +24,7 @@ export function composeRootReducer() {
   const moduleReducers = {
     [HOME_MODULE]: {},
     [APP_INFO_MODULE]: {},
-    [AUTH_MODULE]: {},
+    [AUTH_MODULE]: authReducer,
     [CAR_INFO_MODULE]: {},
     [LOADING_MODULE]: {},
     [LOCATION_MODULE]: {},

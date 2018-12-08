@@ -30,12 +30,12 @@ export default createStackNavigator(
     [routes.CAR_ID]: {
       name: routes.CAR_ID,
       screen: CarIdScreen,
-      navigationOptions: {
+      navigationOptions: ({ navigation }) => ({
         headerStyle: styles.header,
         title: 'M2M Mobile',
-        headerLeft: <HeaderLeft />,
+        headerLeft: <HeaderLeft navigation={navigation} />,
         headerTitleStyle: styles.headerTitle,
-      },
+      }),
     },
   },
   { initialRouteName: routes.LOGIN },

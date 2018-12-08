@@ -10,5 +10,5 @@ export {
   TextButton,
   HorizontalLine,
   TextItem,
-  ModalDialog
+  ModalDialog,
 } from './components';

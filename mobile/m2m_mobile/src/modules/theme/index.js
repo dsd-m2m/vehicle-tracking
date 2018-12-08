@@ -4,6 +4,7 @@ import {
 } from './colors';
 import {
   dimensions,
+  gutter,
   spacing,
 } from './dimensions';
 import {
@@ -17,6 +18,7 @@ export {
   colors,
   gradients,
   dimensions,
+  gutter,
   spacing,
   textStyles,
   fontWeight,

@@ -1,7 +1,8 @@
 export { Text } from './Text';
 export { TextInput } from './TextInput';
 export {
-  Button, TextButton
+  Button,
+  TextButton,
 } from './Button';
 export {
   Icon,

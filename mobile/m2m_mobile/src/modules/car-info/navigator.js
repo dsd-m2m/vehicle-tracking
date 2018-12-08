@@ -13,12 +13,12 @@ export default createStackNavigator(
     [routes.CAR_INFO]: {
       name: routes.CAR_INFO,
       screen: CarInfoScreen,
-      navigationOptions: {
+      navigationOptions: ({ navigation }) => ({
         headerStyle: styles.header,
         title: 'Car Info',
-        headerLeft: <HeaderLeft />,
+        headerLeft: <HeaderLeft navigation={navigation} />,
         headerTitleStyle: styles.headerTitle,
-      },
+      }),
     },
   },
   { initialRouteName: routes.CAR_INFO },

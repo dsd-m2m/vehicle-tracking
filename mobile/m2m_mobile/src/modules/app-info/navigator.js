@@ -13,12 +13,12 @@ export default createStackNavigator(
     [routes.APP_INFO]: {
       name: routes.APP_INFO,
       screen: AppInfoScreen,
-      navigationOptions: {
+      navigationOptions: ({ navigation }) => ({
         headerStyle: styles.header,
         title: 'App Info',
-        headerLeft: <HeaderLeft />,
+        headerLeft: <HeaderLeft navigation={navigation} />,
         headerTitleStyle: styles.headerTitle,
-      },
+      }),
     },
   },
   { initialRouteName: routes.APP_INFO },

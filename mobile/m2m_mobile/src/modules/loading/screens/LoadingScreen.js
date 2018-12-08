@@ -2,10 +2,15 @@ import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { styles } from './styles';
 
 class LoadingScreen extends PureComponent {
   render() {
-    return <Screen><View /></Screen>;
+    return (
+      <Screen style={styles.container}>
+        <View />
+      </Screen>
+    );
   }
 }
 
