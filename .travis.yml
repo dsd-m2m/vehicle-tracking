@@ -12,15 +12,28 @@ before_deploy:
   - 'cd ../backend-api'
 
 deploy:
-  provider: elasticbeanstalk
-  skip_cleanup: true
-  provider: elasticbeanstalk
-  access_key_id: $ACCESSKEYID
   secret_access_key: $SECRETACCESSKEY
   region: 'eu-central-1'
   app: 'rimac-m2m'
-  env: 'm2m-dev'
-  bucket_name: 'elasticbeanstalk-eu-central-1-rimac-m2m'
-  on:
-    branch: develop
+  - provider: elasticbeanstalk
+    skip_cleanup: true
+    provider: elasticbeanstalk
+    access_key_id: $ACCESSKEYID
+    secret_access_key: $SECRETACCESSKEY
+    region: 'eu-central-1'
+    app: 'rimac-m2m'
+    env: 'm2m-dev'
+    bucket_name: 'elasticbeanstalk-eu-central-1-rimac-m2m'
+    on:
+      branch: develop
+  - provider: s3
+    access_key_id: $ACCESSKEYID
+    secret_access_key: $SECRETACCESSKEY
+    region: 'eu-central-1'
+    acl: public_read
+    bucket: "m2m-dev"
+    local_dir: ../web/build
+    skip_cleanup: true
+    on:
+      branch: develop
 

@@ -8,6 +8,7 @@ const defaultConfig = {
   },
   auth: {
     googleClientId: process.env.GOOGLE_CLIENT_ID,
+    googleClientIdMobile: process.env.GOOGLE_CLIENT_ID_MOBILE,
     googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
   },
 };

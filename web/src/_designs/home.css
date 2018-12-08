@@ -1,0 +1,40 @@
+.welcoming{
+   position: absolute;
+   font-size: 15px;
+   right:5%;
+   top:3%;
+}
+
+.user_authorization{
+    position: absolute;
+    right: 4%;
+    top:5%;
+    margin-top:5px;
+    margin-right:5px;
+}
+.UsersList{
+	position: absolute;
+	left:10%;
+	top:15%;
+	color:white;
+	margin:25px 50px 50px 25px;
+}
+
+.UsersList ol{
+	font-size: 18px;
+	font-weight: bold;
+
+}
+
+.VehiclesList{
+	position: absolute;
+	left:10%;
+	top:15%;
+    color:white;
+    margin:25px 50px 50px 25px;
+}
+
+.VehiclesList ol{
+	font-size: 18px;
+	font-weight: bold;
+}

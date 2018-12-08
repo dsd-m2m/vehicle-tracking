@@ -1,62 +1,88 @@
-/* eslint-disable no-console */
-const UserVehicle = require('../models/user').user_vehicle;
+const Vehicle = require('../models/user').vehicle;
 
-const subscribe = async (req, res) => {
-  const { vin } = req.body.vin;
+const get = async (req, res) => {
+    const { vin } = req.params;
+    if (!vin) {
+        return res.status(400).json({ message: 'Undefined vehicle id' });
+    }
+    const vehicle = await Vehicle
+        .findOne({ where: { vin } }).catch(() => {
+            throw Error('SequelizeError');
+        });
 
-  if (!vin) {
-    return res.status(400).json({ success: false, data: 'Invalid vehicle UID' });
-  }
-  const userId = req.user.sub;
+    if (!vehicle) {
+        return res.status(400).json({ message: 'Vehicle is not registered in the system' });
+    }
 
-  await UserVehicle
-    .findOrCreate({
-      where: {
-        userId,
-        vin,
-      },
-      defaults: {
-        userId,
-        vin,
-        creationDate: new Date(),
-      },
-    }).catch(() => {
-      throw Error('SequelizeError');
-    });
-
-  return res.status(200).json({ success: true, data: 'User is successfully subscribed to the vehicle' });
+    return res.status(200).json(vehicle);
 };
 
-const unsubscribe = async (req, res) => {
-  const { vin } = req.body.vin;
-  const { userId } = req.user.sub;
-  if (!vin) {
-    return res.status(400).json({ success: false, data: 'Invalid vehicle id' });
-  }
+const all = async (req, res) => {
 
-  const userVehicle = await UserVehicle
-    .destroy({
-      where: {
-        userId,
-        vin,
-      },
-    }).catch(() => {
-      throw Error('SequelizeError');
-    });
-  if (!userVehicle) {
-    return res.status(200).json({ success: false, data: 'User is not subscribed to this vehicle' });
-  }
-  return res.status(200).json({ success: true, data: 'User is successfully unsubscribed from the vehicle' });
+    const vehicles = await Vehicle
+        .findAll().catch(() => {
+            throw Error('SequelizeError');
+        });
+
+    return res.status(200).json(vehicles);
 };
 
-// TO DO
-const command = async (req, res) => {
-  console.log(req.params);
-  return res.status(200).json({ success: true });
-  // const { commandName } = req.params.commandName;
-  // const { newState } = req.body.newState;
+const create = async (req, res) => {
+    const { vin, model, manufacturer, manufactureYear } = req.body
+    const vehicle = await Vehicle
+        .create(
+            {
+                vin,
+                model,
+                manufacturer,
+                manufactureYear
+            }).catch(() => {
+                throw Error('SequelizeError');
+            });
+    return res.status(200).json(vehicle);
+
+}
+
+const update = async (req, res) => {
+    const { vin } = req.params;
+    const { model, manufacturer, manufactureYear } = req.body
+    if (!vin) {
+        return res.status(400).json({ message: 'Undefined vehicle id' });
+    }
+
+    await Vehicle
+        .update(
+            {
+                model,
+                manufacturer,
+                manufactureYear
+            },
+            { where: { vin } }
+        ).catch(() => {
+            throw Error('SequelizeError');
+        });
+    return res.status(200).json({ message: 'Vehicle successfully updated' });
 };
 
-module.exports.unsubscribe = unsubscribe;
-module.exports.subscribe = subscribe;
-module.exports.command = command;
+const remove = async (req, res) => {
+    const { vin } = req.params;
+    if (!vin) {
+        return res.status(400).json({ message: 'Undefined vehicle id' });
+    }
+
+    const vehicle = await Vehicle
+        .destroy({
+            where: {
+                vin
+            },
+        }).catch(() => {
+            throw Error('SequelizeError');
+        });
+
+    if (!vehicle) {
+        return res.status(400).json({ message: 'Vehicle is not registered in the system' });
+    }
+    return res.status(200).json({ message: 'Vehicle is successfully deleted' });
+}
+
+module.exports = { get, all, create, update, remove };

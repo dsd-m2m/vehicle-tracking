@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   title: Vehicles tracking API
   description: Backend API for m2m vehicles tracking system
-  version: '1.0.0'
+  version: '1.0.3'
 tags:
 - name: test, auth, user, role, vehicle, sensorData
   description: Test the public and secured endpoints
@@ -26,6 +26,8 @@ paths:
                 "$ref": "#/components/GenericResponse"
   "/api/ping/secure":
     get:
+      security:
+        - authentication: []
       tags:
       - test
       description: Test endpoint, authentication jwt needed
@@ -47,29 +49,35 @@ paths:
       tags:
       - auth
       description: Authenticate the user, using the google provided (oauth2) social token
-      parameters:
-      - name: social_token
-        in: body
-        schema:
-          type: string
+      requestBody:
         description: Social token provided by google oauth2
-      description: Get user by id
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+                type: object
+                properties:
+                  social_token:
+                    type: string
       responses:
         '200':
           description: The user is successfully authenticated and the new JWT token is returned
           content:
             application/json:
               schema:
-                type: array
+                type: object
                 items: 
                   "$ref": "#/components/User"
         '401':
           description: Missing authentication credentials
           content:
             application/json:
-                  "$ref": "#/components/LoginResult"
+              schema:
+                "$ref": "#/components/LoginResult"
   "/api/user":
     get:
+      security:
+        - authentication: []
       tags:
       - user
       description: Get all users
@@ -86,9 +94,8 @@ paths:
           description: Missing authentication credentials
           content:
             application/json:
-              content:
-                schema:
-                  "$ref": "#/components/GenericResponse"
+              schema:
+                "$ref": "#/components/GenericResponse"
         '403':
           description: Missing admin rights
           content:
@@ -97,6 +104,8 @@ paths:
                 "$ref": "#/components/GenericResponse"
   "/api/role":
     get:
+      security:
+        - authentication: []
       tags:
       - role
       description: Get all roles
@@ -117,22 +126,24 @@ paths:
                 "$ref": "#/components/GenericResponse"
   "/api/role/changeUserRole":
     post:
+      security:
+        - authentication: []
       tags:
       - role
-      parameters:
-      - name: userId
-        in: body
-        description: Id of the user to change the role
-        required: true
-        schema:
-          type: number
-      - name: newRoleId
-        in: body
-        description: Id of the new role
-        required: true
-        schema:
-          type: number
       description: Change user's role
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+                type: object
+                properties:
+                  userId:
+                    type: number
+                    description: Id of the user to change the role
+                  newRoleId:
+                    type: number
+                    description: Id of the new role
       responses:
         '200':
           description: User's role changed
@@ -154,13 +165,16 @@ paths:
                 "$ref": "#/components/GenericResponse"
   "/api/user/{id}":
     get:
+      security:
+        - authentication: []
       tags:
       - user
       parameters:
-      - name: id
-        in: path
+      - in: path
+        name: id
         schema:
           type: number
+        required: true
         description: The user id
       description: Get user by id
       responses:
@@ -182,16 +196,240 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/GenericResponse"
-  "/api/vehicle/subscribe":
+    delete:
+      security:
+        - authentication: []
+      tags:
+      - user
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+          required: true
+          description: User identifier
+      description: Delete one user
+      responses:
+        '200':
+          description: User deleted
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '400':
+          description: Invalid user identifier
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '401':
+          description: Missing authentication credentials
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '403':
+          description: Missing admin rights
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+
+  "/api/vehicle":
+    get:
+      security:
+        - authentication: []
+      tags:
+      - vehicle
+      description: Fetch all vehicles in the system
+      responses:
+        '200':
+          description: Fetched vehicles identifiers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/Vehicle"
+        '401':
+          description: Missing authentication credentials
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '403':
+          description: Missing admin rights
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
     post:
+      security:
+        - authentication: []
+      tags:
+      - vehicle
+      description: Create new vehicle
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+                "$ref": "#/components/Vehicle"
+      responses:
+        '200':
+          description: Created new vehicle
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/Vehicle"
+        '401':
+          description: Missing authentication credentials
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '403':
+          description: Missing admin rights
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+                
+  "/api/vehicle/{id}":
+    get:
+      security:
+        - authentication: []
       tags:
       - vehicle
       parameters:
-      - name: vin
-        in: body
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: Vehicle identifier
+      description: Fetch one vehicle
+      responses:
+        '200':
+          description: Vehicle fetched
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/Vehicle"
+        '400':
+          description: Invalid vehicle identifier
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '401':
+          description: Missing authentication credentials
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '403':
+          description: Missing admin rights
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+    put:
+      security:
+        - authentication: []
+      tags:
+      - vehicle
+      parameters:
+      - in: path
+        name: id
         schema:
-          type: number
-        description: Unique vehicle identifier
+          type: string
+        required: true
+        description: Vehicle identifier
+      description: Update one vehicle
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+                "$ref": "#/components/Vehicle"
+      responses:
+        '200':
+          description: Vehicle updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '400':
+          description: Invalid vehicle identifier
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '401':
+          description: Missing authentication credentials
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '403':
+          description: Missing admin rights
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+    delete:
+      security:
+        - authentication: []
+      tags:
+      - vehicle
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: Vehicle identifier
+      description: Delete one vehicle
+      responses:
+        '200':
+          description: Vehicle deleted
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '400':
+          description: Invalid vehicle identifier
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '401':
+          description: Missing authentication credentials
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '403':
+          description: Missing admin rights
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+    
+  "/api/vehicle/{vin}/subscribe":
+    put:
+      security:
+        - authentication: []
+      tags:
+      - vehicle
+      parameters:
+        - in: path
+          name: vin
+          schema:
+            type: string
+          required: true
+          description: Unique vehicle identifier
       description: Subscribe the user to the vehicle data
       responses:
         '200':
@@ -200,6 +438,12 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/GenericResponse"
+        '400':
+          description: Invalid vehicle identifier
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
         '401':
           description: Missing authentication credentials
           content:
@@ -212,16 +456,19 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/GenericResponse"
-  "/api/vehicle/unsubscribe":
-    post:
+  "/api/vehicle/{vin}/unsubscribe":
+    put:
+      security:
+        - authentication: []
       tags:
       - vehicle
       parameters:
-      - name: vin
-        in: body
-        schema:
-          type: number
-        description: Unique vehicle identifier
+        - in: path
+          name: vin
+          schema:
+            type: string
+          required: true
+          description: Unique vehicle identifier
       description: Unsubscribe the user from the vehicle data
       responses:
         '200':
@@ -230,6 +477,12 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/GenericResponse"
+        '400':
+          description: Invalid vehicle identifier
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
         '401':
           description: Missing authentication credentials
           content:
@@ -242,17 +495,36 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/GenericResponse"
-  "/api/vehicle/command/carState":
-    post:
+  "/api/vehicle/{vin}/command":
+    put:
+      security:
+        - authentication: []
       tags:
       - vehicle
       parameters:
-      - name: newState
-        in: body
-        schema:
-          type: string
-        description: New car state ON/OFF
+        - in: path
+          name: vin
+          schema:
+            type: string
+          required: true
+          description: Vehicle identifier
       description: Change car's state
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+                type: object
+                properties:
+                  on:
+                    type: boolean
+                    description: New car running state (true - on, false - off)
+                  heating:
+                    type: boolean
+                    description: New car's heating state (true - on, false - off)
+                  fan:
+                    type: boolean
+                    description: New car's fan state (true - on, false - off)
       responses:
         '200':
           description: Car's state successfully changed
@@ -260,34 +532,8 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/GenericResponse"
-        '401':
-          description: Missing authentication credentials
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/GenericResponse"
-          examples: {}
-        '403':
-          description: Missing subscription rights for the vehicle
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/GenericResponse"
-          examples: {}
-  "/api/vehicle/command/heatingState":
-    post:
-      tags:
-      - vehicle
-      parameters:
-      - name: newStates
-        in: body
-        schema:
-          type: string
-        description: New heating state ON/OFF
-      description: Change heating's state
-      responses:
-        '200':
-          description: Car's heating state successfully changed
+        '400':
+          description: Invalid vehicle identifier
           content:
             application/json:
               schema:
@@ -306,54 +552,84 @@ paths:
                 "$ref": "#/components/GenericResponse"
   "/api/sensorData/{vin}":
     get:
+      security:
+        - authentication: []
       tags:
       - sensorData
       parameters:
-      - name: vin
-        in: path
+      - in: path
+        name: vin
         schema:
           type: string
+        required: true
         description: Vehicle identifier
-      - name: startTime
-        in: path
+      - name: start
+        in: query
+        required: false
         schema:
-          type: string
-        description: Starting point of the requested timeframe
-      - name: endTime
-        in: path
+          type: number
+        description: Starting point of the requested timeframe; If not provided, value '0' is used as the initial point of the search interval
+      - name: end
+        in: query
+        required: false
         schema:
-          type: string
-        description: Ending point of the requested timeframe
-      description: Fetch all the historical data for one vehicle, for the requested timeframe
+          type: number
+        description: Ending point of the requested timeframe; If not provided, current time is used as the end point of the search interval
+      description: Get all historical data for a single vehicle, for the requested timeframe
       responses:
         '200':
-          description: Get all the data
+          description: Get requested data
           content:
             application/json:
               schema:
                 "$ref": "#/components/SensorData"
+        '400':
+          description: Invalid vehicle identifier
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
         '401':
           description: Missing authentication credentials
           content:
             application/json:
               schema:
                 "$ref": "#/components/GenericResponse"
-        '403':
-          description: Missing admin rights
+        '404':
+          description: Resource is not found
           content:
             application/json:
               schema:
                 "$ref": "#/components/GenericResponse"
 components:
+  securitySchemes:
+    authentication:
+      type: apiKey
+      name: Authorization
+      in: header
   GenericResponse:
     type: object
     properties:
-      success:
-        type: boolean
-        description: Flag if the request was valid
-      data:
+      message:
         type: string
-        description: Response data
+        description: Response message
+
+  Vehicle: 
+    type: object
+    properties:
+      vin: 
+        type: string
+        description: Vehicle identifier
+      model: 
+        type: string
+        description: Vehicle model
+      manufacturer: 
+        type: string
+        description: Vehicle manufacturer
+      manufactureYear: 
+        type: integer
+        description: Manufacture year
+  
   User:
     type: object
     properties:
@@ -375,6 +651,12 @@ components:
       creationDate:
         type: string
         description: Registration date
+      vehicles:
+        type: array
+        items:
+          type: string
+        description: Subscribed vehicles ids
+
   Role:
     type: object
     properties:
@@ -384,15 +666,14 @@ components:
       roleName:
         type: string
         description: Name of the role
+
   LoginResult: 
     type: object
     properties:
-      success:
-        type: boolean
-        description: Flag if the request was valid
       token:
         type: string
         description: Newly generated JWT token which should be placed in the Authentication header of every seqent request
+  
   SensorData:
     type: object
     properties:

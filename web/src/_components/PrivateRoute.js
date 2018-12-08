@@ -3,10 +3,12 @@ import { Route, Redirect } from 'react-router-dom';
 
 /*renders a route component if the user is logged in,
 otherwise it redirects the user to the /login page.*/
-export const PrivateRoute = ({ component: Component, ...rest }) => (
+const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => (
         localStorage.getItem('userData')
             ? <Component {...props} />
             : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
     )} />
 )
+
+export default PrivateRoute;
