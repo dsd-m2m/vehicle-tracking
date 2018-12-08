@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import api from '../api';
 
+//It renders when user is not logged in on route /login
 class LoginPage extends React.Component {
 	constructor(props) {
 		super(props);
@@ -13,6 +14,10 @@ class LoginPage extends React.Component {
 		};
 	}
 
+
+	//called after login button is pressed,sends data got from google to the server
+	//On success server responds with jwt which is then stored in local storage
+	//Also user name is stored from google response(res.w3.ig) as userData in local storage
 	signup = res => {
 		const social_token = res.tokenId;
 		console.log(res);
@@ -34,6 +39,7 @@ class LoginPage extends React.Component {
 	};
 
 	render() {
+		//if server is down and login is not possible appropriate message is rendered
 		if (this.state.loginError) {
 			return (
 				<div className="srvDown">

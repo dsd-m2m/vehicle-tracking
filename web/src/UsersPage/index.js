@@ -2,6 +2,8 @@ import React from 'react';
 import api from '../api';
 import Header from '../_components/Header';
 
+
+//conponent on route /users,it renders list of users in database with their name,email and role
 class UsersPage extends React.Component {
 	constructor(props) {
 		super(props);
@@ -15,9 +17,10 @@ class UsersPage extends React.Component {
 		this.getUsers();
 	}
 	
+	//when this route is accessed it fetches all users from server
 	getUsers = () => {
 		api('GET', 'user')
-			.then(res => this.setState({ users: res.data }))
+			.then(res =>this.setState({ users: res.data }))
 			.catch(e => {
 				console.log(e);
 			});
@@ -27,7 +30,7 @@ class UsersPage extends React.Component {
 		return (
 			<div>
 			 	<Header/>
-				<div className="UsersList">
+				<div className="list">
 					<h2>Users</h2>
 					{this.state.users.map((user, index) => {
 						return (

@@ -1,6 +1,6 @@
 import React from 'react';
-import api from '../api';
-import Header from '../_components/Header';
+//import api from '../api';
+//import Header from '../_components/Header';
 
 class ContactPage extends React.Component {
 	constructor(props) {

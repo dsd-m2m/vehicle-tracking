@@ -1,12 +1,13 @@
 import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { GoogleLogout } from 'react-google-login';
+
 
 import PrivateRoute from './_components/PrivateRoute';
 import HomePage from './HomePage';
 import LoginPage from './LoginPage';
 import VehiclesPage from './VehiclesPage';
+import SensorsPage from './SensorsPage';
 import UsersPage from './UsersPage';
 import SideBar from './_components/SideBar';
 import ContactPage from './ContactPage';
@@ -23,7 +24,6 @@ class App extends React.Component {
 		console.log(name);
 		return (
 			<div className="jumbotron">
-				<div className="container">
 					{alert.message && <div className={`alert ${alert.type}`}>{alert.message}</div>}
 					<Router history={this.props.history}>
 						<div className="Hpage">
@@ -32,14 +32,14 @@ class App extends React.Component {
 							<Switch>
 								<Route path="/login" component={LoginPage} />
 								<PrivateRoute exact path="/" component={HomePage} />
-								<PrivateRoute path="/vehicles" exact component={VehiclesPage} />
-								<PrivateRoute path="/users" exact component={UsersPage} />
+								<PrivateRoute path="/vehicles" component={VehiclesPage} />
+								<PrivateRoute path="/sensors" component={SensorsPage}/>
+								<PrivateRoute path="/users" component={UsersPage} />
 								<Route path="/contact" exact component={ContactPage}/>
 								<Route path="/about" exact component={AboutPage}/>
 							</Switch>
 						</div>
 					</Router>
-				</div>
 			</div>
 		);
 	}

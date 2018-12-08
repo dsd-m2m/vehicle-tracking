@@ -1,18 +1,20 @@
 .welcoming{
-   position: absolute;
+   position: fixed;
    font-size: 15px;
    right:5%;
    top:3%;
+   z-index: 2;
 }
 
 .user_authorization{
-    position: absolute;
+    position: fixed;
     right: 4%;
     top:5%;
     margin-top:5px;
     margin-right:5px;
 }
-.UsersList{
+
+.list{
 	position: absolute;
 	left:10%;
 	top:15%;
@@ -20,21 +22,18 @@
 	margin:25px 50px 50px 25px;
 }
 
-.UsersList ol{
+.list ol{
 	font-size: 18px;
 	font-weight: bold;
-
+	cursor:pointer;
 }
 
-.VehiclesList{
-	position: absolute;
-	left:10%;
-	top:15%;
-    color:white;
-    margin:25px 50px 50px 25px;
+.textData{
+	border-style: solid;
+	color:white;
+	width:500px;
 }
 
-.VehiclesList ol{
-	font-size: 18px;
-	font-weight: bold;
-}
+
+
+
