@@ -15,7 +15,7 @@ const getUser = async (login, isMobile) => googleAuth
     return content;
   })
   .catch((err) => {
-    throw new Error(`Authentification error: ${  err.message}`);
+    throw new Error(`Authentification error: ${err.message}`);
   });
 
 const processLogin = async (req, res, next, loggedInUser) => {
@@ -44,14 +44,14 @@ const processLogin = async (req, res, next, loggedInUser) => {
       fields: ['roleId'],
     }).catch(() => { throw Error('SequelizeError:'); });
   }
-  return res.json({ success: true, token: createToken(user) }).end();
+  return res.json({ token: createToken(user) }).end();
 }
 
 const loginMobile = async (req, res, next) => {
   const loginData = req.body;
   try {
     const credentials = await getUser(loginData, true).catch((err) => {
-      throw new Error(`Authentification error: ${  err.message}`);
+      throw new Error(`Authentification error: ${err.message}`);
     });
     const loggedInUser = credentials.user;
 
@@ -62,7 +62,7 @@ const loginMobile = async (req, res, next) => {
 }
 
 
-const login = async (req, res, next) => {
+const loginWeb = async (req, res, next) => {
   const loginData = req.body;
   try {
     const credentials = await getUser(loginData, false).catch(() => {
@@ -76,5 +76,4 @@ const login = async (req, res, next) => {
   }
 };
 
-module.exports.login = login;
-module.exports.loginMobile = loginMobile;
+module.exports = { loginWeb, loginMobile };

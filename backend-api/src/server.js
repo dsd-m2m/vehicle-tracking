@@ -51,13 +51,13 @@ fs.readdirSync(path.join(__dirname, 'routes')).map((file) => {
   require(`./routes/${file}`)(app, '/api');
 });
 
-app.use((req, res) => res.status(404).send({ success: false, data: 'Resource not found' }));
+app.use((req, res) => res.status(404).send({ message: 'Resource not found' }));
 app.use((err, req, res, next) => {
   console.log('ERROR:', err.message);
   if (err.name === 'UnauthorizedError') {
-    res.status(401).send({ success: false, data: 'Missing authentication credentials' });
+    res.status(401).send({ message: 'Missing authentication credentials' });
   } else {
-    res.status(500).send({ success: false, data: err.message });
+    res.status(500).send({ message: err.message });
   }
 });
 

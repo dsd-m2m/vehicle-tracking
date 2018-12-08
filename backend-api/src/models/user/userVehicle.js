@@ -11,10 +11,13 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     vin: {
-      primaryKey: true,
       type: DataTypes.STRING,
       allowNull: false,
-    },
+      references: {
+        model: 'vehicle',
+        key: 'vin',
+      }
+    }
   }, { freezeTableName: true });
   return userVehicle;
 };
