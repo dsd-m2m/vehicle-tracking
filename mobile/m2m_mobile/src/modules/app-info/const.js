@@ -1,1 +1,1 @@
-export const MODULE_NAME = 'HOME_MODULE';
+export const MODULE_NAME = 'APP_INFO_MODULE';

@@ -7,10 +7,27 @@ import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 
 import { MODULE_NAME as HOME_MODULE } from '~/modules/home';
+import { MODULE_NAME as APP_INFO_MODULE } from '~/modules/app-info';
+import { MODULE_NAME as AUTH_MODULE } from '~/modules/auth';
+import { MODULE_NAME as CAR_INFO_MODULE } from '~/modules/car-info';
+import { MODULE_NAME as LOADING_MODULE } from '~/modules/loading';
+import { MODULE_NAME as LOCATION_MODULE } from '~/modules/location';
+import { MODULE_NAME as SETTINGS_MODULE } from '~/modules/settings';
+import { MODULE_NAME as TRIPS_MODULE } from '~/modules/trips';
+
 
 // Load all imported application modules
 export function composeRootReducer() {
-  const moduleReducers = { [HOME_MODULE]: {} };
+  const moduleReducers = {
+    [HOME_MODULE]: {},
+    [APP_INFO_MODULE]: {},
+    [AUTH_MODULE]: {},
+    [CAR_INFO_MODULE]: {},
+    [LOADING_MODULE]: {},
+    [LOCATION_MODULE]: {},
+    [SETTINGS_MODULE]: {},
+    [TRIPS_MODULE]: {},
+  };
 
   return combineReducers(moduleReducers);
 }

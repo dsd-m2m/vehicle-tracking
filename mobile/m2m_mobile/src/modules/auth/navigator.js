@@ -2,26 +2,41 @@ import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 import {
   HeaderLeft,
-  HeaderRight,
   styles,
 } from '~/modules/navigation';
-import { HomeScreen } from './screens';
+import {
+  LoginScreen,
+  CarIdScreen,
+} from './screens';
 
-export const routes = { HOME: 'HOME' };
+export const routes = {
+  LOGIN: 'LOGIN',
+  CAR_ID: 'CAR_ID',
+};
 
 export default createStackNavigator(
   {
-    [routes.HOME]: {
-      name: routes.HOME,
-      screen: HomeScreen,
+    [routes.LOGIN]: {
+      name: routes.LOGIN,
+      screen: LoginScreen,
       navigationOptions: {
         headerStyle: styles.header,
         title: 'M2M Mobile',
-        headerLeft: <HeaderLeft iconName="settings" />,
-        headerRight: <HeaderRight iconName="notifications" />,
         headerTitleStyle: styles.headerTitle,
       },
     },
   },
-  { initialRouteName: routes.HOME },
+  {
+    [routes.CAR_ID]: {
+      name: routes.CAR_ID,
+      screen: CarIdScreen,
+      navigationOptions: {
+        headerStyle: styles.header,
+        title: 'M2M Mobile',
+        headerLeft: <HeaderLeft />,
+        headerTitleStyle: styles.headerTitle,
+      },
+    },
+  },
+  { initialRouteName: routes.LOGIN },
 );

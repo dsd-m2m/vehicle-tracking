@@ -2,26 +2,24 @@ import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 import {
   HeaderLeft,
-  HeaderRight,
   styles,
 } from '~/modules/navigation';
-import { HomeScreen } from './screens';
+import { AppInfoScreen } from './screens';
 
-export const routes = { HOME: 'HOME' };
+export const routes = { APP_INFO: 'APP_INFO' };
 
 export default createStackNavigator(
   {
-    [routes.HOME]: {
-      name: routes.HOME,
-      screen: HomeScreen,
+    [routes.APP_INFO]: {
+      name: routes.APP_INFO,
+      screen: AppInfoScreen,
       navigationOptions: {
         headerStyle: styles.header,
-        title: 'M2M Mobile',
-        headerLeft: <HeaderLeft iconName="settings" />,
-        headerRight: <HeaderRight iconName="notifications" />,
+        title: 'App Info',
+        headerLeft: <HeaderLeft />,
         headerTitleStyle: styles.headerTitle,
       },
     },
   },
-  { initialRouteName: routes.HOME },
+  { initialRouteName: routes.APP_INFO },
 );

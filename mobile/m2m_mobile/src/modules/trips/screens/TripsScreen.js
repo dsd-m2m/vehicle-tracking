@@ -3,13 +3,17 @@ import { View } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-class LoadingScreen extends PureComponent {
+class TripsScreen extends PureComponent {
   render() {
-    return <Screen><View /></Screen>;
+    return (
+      <Screen>
+        <View />
+      </Screen>
+    );
   }
 }
 
-LoadingScreen.propTypes = {};
+TripsScreen.propTypes = {};
 
 function mapStateToProps(state) {
   return {};
@@ -17,4 +21,4 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoadingScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(TripsScreen);

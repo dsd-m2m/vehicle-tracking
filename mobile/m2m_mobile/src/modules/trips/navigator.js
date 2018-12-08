@@ -5,15 +5,15 @@ import {
   HeaderRight,
   styles,
 } from '~/modules/navigation';
-import { HomeScreen } from './screens';
+import { TripsScreen } from './screens';
 
-export const routes = { HOME: 'HOME' };
+export const routes = { TRIPS: 'TRIPS' };
 
 export default createStackNavigator(
   {
-    [routes.HOME]: {
-      name: routes.HOME,
-      screen: HomeScreen,
+    [routes.TRIPS]: {
+      name: routes.TRIPS,
+      screen: TripsScreen,
       navigationOptions: {
         headerStyle: styles.header,
         title: 'M2M Mobile',
@@ -23,5 +23,5 @@ export default createStackNavigator(
       },
     },
   },
-  { initialRouteName: routes.HOME },
+  { initialRouteName: routes.TRIPS },
 );
