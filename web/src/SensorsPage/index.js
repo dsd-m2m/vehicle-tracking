@@ -1,12 +1,11 @@
 import React from 'react';
 import moment from 'moment';
 import Collapse from 'react-collapse';
+import { VictoryChart, VictoryLine } from "victory";
 
 import api from '../api';
 import Header from '../_components/Header';
 //import VehicleMap from "../_components/VehicleMap"
-
-
 
 /*<div className="map">
 										<VehicleMap 
@@ -27,14 +26,18 @@ class SensorsPage extends React.Component {
 			vin:'',
 			sensors: [],
 			isOpened: [],
-			render:false
+			render:false,
+			showGraph:false,
+			graphData:[]
 		};
-		this.handleClick=this.handleClick.bind(this);
 	}
+
+
 
 	componentDidMount() {
 		this.getSensors("1T7HT4B27X1183680");
 	}
+
 
 
 //1T7HT4B27X1183680
@@ -42,7 +45,7 @@ class SensorsPage extends React.Component {
 		api('GET','sensorData/'+vin)
 		.then(res=>{
 			this.setState({sensors:res.data});
-			console.log(res.data[0]);
+			//console.log(res.data[0]);
 			for(var i=0;i<this.state.sensors.length;i++){
 				this.state.isOpened.push(false);
 			}
@@ -53,6 +56,7 @@ class SensorsPage extends React.Component {
 				console.log(e);
 			});
 	};
+
 
 	handleClick = i =>{
 		this.setState(state => {
@@ -69,26 +73,73 @@ class SensorsPage extends React.Component {
 	      	};
 	    });
 	};
+
+
 	
-	showGraph=type=>{
+	showGraph = type => { 
+		var graphData=[];
+		var i,sensor;
+
 		switch(type){
-			case "MotorRpm":
-					console.log(type);
-					break
-			case "carSpeed":
-					console.log(type);
+			case "Motor Rounds per minute":
+					for(i in this.state.sensors){
+						sensor = {
+							data:this.state.sensors[i].MotorRpm,
+							time:moment.utc(this.state.sensors[i].timestamp).format('MMMM Do YYYY, h:mm:ss a')		
+						}
+						graphData.push(sensor);
+					}
+					console.log(graphData);
 					break;
-			case "powerMotorTotal":
-					console.log(type);
+
+			case "Car speed":
+					for(i in this.state.sensors){
+						sensor = {
+							data:this.state.sensors[i].carSpeed,
+							time:moment.utc(this.state.sensors[i].timestamp).format('MMMM Do YYYY, h:mm:ss a')
+						}
+						graphData.push(sensor);
+					}
+					console.log(graphData);
 					break;
-			case "tempOilMotor":
-					console.log(type);
+
+			case "Motor power":
+					for(i in this.state.sensors){
+						sensor = {
+							data:this.state.sensors[i].powerMotorTotal,
+							time:moment.utc(this.state.sensors[i].timestamp).format('MMMM Do YYYY, h:mm:ss a')		
+						}
+						graphData.push(sensor);
+					}
+					console.log(graphData);
 					break;
-			case "torqueMotor":
-					console.log(type);
+
+			case "Oil motor temperature":
+					for(i in this.state.sensors){
+						sensor = {
+							data:this.state.sensors[i].tempOilMotor,
+							time:moment.utc(this.state.sensors[i].timestamp).format('MMMM Do YYYY, h:mm:ss a')
+						}
+						graphData.push(sensor);
+					}
+					console.log(graphData);
 					break;
+
+			case "Motor torque":
+					for(i in this.state.sensors){
+						sensor = {
+							data:this.state.sensors[i].torqueMotor,
+							time:moment.utc(this.state.sensors[i].timestamp).format('MMMM Do YYYY, h:mm:ss a')							 
+						}
+						graphData.push(sensor);
+					}
+					console.log(graphData);
+					break;
+
 			default: console.log("Error");
 		}
+		this.setState({ graphData:graphData });
+		this.setState({ showGraph:true });
 	}
 	
 	render() {
@@ -98,11 +149,23 @@ class SensorsPage extends React.Component {
 			 	<Header/>
 				<div className="list">
 					<h2>Sensor Data VIN:{this.state.vin}</h2>
-					<button onClick={()=>this.showGraph("MotorRpm")}>MotorRpm</button>
-					<button onClick={()=>this.showGraph("carSpeed")}>Speed</button>
-					<button onClick={()=>this.showGraph("powerMotorTotal")}>MotorPower</button>
-					<button onClick={()=>this.showGraph("tempOilMotor")}>Motoroil</button>
-					<button onClick={()=>this.showGraph("torqueMotor")}>MotorTorque</button>
+					<button onClick={()=>this.showGraph("Motor Rounds per minute")}>Motor Rpm</button>
+					<button onClick={()=>this.showGraph("Car speed")}>Speed</button>
+					<button onClick={()=>this.showGraph("Motor power")}>Motor Power</button>
+					<button onClick={()=>this.showGraph("Oil motor temperature")}>Motor Oil</button>
+					<button onClick={()=>this.showGraph("Motor torque")}>Motor Torque</button>
+
+					{this.state.showGraph &&
+						<VictoryChart width={800} height={400}>
+							  <VictoryLine style={{   data: { stroke: "#c43a31" },
+												      parent: { border: "1px solid #ccc"}
+												    }}
+							    data={this.state.graphData}
+							    x="time"
+        						y="data"
+							  />
+							</VictoryChart>
+					}
 					{this.state.sensors.map((sensor,index)=>{
 						let date=moment.utc(sensor.timestamp).toString();
 						return(
