@@ -1,0 +1,57 @@
+.contact{
+  text-align: center;
+  position: absolute;
+  top:35%;
+  left: 50%;
+  transform: translate(-40%, -40%);
+}
+
+.contact h1{
+  color: #fff;
+  font-size: 46px;
+
+}
+
+.contact p{
+  color: #fff;
+  font-size: 18px;
+}
+
+.form{
+position: absolute;
+margin-top: 130px;
+margin-left: 120px;
+  transform: translate(-40%, -40%);
+  text-align: center;
+}
+input{
+  width: 150%;
+  margin: 20px 0;
+  background: rgba(0, 0, 0, 0);
+  border: none;
+  border-bottom: 1px solid #6da3e0;
+  font-size: 22px;
+  color: #EAEAEA;
+  letter-spacing: 2px;
+}
+
+#msg{
+  margin-top: 60px;
+}
+
+::-webkit-inpit-placeholder{
+color: #EAEAEA;
+font-size: 12px;
+letter-spacing: 2px;
+}
+
+button{
+  margin-left: 120px;
+  padding: 20px 32px;
+  font-size: 16px;
+  background: #0078ff;
+  border: none;
+  border-radius: 4px;
+  margin-top: 30px;
+  color: #fff;
+}
