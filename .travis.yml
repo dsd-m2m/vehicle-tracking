@@ -12,6 +12,9 @@ before_deploy:
   - 'cd ../backend-api'
 
 deploy:
+- secret_access_key: $SECRETACCESSKEY	
+- region: 'eu-central-1'	
+- app: 'rimac-m2m'
   - provider: elasticbeanstalk
     skip_cleanup: true
     provider: elasticbeanstalk
