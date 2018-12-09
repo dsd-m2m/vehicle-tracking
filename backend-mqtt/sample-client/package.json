@@ -4,6 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
+		"shadow": "nodemon shadow.js",
 		"start": "nodemon index.js"
 	},
 	"author": "",
