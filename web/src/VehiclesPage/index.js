@@ -85,6 +85,7 @@ class VehiclesPage extends React.Component {
 					<button onClick={()=>this.setFormVisibility()}>Add new Vehicle</button><br/>
 					<Collapse isOpened={this.state.showForm}>
 						<form>
+
 							<label>Vehicle ID number</label><br/>
 							<input  type="text" onChange={(e) => this.handleInput("vin",e)}></input><br/>
 							<label>Model</label><br/>
@@ -94,6 +95,7 @@ class VehiclesPage extends React.Component {
 							<label>Manufacturer Year</label><br/>
 							<input type="text" onChange={(e) => this.handleInput("manufactureYear",e)}></input><br/>
 							<button onClick={()=>this.addNewVehicle()}>Submit</button>
+							
 						</form>
 					</Collapse>
 
