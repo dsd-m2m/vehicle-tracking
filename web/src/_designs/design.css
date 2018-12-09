@@ -7,10 +7,14 @@
 }
 
 #header{
+    position: fixed;
+    width:100%;
 	background-color: #888888;
     padding: 15px;
 	top:0;
-    margin-bottom: 5px;
+    margin-bottom: 20px;
+    z-index: 1;
+
 }
 #header h1{
 	font-size:30px;
@@ -35,7 +39,8 @@
     background-color: #111; /* Black */
     overflow-x: hidden;
     padding-top: 20px;
-	margin-top:0px;
+	margin-top:97px;
+   
 }
 
 /* The navigation menu links */
