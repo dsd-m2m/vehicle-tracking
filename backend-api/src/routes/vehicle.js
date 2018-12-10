@@ -12,5 +12,7 @@ module.exports = (api, basePath) => {
 
   api.route(`${basePath}/vehicle/:vin/subscribe`).put(wrapAsync(UserVehicle.subscribe));
   api.route(`${basePath}/vehicle/:vin/unsubscribe`).put(requireCarSubscription(), wrapAsync(UserVehicle.unsubscribe));
-  api.route(`${basePath}/vehicle/:vin/command`).put(requireCarSubscription(), wrapAsync(UserVehicle.command));
+  api.route(`${basePath}/vehicle/:vin/command`).put(requireCarSubscription(), wrapAsync(Vehicle.writeCommand));
+  api.route(`${basePath}/vehicle/:vin/command`).get(requireCarSubscription(), wrapAsync(Vehicle.readCommand));
+
 };
