@@ -3,6 +3,8 @@
   position: absolute;
   top:35%;
   left: 50%;
+  width: 400px;
+  height:400px;
   transform: translate(-40%, -40%);
 }
 
@@ -18,9 +20,9 @@
 }
 
 .form{
-position: absolute;
-margin-top: 130px;
-margin-left: 120px;
+  position: absolute;
+  margin-top: 130px;
+  margin-left: 120px;
   transform: translate(-40%, -40%);
   text-align: center;
 }
@@ -37,6 +39,14 @@ input{
 
 #msg{
   margin-top: 60px;
+  margin-left: 60px;
+  height:200px;
+  width: 400px;
+  border:1px solid #6da3e0;
+}
+
+#name{
+  margin-top: 80px;
 }
 
 ::-webkit-inpit-placeholder{
@@ -45,7 +55,7 @@ font-size: 12px;
 letter-spacing: 2px;
 }
 
-button{
+.contactButton{
   margin-left: 120px;
   padding: 20px 32px;
   font-size: 16px;

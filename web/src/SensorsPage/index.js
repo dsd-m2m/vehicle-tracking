@@ -145,15 +145,15 @@ class SensorsPage extends React.Component {
 	render() {
 		if(!this.state.render)return null;
 		return (
-			<div>
+			<div id="SensorsPage">
 			 	<Header/>
-				<div className="list">
+				<div className="list" >
 					<h2>Sensor Data VIN:{this.state.vin}</h2>
-					<button onClick={()=>this.showGraph("Motor Rounds per minute")}>Motor Rpm</button>
-					<button onClick={()=>this.showGraph("Car speed")}>Speed</button>
-					<button onClick={()=>this.showGraph("Motor power")}>Motor Power</button>
-					<button onClick={()=>this.showGraph("Oil motor temperature")}>Motor Oil</button>
-					<button onClick={()=>this.showGraph("Motor torque")}>Motor Torque</button>
+					<button className="sensorsButtons" onClick={()=>this.showGraph("Motor Rounds per minute")}>Motor Rpm</button>
+					<button className="sensorsButtons" onClick={()=>this.showGraph("Car speed")}>Speed</button>
+					<button className="sensorsButtons" onClick={()=>this.showGraph("Motor power")}>Motor Power</button>
+					<button className="sensorsButtons" onClick={()=>this.showGraph("Oil motor temperature")}>Motor Oil</button>
+					<button className="sensorsButtons" onClick={()=>this.showGraph("Motor torque")}>Motor Torque</button>
 
 					{this.state.showGraph &&
 						<VictoryChart width={800} height={400}>
