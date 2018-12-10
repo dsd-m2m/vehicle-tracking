@@ -21,16 +21,7 @@ import { MODULE_NAME as TRIPS_MODULE } from '~/modules/trips';
 
 // Load all imported application modules
 export function composeRootReducer() {
-  const moduleReducers = {
-    [HOME_MODULE]: {},
-    [APP_INFO_MODULE]: {},
-    [AUTH_MODULE]: authReducer,
-    [CAR_INFO_MODULE]: {},
-    [LOADING_MODULE]: {},
-    [LOCATION_MODULE]: {},
-    [SETTINGS_MODULE]: {},
-    [TRIPS_MODULE]: {},
-  };
+  const moduleReducers = { [AUTH_MODULE]: authReducer };
 
   return combineReducers(moduleReducers);
 }

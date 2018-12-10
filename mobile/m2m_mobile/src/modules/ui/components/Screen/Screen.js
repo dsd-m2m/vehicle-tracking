@@ -11,7 +11,7 @@ import {
   isAndroid,
   isIPhoneX,
 } from '~/modules/core';
-import StatusBar from '../StatusBar';
+import { StatusBar } from '../StatusBar';
 import { styles } from './styles';
 
 export default class Screen extends PureComponent {
@@ -31,6 +31,7 @@ export default class Screen extends PureComponent {
       scrollable,
       children,
       keyboardAware,
+      style,
       ...otherProps
     } = this.props;
 
@@ -46,7 +47,7 @@ export default class Screen extends PureComponent {
           keyboardVerticalOffset={verticalOffset}
         >
           <ContentContainerComponent
-            style={styles.container}
+            style={[styles.container, style]}
             {...otherProps}
           >
             <StatusBar />

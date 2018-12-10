@@ -4,18 +4,20 @@ import storage from 'redux-persist/lib/storage';
 import { logoutReducerFactory } from '~/modules/core';
 import { MODULE_NAME } from '../const';
 import {
-  SET_AUTH_TOKEN,
-  CLEAR_AUTH_TOKEN,
-  USER_REGISTERED,
-  USER_LOGGED_OUT,
-  USER_SETTINGS_UPDATED,
+  VEHICLE_SUBSCRIBED,
+  VEHICLE_UNSUBSCRIBED,
+  SET_GOOGLE_AUTH_TOKEN,
+  CLEAR_GOOGLE_AUTH_TOKEN,
+  SET_SESSION_AUTH_TOKEN,
+  CLEAR_SESSION_AUTH_TOKEN,
 } from './actions';
+import { LOGOUT } from '../../core';
 
 export function googleAuthTokenReducer(state = '', action) {
   switch (action.type) {
-    case SET_AUTH_TOKEN:
+    case SET_GOOGLE_AUTH_TOKEN:
       return action.payload.token;
-    case CLEAR_AUTH_TOKEN:
+    case CLEAR_GOOGLE_AUTH_TOKEN:
       return '';
     default:
       return state;
@@ -24,6 +26,10 @@ export function googleAuthTokenReducer(state = '', action) {
 
 export function sessionAuthTokenReducer(state = '', action) {
   switch (action.type) {
+    case SET_SESSION_AUTH_TOKEN:
+      return action.payload.token;
+    case CLEAR_SESSION_AUTH_TOKEN:
+      return action.payload.token;
     default:
       return state;
   }
@@ -31,18 +37,19 @@ export function sessionAuthTokenReducer(state = '', action) {
 
 export function userReducer(state = {}, action) {
   switch (action.type) {
-    case USER_REGISTERED:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case USER_LOGGED_OUT:
+    case LOGOUT:
       return {};
-    case USER_SETTINGS_UPDATED:
-      return {
-        ...state,
-        settings: action.payload,
-      };
+    default:
+      return state;
+  }
+}
+
+export function vehicleReducer(state = {}, action) {
+  switch (action.type) {
+    case VEHICLE_SUBSCRIBED:
+      return action.payload.vehicle;
+    case VEHICLE_UNSUBSCRIBED:
+      return {};
     default:
       return state;
   }
@@ -51,13 +58,14 @@ export function userReducer(state = {}, action) {
 export const persistConfig = {
   key: MODULE_NAME,
   storage,
-  blacklist: ['token', 'appReady'],
+  blacklist: ['sessionToken'],
 };
 
 export const combinedReducer = combineReducers({
   user: logoutReducerFactory(userReducer),
   googleToken: logoutReducerFactory(googleAuthTokenReducer),
   sessionToken: logoutReducerFactory(sessionAuthTokenReducer),
+  vehicle: logoutReducerFactory(vehicleReducer),
 });
 
 export default persistReducer(persistConfig, combinedReducer);

@@ -1,5 +1,3 @@
-import _ from 'lodash';
-import config from '~/appConfig';
 import {
   buildActionType,
   buildRequestEndpoint,
@@ -7,45 +5,89 @@ import {
   LOGOUT,
 } from '~/modules/core';
 import { MODULE_NAME } from '../const';
+import {
+  getGoogleAuthToken, getSessionAuthToken,
+} from './selectors';
 
-export const SET_AUTH_TOKEN = buildActionType(MODULE_NAME, 'SET_AUTH_TOKEN');
-export const CLEAR_AUTH_TOKEN = buildActionType(MODULE_NAME, 'CLEAR_AUTH_TOKEN');
+export const SET_SESSION_AUTH_TOKEN = buildActionType(MODULE_NAME, 'SET_SESSION_AUTH_TOKEN');
+export const CLEAR_SESSION_AUTH_TOKEN = buildActionType(MODULE_NAME, 'CLEAR_SESSION_AUTH_TOKEN');
 
-export const USER_REGISTERED = buildActionType(MODULE_NAME, 'USER_REGISTERED');
-export const USER_LOGGED_OUT = buildActionType(MODULE_NAME, 'USER_LOGGED_OUT');
+export const SET_GOOGLE_AUTH_TOKEN = buildActionType(MODULE_NAME, 'SET_GOOGLE_AUTH_TOKEN');
+export const CLEAR_GOOGLE_AUTH_TOKEN = buildActionType(MODULE_NAME, 'CLEAR_GOOGLE_AUTH_TOKEN');
 
-export const USER_SETTINGS_UPDATED = buildActionType(MODULE_NAME, 'USER_SETTINGS_UPDATED');
+export const VEHICLE_SUBSCRIBED = buildActionType(MODULE_NAME, 'VEHICLE_SUBSCRIBED');
+export const VEHICLE_UNSUBSCRIBED = buildActionType(MODULE_NAME, 'VEHICLE_UNSUBSCRIBED');
 
-export const SET_APP_READY = buildActionType(MODULE_NAME, 'SET_APP_READY');
+const LOGIN_ENDPOINT = buildRequestEndpoint('auth/login');
 
-const AUTH_TOKEN_ENDPOINT = buildRequestEndpoint('/auth/login');
-
-export function setAppReady() {
-  return { type: SET_APP_READY };
-}
+const VEHICLE_ENDPOINT = buildRequestEndpoint('vehicle');
 
 export function logout() {
   return { type: LOGOUT };
 }
 
-export function fetchAuthToken() {
+export function fetchGoogleAuthToken() {
   return dispatch => {
-    const authTokenBody = {
-      email: config.auth.email,
-      password: config.auth.pass,
-      application: config.applicationId,
-    };
+
+  };
+}
+
+export function fetchSessionAuthToken() {
+  return (dispatch, getState) => {
+    const authTokenBody = { social_token: getGoogleAuthToken(getState()) };
 
     const fetchConfig = {
       method: 'POST',
       body: JSON.stringify(authTokenBody),
     };
 
-    return fetchRequest(AUTH_TOKEN_ENDPOINT, fetchConfig)
-      .then(payload => dispatch({
-        type: SET_AUTH_TOKEN,
-        payload: { token: payload.token },
-      }))
+    return fetchRequest(LOGIN_ENDPOINT, fetchConfig)
+      .then(payload => {
+        console.log(payload);
+        return;
+        dispatch({
+          type: SET_SESSION_AUTH_TOKEN,
+          payload: { token: payload.token },
+        });
+      })
       .catch(error => { throw error; });
+  };
+}
+
+export function subscribeToCar(vin) {
+  return (dispatch, getState) => {
+    const sessionToken = getSessionAuthToken(getState());
+
+
+    const fetchConfig = {
+      method: 'PUT',
+      authorization: sessionToken,
+    };
+
+    return fetchRequest(`${VEHICLE_ENDPOINT}/${vin}/subscribe`, fetchConfig)
+      .then(payload => {
+        dispatch({
+          type: VEHICLE_SUBSCRIBED,
+          payload: { vehicle: payload },
+        });
+      }).catch(error => { throw error; });
+  };
+}
+
+
+export function unsubscribeFromCar(vin) {
+  return (dispatch, getState) => {
+    const sessionToken = getSessionAuthToken(getState());
+
+
+    const fetchConfig = {
+      method: 'PUT',
+      authorization: sessionToken,
+    };
+
+    return fetchRequest(`${VEHICLE_ENDPOINT}/${vin}/unsubscribe`, fetchConfig)
+      .then(() => {
+        dispatch({ type: VEHICLE_UNSUBSCRIBED });
+      }).catch(error => { throw error; });
   };
 }

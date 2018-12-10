@@ -13,3 +13,4 @@ export { StatusBar } from './StatusBar';
 export { HorizontalLine } from './Line';
 export { TextItem } from './TextItem';
 export { ModalDialog } from './ModalDialog';
+export { NetworkErrorModal } from './NetworkErrorModal';
