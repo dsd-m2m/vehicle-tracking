@@ -102,8 +102,8 @@ class VehiclesPage extends React.Component {
 							<ol key={vehicle.vin}>
 								{index+1}.VehicleID:{vehicle.vin}<br/>
 								Model:{vehicle.model}<br/>
-								Proizvodac:{vehicle.manufacturer}<br/>
-								Godina proizvodnje:{vehicle.manufactureYear}<br/>
+								Manufacturer:{vehicle.manufacturer}<br/>
+								Manufacture Year:{vehicle.manufactureYear}<br/>
 								<button onClick={()=>this.getSensors(vehicle.vin)} className="vehiclePageButtons">Get sensor data</button>
 								<button onClick={()=>this.deleteVehicle(vehicle.vin)} className="vehiclePageButtons">Delete vehicle</button>
 								<br />
