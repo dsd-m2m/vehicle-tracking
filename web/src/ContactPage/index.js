@@ -1,6 +1,5 @@
 import React from 'react';
-//import api from '../api';
-//import Header from '../_components/Header';
+import api from '../api';
 
 class ContactPage extends React.Component {
 	constructor(props) {
@@ -12,11 +11,29 @@ class ContactPage extends React.Component {
 
 	componentDidMount() {
 	}
-	
+
 
 	render() {
 		return (
-			<h2>CONTACTPAGE</h2>
+			<div class="contact">
+				<h1>Contact Us</h1>
+				<p>
+							Some Text about our company should be written here
+				</p>
+
+
+
+			<div class="form">
+				<form>
+					<input type="text" placeholder="Name"></input>
+					<input type="text" placeholder="E-Mail"></input>
+					<input type="text" id="msg" placeholder="Message"></input>
+
+				</form>
+
+				<button type="button">Let's Talk</button>
+			</div>
+		</div>
 			);
 	}
 }
