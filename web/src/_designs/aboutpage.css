@@ -1,23 +1,7 @@
-*{
-
-  padding: 0;
-  font-family: sans-serif;
-}
-
-
 .team-section{
-  overflow: hidden;
   text-align:center;
   background: #34495e;
   padding-bottom: 140px;
-
-}
-
-.team-section h1{
-  text-transform: uppercase;
-  margin-bottom: 10px;
-  color: white;
-  font-size: 40px;
 }
 
 .border{
@@ -26,14 +10,13 @@
   width: 200px;
   background-color: #3498db;
   margin-bottom: 20px;
-
 }
 
-.ps{
+.memberPics{
   margin-bottom: 20px;
 }
 
-.ps a {
+.memberPics a {
   display: inline-block;
   margin: 0 15px;
   width: 120px;
@@ -41,13 +24,13 @@
   overflow: hidden;
   border-radius: 50%;
 }
-.ps a img{
+.memberPics a img{
   width: 100%;
   filter: grayscale(100%);
   transition: 0.4s all;
 
 }
-.ps a:hover > img{
+.memberPics a:hover > img{
   filter: none;
 }
 .section{
@@ -56,9 +39,7 @@
   margin-bottom:  0px;
   font-size: 20px;
   color: white;
-  text-align: justify;
   overflow:  hidden;
-  height: 0;
 }
 .section:target{
   height: auto;

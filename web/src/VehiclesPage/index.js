@@ -58,7 +58,7 @@ class VehiclesPage extends React.Component {
 	};
 
 	setFormVisibility=()=>{
-		this.setState({showForm:true});
+		this.setState({showForm:!this.state.showForm});
 	};
 
 	handleInput=(name,e)=>{
@@ -82,7 +82,7 @@ class VehiclesPage extends React.Component {
 			 	<Header/>
 				<div className="list">
 					<h2>Vehicles</h2>
-					<button onClick={()=>this.setFormVisibility()}>Add new Vehicle</button><br/>
+					<button onClick={()=>this.setFormVisibility()} className="vehiclePageButtons">Add new Vehicle</button><br/>
 					<Collapse isOpened={this.state.showForm}>
 						<form>
 							<label>Vehicle ID number</label><br/>
@@ -93,7 +93,7 @@ class VehiclesPage extends React.Component {
 							<input type="text" onChange={(e) => this.handleInput("manufacturer",e)}></input><br/>
 							<label>Manufacturer Year</label><br/>
 							<input type="text" onChange={(e) => this.handleInput("manufactureYear",e)}></input><br/>
-							<button onClick={()=>this.addNewVehicle()}>Submit</button>
+							<button onClick={()=>this.addNewVehicle()} className="vehiclePageButtons">Submit</button>
 						</form>
 					</Collapse>
 
@@ -104,8 +104,8 @@ class VehiclesPage extends React.Component {
 								Model:{vehicle.model}<br/>
 								Proizvodac:{vehicle.manufacturer}<br/>
 								Godina proizvodnje:{vehicle.manufactureYear}<br/>
-								<button onClick={()=>this.getSensors(vehicle.vin)}>Get sensor data</button>
-								<button onClick={()=>this.deleteVehicle(vehicle.vin)}>Delete vehicle</button>
+								<button onClick={()=>this.getSensors(vehicle.vin)} className="vehiclePageButtons">Get sensor data</button>
+								<button onClick={()=>this.deleteVehicle(vehicle.vin)} className="vehiclePageButtons">Delete vehicle</button>
 								<br />
 							</ol>
 						);

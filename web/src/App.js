@@ -16,6 +16,8 @@ import AboutPage from './AboutPage';
 import './_designs/login.css';
 import './_designs/home.css';
 import './_designs/design.css';
+import './_designs/contactpage.css'
+import './_designs/aboutpage.css'
 
 class App extends React.Component {
 	render() {
@@ -23,7 +25,7 @@ class App extends React.Component {
 		const name = localStorage.getItem('userData');
 		console.log(name);
 		return (
-			<div className="jumbotron">
+			<div id="root-div">
 					{alert.message && <div className={`alert ${alert.type}`}>{alert.message}</div>}
 					<Router history={this.props.history}>
 						<div className="Hpage">
