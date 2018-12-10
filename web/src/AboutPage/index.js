@@ -1,5 +1,12 @@
 import React from 'react';
 import Header from '../_components/Header';
+import p1 from '../pictures/p1.jpg';
+import p2 from '../pictures/p2.jpg';
+import p3 from '../pictures/p3.jpg';
+import p4 from '../pictures/p4.jpg';
+import p5 from '../pictures/p5.jpg';
+import p6 from '../pictures/p6.jpg';
+import p7 from '../pictures/p7.png';
 
 class AboutPage extends React.Component {
 	constructor(props) {
@@ -15,24 +22,13 @@ class AboutPage extends React.Component {
 
 	render() {
 		return(
-			<div className="AboutPage">
+			<div id="AboutPage">
 				<Header/>
 				<div className="team-section" >
-						
-
-					<div className="memberPics">
-						<a href="#p1"><img src="pictures/p1.jpg" alt=""></img></a>
-						<a href="#p2"><img src="pictures/p2.jpg" alt=""></img></a>
-						<a href="#p3"><img src="pictures/p3.jpg" alt=""></img></a>
-						<a href="#p4"><img src="pictures/p4.jpg" alt=""></img></a>
-						<a href="#p5"><img src="pictures/p5.jpg" alt=""></img></a>
-						<a href="#p6"><img src="pictures/p6.jpg" alt=""></img></a>
-						<a href="#p7"><img src="pictures/p7.jpg" alt=""></img></a>
-					</div>
-
-						<div className="section" classID="p6">
+						<div className="section" classID="p1">
 								<span className="name">Juraj</span>
 								<hr className="border"></hr>
+								<img src={p1} alt="" className="memberPics"/>
 								<p>
 									Juraj is product owner and when he isnt he is just a casual 23-year-old guy from Sisak,Croatia.
 									Currently he is studying Software Engineering at Fer, University of Zagreb.
@@ -42,9 +38,10 @@ class AboutPage extends React.Component {
 								</p>
 						</div>
 
-						<div className="section" classID="p7">
+						<div className="section" classID="p2">
 								<span className="name">Tomislav </span>
 								<hr className="border"></hr>
+								<img src={p2} alt="" className="memberPics"/>
 								<p>
 									 Tomislav is ex-product owner.He is 24 years old  student born in Zagreb,Croatia.
 									 He got his Bachelor's degree for embedded systems and he is currently pursuing  his 
@@ -54,9 +51,10 @@ class AboutPage extends React.Component {
 								</p>
 						</div>
 
-						<div className="section" classID="p1">
+						<div className="section" classID="p3">
 								<span className="name">Zvonimir </span>
 								<hr className="border"></hr>
+								<img src={p3} alt="" className="memberPics"/>
 								<p>
 									Zvonimir is 24 years old student from Karlovac,Croatia.He currently enrolls his master's 
 									degree in programme 'Information and Communication Technology' at FER university in Zagreb. 
@@ -67,9 +65,10 @@ class AboutPage extends React.Component {
 								</p>
 						</div>
 
-						<div className="section" classID="p2">
+						<div className="section" classID="p4">
 								<span className="name">Frano </span>
 								<hr className="border"></hr>
+								<img src={p4} alt="" className="memberPics"/>
 								<p>
 									Frano is 23 years old student born and raised in Zagreb,Croatia.He is on his way of finishing his master's 
 									degree in Computer Engineering at FER university in Zagreb.He has bachelor's degree in Computer Engineering on the same
@@ -79,9 +78,10 @@ class AboutPage extends React.Component {
 								</p>
 						</div>
 
-						<div className="section" classID="p3">
+						<div className="section" classID="p5">
 								<span className="name">Mehdi </span>
 								<hr className="border"></hr>
+								<img src={p5} alt="" className="memberPics"/>
 								<p>
 									Mehdi is 24 years old Iranian boy currently studying Computer Science and Engineering at POLIMI.He recently graduated with a bachelor's degree 
 									in Computer Software Engineering.He has huge interest in robotics and autonomous vehicles and he worked for more than 3 years 
@@ -91,9 +91,10 @@ class AboutPage extends React.Component {
 								</p>
 						</div>
 
-						<div className="section" classID="p4">
+						<div className="section" classID="p6">
 								<span className="name">Amin </span>
 								<hr className="border"></hr>
+								<img src={p6} alt="" className="memberPics"/>
 								<p>
 									Amin is 24 years old student from Iran.He is currently pursuing his Master's degree in Computer Science at POLIMI.
 									He got his Bachelor's degree in software engineering in 2017.His main interests are backend development and databases.
@@ -101,9 +102,10 @@ class AboutPage extends React.Component {
 								</p>
 						</div>
 
-						<div className="section" classID="p5">
+						<div className="section" classID="p7">
 								<span className="name">Soheil </span>
 								<hr className="border"></hr>
+								<img src={p7} alt="" className="memberPics"/>
 								<p>
 									Soheil is  31 years old student from Iran.Currently he is studying computer science and engineering at POLIMI,Milano.
 									He's got his bachelor's degree in Computer Software Engineering.His main interests are:Asp.net programming, C# programming.

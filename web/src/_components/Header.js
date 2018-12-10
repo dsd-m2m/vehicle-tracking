@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-import { GoogleLogout } from 'react-google-login';
+
 
 
 //renders a header component that contain welcoming message and loguout button 
@@ -23,7 +23,7 @@ class Header extends React.Component {
           <div className="user_authorization">
             {name && (
                 <div>
-                  <GoogleLogout buttonText="Logout" onLogoutSuccess={this.signout}></GoogleLogout>
+                  <button   onClick={this.signout} className="LogoutButton">Logout</button>
                 </div>
               )}
           </div>
