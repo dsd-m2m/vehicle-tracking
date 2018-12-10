@@ -2,7 +2,11 @@ import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 import { autobind } from 'core-decorators';
 import { connect } from 'react-redux';
-import { Screen } from '~/modules/ui';
+import {
+  Screen,
+  IconButton,
+  Card,
+} from '~/modules/ui';
 
 class HomeScreen extends PureComponent {
   @autobind
@@ -23,7 +27,12 @@ class HomeScreen extends PureComponent {
   render() {
     return (
       <Screen>
-        <View />
+        <View>
+          <IconButton />
+          <IconButton />
+          <IconButton />
+        </View>
+        <Card />
       </Screen>
     );
   }
