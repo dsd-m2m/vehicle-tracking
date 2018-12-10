@@ -12,4 +12,8 @@ export default {
     iOSApiKey: Config.INTERCOM_IOS_API_KEY,
     AndroidApiKey: Config.INTERCOM_ANDROID_API_KEY,
   },
+  google: {
+    appId: '758979408479-goveeriu15321hbui93t610k069kv5ao.apps.googleusercontent.com',
+    bundleId: 'com.dsd.m2m',
+  },
 };

@@ -1,3 +1,5 @@
+import { google } from 'react-native-simple-auth';
+import Config from '~/appConfig';
 import {
   buildActionType,
   buildRequestEndpoint,
@@ -28,7 +30,13 @@ export function logout() {
 
 export function fetchGoogleAuthToken() {
   return dispatch => {
-
+    google({
+      appId: Config.google.appId,
+      callback: `${Config.google.bundleId}:/oauth2redirect`,
+    }).then(info => dispatch({
+      type: SET_GOOGLE_AUTH_TOKEN,
+      payload: { token: info.credentials.id_token },
+    })).catch(error => { throw error; });
   };
 }
 
