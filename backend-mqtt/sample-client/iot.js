@@ -20,7 +20,7 @@ const iotData = new AWS.IotData({ endpoint: process.env.IOT_ENDPOINT });
 const thingName = '1T7HT4B27X1183680';
 const newState = {
 	state: {
-		desired: { engine: false, ac: false },
+		desired: { engine: false, ac: false, radiator: false },
 	},
 };
 
@@ -29,7 +29,7 @@ iotData.updateThingShadow(
 		thingName,
 		payload: JSON.stringify(newState),
 	},
-	function(err, data) {
+	function (err, data) {
 		if (err) console.log(err);
 		else console.log(data); // successful response
 	},

@@ -17,6 +17,7 @@ const newState = {
 		desired: {
 			engine: true,
 			ac: true,
+			radiator: true
 		},
 	},
 };
