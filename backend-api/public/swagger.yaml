@@ -601,6 +601,55 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/GenericResponse"
+  "/api/sensorData":
+    get:
+      security:
+        - authentication: []
+      tags:
+      - sensorData
+      parameters:
+      - name: start
+        in: query
+        required: false
+        schema:
+          type: number
+        description: Starting point of the requested timeframe; If not provided, value '0' is used as the initial point of the search interval
+      - name: end
+        in: query
+        required: false
+        schema:
+          type: number
+        description: Ending point of the requested timeframe; If not provided, current time is used as the end point of the search interval
+      - name: field
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            description: Sensor data table field
+        description: Sensor data fields projection; If not provided, all fields are returned
+      description: Get all historical data for a single vehicle, for the requested timeframe
+      responses:
+        '200':
+          description: Get requested data (projected fields if requested with parameter(s) 'field')
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/SensorData"
+        '401':
+          description: Missing authentication credentials
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '404':
+          description: Resource is not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+
 components:
   securitySchemes:
     authentication:

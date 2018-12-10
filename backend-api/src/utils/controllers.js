@@ -60,6 +60,5 @@ function requireCarSubscription() {
   };
 }
 
-exports.wrapAsync = wrapAsync;
-exports.requireCarSubscription = requireCarSubscription;
-exports.requireAdmin = requireAdmin;
+module.exports = { wrapAsync, requireCarSubscription, requireAdmin };
+
