@@ -1,4 +1,10 @@
+const AWS = require('aws-sdk');
 const Vehicle = require('../models/user').vehicle;
+const VehicleStateEnum = require('../utils/enums/vehicleStates');
+const ValidationUtil = require('../utils/validation');
+
+// DOCS: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/IotData.html
+const iotData = new AWS.IotData({ endpoint: process.env.IOT_ENDPOINT });
 
 const get = async (req, res) => {
     const { vin } = req.params;
@@ -85,4 +91,53 @@ const remove = async (req, res) => {
     return res.status(200).json({ message: 'Vehicle is successfully deleted' });
 }
 
-module.exports = { get, all, create, update, remove };
+
+const readCommand = async (req, res) => {
+    const thingName = req.params.vin;
+    return iotData.getThingShadow({ thingName }, (err, data) => {
+        if (err) {
+            return res.status(400).json({ message: err });
+        }
+        return res.status(200).json(JSON.parse(data.payload).state.reported);
+    });
+};
+
+const writeCommand = async (req, res) => {
+    const thingName = req.params.vin;
+    const desired = req.body;
+    const desiredKeys = Object.keys(desired);
+
+    if (desiredKeys.length === 0) {
+        return res.status(400).json({ message: "Empty command parameters" });
+    }
+
+    for (let i = 0; i < Object.keys(desired).length; i += 1) {
+        if (!(desiredKeys[i] in VehicleStateEnum)) {
+            return res.status(400).json({ message: `Invalid parametar name {${desiredKeys[i]}}` });
+        }
+        if (!ValidationUtil.isBoolean(desired[desiredKeys[i]])) {
+            return res.status(400).json({ message: `Invalid parametar value for key {${desiredKeys[i]}}, only boolean values are allowed` });
+        }
+    }
+
+    const newState = {
+        state: {
+            desired
+        }
+    };
+
+    return iotData.updateThingShadow(
+        {
+            thingName,
+            payload: JSON.stringify(newState),
+        },
+        (err) => {
+            if (err) {
+                res.status(400).json({ message: err });
+            }
+            res.status(200).json({ message: "Command is successfully delivered" });
+        },
+    );
+};
+
+module.exports = { get, all, create, update, remove, readCommand, writeCommand };

@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   title: Vehicles tracking API
   description: Backend API for m2m vehicles tracking system
-  version: '1.0.3'
+  version: '1.0.4'
 tags:
 - name: test, auth, user, role, vehicle, sensorData
   description: Test the public and secured endpoints
@@ -496,6 +496,44 @@ paths:
               schema:
                 "$ref": "#/components/GenericResponse"
   "/api/vehicle/{vin}/command":
+    get:
+      security:
+        - authentication: []
+      tags:
+      - vehicle
+      parameters:
+        - in: path
+          name: vin
+          schema:
+            type: string
+          required: true
+          description: Vehicle identifier
+      description: Get car's state
+      responses:
+        '200':
+          description: Get car's state
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/CarState"
+        '400':
+          description: Invalid vehicle identifier
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '401':
+          description: Missing authentication credentials
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
+        '403':
+          description: Missing subscription rights for the vehicle
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
     put:
       security:
         - authentication: []
@@ -516,15 +554,15 @@ paths:
             schema:
                 type: object
                 properties:
-                  on:
+                  engine:
                     type: boolean
-                    description: New car running state (true - on, false - off)
-                  heating:
+                    description: New engine state (true - on, false - off)
+                  ac:
                     type: boolean
-                    description: New car's heating state (true - on, false - off)
-                  fan:
+                    description: New air conditioner state (true - on, false - off)
+                  radiator:
                     type: boolean
-                    description: New car's fan state (true - on, false - off)
+                    description: New radiator state (true - on, false - off)
       responses:
         '200':
           description: Car's state successfully changed
@@ -533,7 +571,7 @@ paths:
               schema:
                 "$ref": "#/components/GenericResponse"
         '400':
-          description: Invalid vehicle identifier
+          description: Bad request (missing/invalid parameters)
           content:
             application/json:
               schema:
@@ -674,6 +712,19 @@ components:
         type: string
         description: Newly generated JWT token which should be placed in the Authentication header of every seqent request
   
+  CarState:
+    type: object
+    properties: 
+      engine:
+        type: boolean
+        description: engine state (true - on, false - off)
+      ac:
+        type: boolean
+        description: ac state (true - on, false - off)
+      radiator:
+        type: boolean
+        description: radiator state (true - on, false - off)
+
   SensorData:
     type: object
     properties:

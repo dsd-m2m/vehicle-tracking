@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const AWS = require('aws-sdk');
 const _ = require('lodash');
 const UserVehicle = require('../models/user').user_vehicle;
@@ -70,12 +69,6 @@ const unsubscribe = async (req, res) => {
   return res.status(200).json({ message: 'User is successfully unsubscribed from the vehicle' });
 };
 
-// TO DO
-const command = async (req, res) => {
-  console.log(req.body);
-  return res.status(200).json({ message: true });
-};
-
 const get = async (req, res, next) => {
 
   const iot = new AWS.Iot();
@@ -88,4 +81,4 @@ const get = async (req, res, next) => {
   });
 };
 
-module.exports = { get, unsubscribe, subscribe, command };
+module.exports = { get, unsubscribe, subscribe };

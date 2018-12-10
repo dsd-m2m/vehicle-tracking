@@ -1,4 +1,4 @@
-const UserVehicle = require('../models/user').userVehicle;
+const UserVehicle = require('../models/user').user_vehicle;
 const User = require('../models/user').user;
 const RoleEnum = require('./enums/role');
 
@@ -37,8 +37,7 @@ function requireAdmin() {
 function requireCarSubscription() {
   return async function requireCarSubscriptionInner(req, res, next) {
     const userId = req.user.sub;
-    const { vin } = req.params.vin;
-
+    const { vin } = req.params;
     if (!vin) {
       return res.status(400).json({ message: 'Invalid vehicle id' });
     }
