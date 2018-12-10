@@ -1,9 +1,10 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable consistent-return */
 const _ = require('lodash');
 const moment = require('moment');
 const SensorData = require('../models/sensor/sensorData');
 
-const all = async (req, res, next) => {
+const get = async (req, res, next) => {
   const { vin } = req.params;
 
   if (!vin) {
@@ -23,4 +24,29 @@ const all = async (req, res, next) => {
     });
 };
 
-module.exports = { all };
+const all = async (req, res, next) => {
+
+  const start = parseInt(req.query.start, 10) || 0;
+  const end = parseInt(req.query.end, 10) || moment().valueOf();
+  const field = req.query.field;
+
+  let call;
+  if (field) {
+    call = SensorData
+      .scan()
+      .where('timestamp').between(start, end)
+      .attributes(field);
+  } else {
+    call = SensorData
+      .scan()
+      .where('timestamp').between(start, end);
+  }
+  call.exec((err, resp) => {
+    if (err) {
+      return next();
+    }
+    return res.status(200).json(_.map(resp.Items, 'attrs'))
+  });
+};
+
+module.exports = { get, all };
