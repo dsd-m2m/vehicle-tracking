@@ -65,3 +65,9 @@ html{
     color: #f1f1f1;
     cursor: pointer;
 }
+
+.srvDown{
+    position: absolute; 
+    right:35%;
+    top:20%;
+}

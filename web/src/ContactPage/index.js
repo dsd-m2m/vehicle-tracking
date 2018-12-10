@@ -41,7 +41,7 @@ class ContactPage extends React.Component {
 							<textarea id="msg" cols="10" rows="5" placeholder="Type your message here" onChange={(e) => this.handleInput("userMsg",e)}></textarea>
 						</form>
 
-						<button type="button" className="contactButton" onClick={()=>this.sendMail()}>Send eMail</button>
+						<button type="button" className="contactButton" onClick={()=>this.sendMail()}>Send E-Mail</button>
 					</div>
 				</div>
 			</div>

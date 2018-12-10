@@ -13,7 +13,6 @@ import SideBar from './_components/SideBar';
 import ContactPage from './ContactPage';
 import AboutPage from './AboutPage';
 
-import './_designs/login.css';
 import './_designs/home.css';
 import './_designs/design.css';
 import './_designs/contactpage.css'

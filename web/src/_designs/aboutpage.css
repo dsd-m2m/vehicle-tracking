@@ -1,7 +1,7 @@
 #AboutPage{
   position: absolute;
   top:15%;
-  left:25%;
+  left:30%;
 }
 
 
@@ -27,7 +27,7 @@
   margin: auto;
   margin-bottom:  0px;
   font-size: 20px;
-  color: white;
+  color: black;
   overflow:  hidden;
 }
 
@@ -41,5 +41,6 @@
   text-align: center;
   text-transform: uppercase;
   font-size: 22px;
+  color:black;
 }
 
