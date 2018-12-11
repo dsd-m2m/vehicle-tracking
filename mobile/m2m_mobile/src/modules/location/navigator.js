@@ -30,7 +30,7 @@ export default createStackNavigator(
           onPress={() => navigation.navigate(carInfoRoutes.CAR_INFO)}
 
         />,
-        headerTitleStyle: styles.headerTitle,
+        headerTitleStyle: [styles.headerTitle, styles.centeredHeaderTitle],
       }),
     },
   },

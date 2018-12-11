@@ -1,10 +1,14 @@
-import { spacing } from '~/modules/theme';
+import {
+  spacing, colors,
+} from '~/modules/theme';
 
 const textInput = {
   alignSelf: 'stretch',
-  backgroundColor: '#fff',
-  borderWidth: 1,
-  borderRadius: 4,
+  backgroundColor: colors.cardBackground,
+  borderBottomColor: colors.black,
+  color: colors.black,
+  textAlign: 'center',
+  borderBottomWidth: 1,
   flexDirection: 'row',
   height: 40,
   marginBottom: spacing.small,

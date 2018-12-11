@@ -7,17 +7,9 @@ import Button from './Button';
 import { textButtonStyles as styles } from './style';
 
 function resolveTextStyle(props) {
-  const {
-    secondary,
-    enabled,
-  } = props;
+  const { enabled } = props;
 
-
-  if (secondary) {
-    return [styles.secondaryButtonText, !enabled && styles.secondaryButtonTextDisabled];
-  }
-
-  return styles.primaryButtonText;
+  return [styles.primaryButtonText, !enabled && styles.primaryButtonTextDisabled];
 }
 
 function resolveSpinnerColor(props) {
@@ -71,7 +63,6 @@ export default function TextButton(props) {
 TextButton.propTypes = {
   title: PropTypes.string,
   textStyle: PropTypes.object,
-  secondary: PropTypes.bool,
   enabled: PropTypes.bool,
   waiting: PropTypes.bool,
 };

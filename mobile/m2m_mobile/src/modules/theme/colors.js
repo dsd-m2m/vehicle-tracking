@@ -1,7 +1,7 @@
 // Generic colors
 const primaryColor = '#63d14f';
-const grayColor = '#d5d5d5';
-const darkGrayColor = '#9b9b9b';
+const grayColor = '#e0e0e0';
+const darkGrayColor = '#c4c4c4';
 const lightGrayColor = '#f8f8f8';
 const limeGreenColor = '#a1dd4f';
 const tealColor = '#3fcfc6';
@@ -15,10 +15,6 @@ const textPrimaryColor = '#4a4a4a';
 const textSecondaryColor = '#63d14f';
 const textTitleColor = '#333333';
 const textH4Color = '#2d2d2d';
-// Context based
-const backgroundColor = '#f9fafb';
-// Shadows
-const shadowColor = 'rgba(195, 198, 206, 0.4)';
 
 export const colors = {
   primary: primaryColor,
@@ -34,11 +30,14 @@ export const colors = {
   textSecondary: textSecondaryColor,
   textH4: textH4Color,
   title: textTitleColor,
-  background: backgroundColor,
   important: yellowColor,
   cardBackground: whiteColor,
-  shadow: shadowColor,
+  screenBackground: grayColor,
+  headerBackground: whiteColor,
+  shadow: blackColor,
   overlay: overlayColor,
+  Anactive: darkGrayColor,
+  Inactive: blackColor,
 };
 
 export const gradients = {

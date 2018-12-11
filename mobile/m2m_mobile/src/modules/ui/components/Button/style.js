@@ -10,45 +10,31 @@ const button = {
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'center',
-  borderRadius: 4,
+  borderRadius: 24,
   height: 46,
   paddingHorizontal: gutter.large,
-};
-
-const primaryButton = { backgroundColor: colors.primary };
-
-const secondaryButton = {
-  backgroundColor: 'transparent',
+  borderColor: colors.active,
   borderWidth: 1,
-  borderColor: colors.primary,
 };
 
 const warningButton = { backgroundColor: colors.warning };
 
 export const buttonStyles = StyleSheet.create({
-  primaryButton: {
-    ...button,
-    ...primaryButton,
-  },
+  primaryButton: { ...button },
   warningButton: {
     ...button,
     ...warningButton,
   },
-  primaryButtonDisabled: { backgroundColor: colors.gray },
-  secondaryButton: {
-    ...button,
-    ...secondaryButton,
+  primaryButtonDisabled: {
+    backgroundColor: colors.white,
+    borderColor: colors.inactive,
   },
-  secondaryButtonDisabled: { borderColor: colors.gray },
-  secondaryButtonText: { color: colors.primary },
-  secondaryButtonTextDisabled: { color: colors.gray },
 });
 
 export const textButtonStyles = {
   primaryButtonText: textStyles.button,
-  secondaryButtonText: [
-    textStyles.button,
-    buttonStyles.secondaryButtonText,
-  ],
-  secondaryButtonTextDisabled: buttonStyles.secondaryButtonTextDisabled,
+  primaryButtonTextDisabled: {
+    ...textStyles.button,
+    color: colors.inactive,
+  },
 };

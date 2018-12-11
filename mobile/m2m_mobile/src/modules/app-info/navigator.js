@@ -17,7 +17,7 @@ export default createStackNavigator(
         headerStyle: styles.header,
         title: 'App Info',
         headerLeft: <HeaderLeft navigation={navigation} />,
-        headerTitleStyle: styles.headerTitle,
+        headerTitleStyle: [styles.headerTitle, styles.rightPaddedHeaderTitle],
       }),
     },
   },

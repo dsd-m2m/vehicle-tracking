@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { autobind } from 'core-decorators';
+import { View } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
@@ -14,6 +15,7 @@ import {
 import { isRequestNetworkConnectionError } from '~/modules/core';
 import { routes as homeRoutes } from '~/modules/home';
 import { subscribeToCar } from '../redux';
+import { styles } from './styles';
 
 class CarIdScreen extends PureComponent {
   constructor(props) {
@@ -77,19 +79,27 @@ class CarIdScreen extends PureComponent {
     return (
       <Screen>
         <Card>
-          <Text h2>Enter your car ID!</Text>
-          <Text>
-            We need your car ID to connect the App with your car. Please provide it into the field below!
+          <Text
+            h2
+            style={styles.title}
+          >
+            Enter your Vehicle ID!
+          </Text>
+          <Text style={styles.body}>
+            We need your Vehicle ID to connect the App with your vehicle. Please provide it into the field below!
           </Text>
           <TextInput
+            style={styles.textInput}
             value={vin}
             onChangeText={this.handleTextChange}
           />
-          <TextButton
-            title="CONFIRM"
-            onPress={this.handleConfirmPress}
-            enabled={vin.length >= 14}
-          />
+          <View style={styles.buttonContainer}>
+            <TextButton
+              title="CONFIRM"
+              onPress={this.handleConfirmPress}
+              enabled={vin.length >= 14}
+            />
+          </View>
         </Card>
         <NetworkErrorModal
           onPress={this.handleNetworkErrorRetry}
@@ -98,10 +108,15 @@ class CarIdScreen extends PureComponent {
         <ModalDialog
           onPress={this.handleWrongIdPress}
           active={wrongId}
+          title="Wrong ID!"
+          error="This Vehicle ID does not exist, please try a different Vehicle ID!"
+          buttonTitle="OK"
         />
         <ModalDialog
           onPress={this.handleConfirmSuccessPress}
           active={success}
+          title="Vehicle subscribed successfully!"
+          buttonTitle="OK"
         />
       </Screen>
     );

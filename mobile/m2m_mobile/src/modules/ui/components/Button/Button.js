@@ -9,15 +9,9 @@ import { buttonStyles as styles } from './style';
 
 export function resolveComponentStyle(props) {
   const {
-    secondary,
     enabled,
     warning,
   } = props;
-
-
-  if (secondary) {
-    return [styles.secondaryButton, !enabled && styles.secondaryButtonDisabled];
-  }
 
   if (warning) {
     return [styles.warningButton, !enabled && styles.primaryButtonDisabled];
@@ -51,7 +45,6 @@ export default function Button(props) {
 
 Button.propTypes = {
   ...TouchableOpacity.propTypes,
-  secondary: PropTypes.bool,
   enabled: PropTypes.bool,
   warning: PropTypes.bool,
 };

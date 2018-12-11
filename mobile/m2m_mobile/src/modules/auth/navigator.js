@@ -22,7 +22,7 @@ export default createStackNavigator(
       navigationOptions: {
         headerStyle: styles.header,
         title: 'M2M Mobile',
-        headerTitleStyle: styles.headerTitle,
+        headerTitleStyle: [styles.headerTitle, styles.centeredHeaderTitle],
       },
     },
     [routes.CAR_ID]: {
@@ -32,7 +32,7 @@ export default createStackNavigator(
         headerStyle: styles.header,
         title: 'M2M Mobile',
         headerLeft: <HeaderLeft navigation={navigation} />,
-        headerTitleStyle: styles.headerTitle,
+        headerTitleStyle: [styles.headerTitle, styles.rightPaddedHeaderTitle],
       }),
     },
   },

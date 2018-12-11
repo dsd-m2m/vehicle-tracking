@@ -7,6 +7,7 @@ import {
 import PropTypes from 'prop-types';
 import { Text } from '../Text';
 import { TextButton } from '../Button';
+import { Card } from '../Card';
 import { StatusBar } from '../StatusBar';
 import { styles } from './styles';
 
@@ -33,7 +34,7 @@ export default function ModalDialog({
             />
           )
         }
-        <View style={styles.contentContainer}>
+        <Card style={styles.contentContainer}>
           <Text
             h2
             style={styles.title}
@@ -51,7 +52,7 @@ export default function ModalDialog({
             primary
             onPress={onPress}
           />
-        </View>
+        </Card>
       </View>
     </Modal>
   );

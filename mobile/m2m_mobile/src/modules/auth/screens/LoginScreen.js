@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { View } from 'react-native';
 import { autobind } from 'core-decorators';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -16,6 +17,7 @@ import {
   fetchSessionAuthToken,
 } from '../redux';
 import { routes } from '../navigator';
+import { styles } from './styles';
 
 class LoginScreen extends PureComponent {
   constructor(props) {
@@ -69,13 +71,15 @@ class LoginScreen extends PureComponent {
     } = this.state;
 
     return (
-      <Screen>
-        <Card>
-          <Text>To continue please sign in!</Text>
-          <TextButton
-            title="SIGN IN WITH GOOGLE"
-            onPress={this.handleGooglePress}
-          />
+      <Screen style={styles.container}>
+        <Card style={styles.contentContainer}>
+          <Text h2>To continue please sign in!</Text>
+          <View style={styles.buttonContainer}>
+            <TextButton
+              title="SIGN IN WITH GOOGLE"
+              onPress={this.handleGooglePress}
+            />
+          </View>
         </Card>
         <NetworkErrorModal
           onPress={this.handleNetworkErrorRetry}
@@ -84,6 +88,9 @@ class LoginScreen extends PureComponent {
         <ModalDialog
           onPress={this.handleErrorPress}
           active={error}
+          title="An issue ocurred!"
+          error="There has been an issue, please retry!"
+          buttonTitle="OK"
         />
       </Screen>
     );
