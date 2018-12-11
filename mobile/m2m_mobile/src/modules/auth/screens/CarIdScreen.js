@@ -78,7 +78,9 @@ class CarIdScreen extends PureComponent {
       <Screen>
         <Card>
           <Text h2>Enter your car ID!</Text>
-          <Text>We need your car ID to connect the App with your car. Please provide it into the field below!</Text>
+          <Text>
+            We need your car ID to connect the App with your car. Please provide it into the field below!
+          </Text>
           <TextInput
             value={vin}
             onChangeText={this.handleTextChange}
@@ -109,7 +111,7 @@ class CarIdScreen extends PureComponent {
 CarIdScreen.propTypes = { subscribeToCarAction: PropTypes.func };
 
 
-function mapStateToProps(state) {
+function mapStateToProps() {
   return {};
 }
 

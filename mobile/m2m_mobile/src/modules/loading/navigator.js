@@ -1,12 +1,12 @@
 import { createStackNavigator } from 'react-navigation';
 import { styles } from '~/modules/navigation';
 import { LoadingScreen } from './screens';
-export const routes = { HOME: 'HOME' };
+export const routes = { LOADING: 'LOADING' };
 
 export default createStackNavigator(
   {
-    [routes.HOME]: {
-      name: routes.HOME,
+    [routes.LOADING]: {
+      name: routes.LOADING,
       screen: LoadingScreen,
       navigationOptions: {
         headerStyle: styles.header,
@@ -15,5 +15,5 @@ export default createStackNavigator(
       },
     },
   },
-  { initialRouteName: routes.HOME },
+  { initialRouteName: routes.LOADING },
 );

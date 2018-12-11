@@ -9,6 +9,10 @@ import {
 } from '~/modules/ui';
 
 class HomeScreen extends PureComponent {
+  constructor(props) {
+    super(props);
+  }
+
   @autobind
   handlePowerPress() {
 

@@ -34,12 +34,12 @@ class LoadingScreen extends PureComponent {
   @autobind
   checkLoginStatus() {
     const {
-      user,
+      googleToken,
       navigation,
       fetchSessionAuthTokenAction,
     } = this.props;
 
-    const isUserEmpty = _.isEmpty(user);
+    const isUserEmpty = _.isEmpty(googleToken);
 
     if (isUserEmpty) {
       navigation.navigate(authRoutes.LOGIN);
@@ -47,16 +47,15 @@ class LoadingScreen extends PureComponent {
     }
 
     fetchSessionAuthTokenAction()
-      .then(isValidated => {
-        navigation.navigate(isValidated ? homeRoutes.HOME : authRoutes.LOGIN);
-      })
+      .then(() => navigation.navigate(homeRoutes.HOME))
       .catch(error => {
         if (isRequestNetworkConnectionError(error)) {
           this.setState({ networkError: true });
+          return;
         }
+        navigation.navigate(authRoutes.LOGIN);
       });
   }
-
 
   @autobind
   handleNetworkErrorRetry() {
@@ -85,7 +84,7 @@ class LoadingScreen extends PureComponent {
 }
 
 LoadingScreen.propTypes = {
-  user: PropTypes.object,
+  googleToken: PropTypes.string,
   fetchSessionAuthTokenAction: PropTypes.func,
 };
 

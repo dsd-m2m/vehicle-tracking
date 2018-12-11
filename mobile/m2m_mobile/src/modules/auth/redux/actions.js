@@ -50,6 +50,8 @@ export function fetchSessionAuthToken() {
       body: JSON.stringify({ social_token: getGoogleAuthToken(state) }),
     };
 
+    console.log('Fetching session');
+
     return fetchRequest(LOGIN_ENDPOINT, fetchConfig)
       .then(payload => dispatch({
         type: SET_SESSION_AUTH_TOKEN,
@@ -61,8 +63,6 @@ export function fetchSessionAuthToken() {
 
 export function fetchUser() {
   return (dispatch, getState) => {
-    const state = getState();
-
     const fetchConfig = {
       method: 'POST',
       authorization: getSessionAuthToken(getState()),
