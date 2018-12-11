@@ -13,6 +13,8 @@ export const spacing = {
   extraLarge: 32,
 };
 
+export const gutter = spacing;
+
 export const dimensions = {
   fillParent: {
     position: 'absolute',

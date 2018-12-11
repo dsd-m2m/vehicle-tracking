@@ -24,15 +24,15 @@ export const textStyles = StyleSheet.create({
   h1: {
     ...fontWeight.extraBold,
     fontSize: 24,
-    color: colors.white,
+    color: colors.black,
     lineHeight: 28,
   },
   h2: {
     ...fontWeight.bold,
     fontSize: 20,
-    color: colors.textPrimary,
+    color: colors.black,
     lineHeight: 24,
-    letterSpacing: -0.4,
+    letterSpacing: 0.0,
   },
   h3: {
     ...fontWeight.regular,
@@ -82,7 +82,7 @@ export const textStyles = StyleSheet.create({
   button: {
     ...fontWeight.bold,
     fontSize: 12,
-    color: colors.white,
+    color: colors.black,
     lineHeight: 13,
     letterSpacing: 2,
   },

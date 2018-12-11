@@ -1,4 +1,7 @@
-import { StyleSheet } from 'react-native';
+import {
+  StyleSheet,
+  Platform,
+} from 'react-native';
 import {
   colors,
   spacing,
@@ -6,8 +9,16 @@ import {
 } from '~/modules/theme';
 
 const headerStyle = {
-  height: 60,
-  backgroundColor: colors.background,
+  height: 56,
+  backgroundColor: colors.headerBackground,
+  shadowColor: colors.black,
+  shadowOffset: {
+    width: 0,
+    height: 2,
+  },
+  shadowOpacity: 0.23,
+  shadowRadius: 2.62,
+  elevation: 4,
 };
 
 export const styles = StyleSheet.create({
@@ -24,7 +35,20 @@ export const styles = StyleSheet.create({
     elevation: 0,
     shadowColor: 'transparent',
   },
+  centeredHeaderTitle: {
+    ...textStyles.h1,
+    alignSelf: 'center',
+    textAlign: 'center',
+    flex: 1,
+  },
+  rightPaddedHeaderTitle: {
+    ...textStyles.h1,
+    alignSelf: 'center',
+    textAlign: 'center',
+    flex: 1,
+    ...(Platform.OS === 'android' && { marginRight: 2 * spacing.medium + 40 }),
+  },
   headerLeft: { marginLeft: spacing.regular + spacing.small },
   headerRight: { marginRight: spacing.regular + spacing.small },
-  headerTitle: textStyles.title,
+  headerTitle: textStyles.h1,
 });

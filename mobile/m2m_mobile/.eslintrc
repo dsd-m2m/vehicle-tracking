@@ -30,6 +30,7 @@
       "all"
     ],
     "global-require": "off",
+    "no-trailing-spaces": "off",
     "no-console": [
       "error",
       {
