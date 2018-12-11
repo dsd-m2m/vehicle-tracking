@@ -9,7 +9,7 @@
 }
 
 .contact h1{
-  color: #fff;
+  color: black;
   font-size: 46px;
 
 }
@@ -26,6 +26,7 @@
   transform: translate(-40%, -40%);
   text-align: center;
 }
+
 input{
   width: 150%;
   margin: 20px 0;
@@ -33,7 +34,7 @@ input{
   border: none;
   border-bottom: 1px solid #6da3e0;
   font-size: 22px;
-  color: #EAEAEA;
+  color: black;
   letter-spacing: 2px;
 }
 
@@ -50,7 +51,7 @@ input{
 }
 
 ::-webkit-inpit-placeholder{
-color: #EAEAEA;
+color: black;
 font-size: 12px;
 letter-spacing: 2px;
 }

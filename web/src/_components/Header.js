@@ -1,7 +1,5 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-import { GoogleLogout } from 'react-google-login';
-
 
 //renders a header component that contain welcoming message and loguout button 
 class Header extends React.Component {
@@ -15,15 +13,29 @@ class Header extends React.Component {
     console.log('signed out');
   };
 
+
+
   render() {
       const name = localStorage.getItem('userData');
+      const buttonStyle= {
+          position:'fixed',
+          fontFamily:"Serif",
+          right:"3%",
+          marginRight:"20px",
+          background: '#cc2900',
+          padding:'12px 70px',
+          fontSize:'16px',
+          border: 'none',
+          borderRadius:'4px',
+          color: 'white'  
+      };
       return (
         <div>
           {name && <div className="welcoming">Welcome {name}</div>}
           <div className="user_authorization">
             {name && (
                 <div>
-                  <GoogleLogout buttonText="Logout" onLogoutSuccess={this.signout}></GoogleLogout>
+                  <button  onClick={this.signout} style={buttonStyle}>Logout</button>
                 </div>
               )}
           </div>

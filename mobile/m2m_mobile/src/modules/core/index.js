@@ -1,1 +1,40 @@
-export const MODULE_NAME = 'CORE_MODULE';
+export { MODULE_NAME } from './const';
+
+export {
+  logoutReducerFactory,
+  AUTHORIZATION_ERROR,
+  reducer,
+  getModuleState,
+  getNetworkStatus,
+  getCollection,
+  getLastUpdated,
+  isNetworkConnectionError,
+  cacheReducerFactory,
+  requestStatusReducerFactory,
+  requestErrorAction,
+  requestNetworkConnectionOk,
+  requestNetworkConnectionError,
+  requestServerError,
+  requestUnauthorized,
+  fetchSuccess,
+  fetchError,
+  LOGOUT,
+} from './redux';
+
+export {
+  buildActionType,
+  buildRequestEndpoint,
+  createDefaultRequestStatus,
+  fetchRequest,
+  requestStatusShape,
+  shouldRefreshData,
+  isRequestNetworkConnectionError,
+  isRequestServerError,
+  isRequestUnauthorized,
+  isCacheValid,
+  resolveNextPageParams,
+  isIPhoneX,
+  isAndroid,
+  ifIPhoneX,
+  getStatusBarHeight,
+} from './services';

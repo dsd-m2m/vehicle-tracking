@@ -79,13 +79,15 @@ class SensorsPage extends React.Component {
 	showGraph = type => { 
 		var graphData=[];
 		var i,sensor;
+		var result;
 
 		switch(type){
 			case "Motor Rounds per minute":
-					for(i in this.state.sensors){
+					result=this.state.sensors.filter((item)=>!!item.MotorRpm);
+					for(i in result){
 						sensor = {
-							data:this.state.sensors[i].MotorRpm,
-							time:moment.utc(this.state.sensors[i].timestamp).format('MMMM Do YYYY, h:mm:ss a')		
+							data:result[i].MotorRpm,
+							time:moment.utc(result[i].timestamp).format('MMMM Do YYYY, h:mm:ss a')		
 						}
 						graphData.push(sensor);
 					}
@@ -93,10 +95,12 @@ class SensorsPage extends React.Component {
 					break;
 
 			case "Car speed":
-					for(i in this.state.sensors){
+					result=this.state.sensors.filter((item)=>!!item.carSpeed);
+					console.log(result)
+					for(i in result){
 						sensor = {
-							data:this.state.sensors[i].carSpeed,
-							time:moment.utc(this.state.sensors[i].timestamp).format('MMMM Do YYYY, h:mm:ss a')
+							data:result[i].carSpeed,
+							time:moment.utc(result[i].timestamp).format('MMMM Do YYYY, h:mm:ss a')
 						}
 						graphData.push(sensor);
 					}
@@ -104,10 +108,11 @@ class SensorsPage extends React.Component {
 					break;
 
 			case "Motor power":
-					for(i in this.state.sensors){
+					result=this.state.sensors.filter((item)=>!!item.powerMotorTotal);
+					for(i in result){
 						sensor = {
-							data:this.state.sensors[i].powerMotorTotal,
-							time:moment.utc(this.state.sensors[i].timestamp).format('MMMM Do YYYY, h:mm:ss a')		
+							data:result[i].powerMotorTotal,
+							time:moment.utc(result[i].timestamp).format('MMMM Do YYYY, h:mm:ss a')		
 						}
 						graphData.push(sensor);
 					}
@@ -115,10 +120,11 @@ class SensorsPage extends React.Component {
 					break;
 
 			case "Oil motor temperature":
-					for(i in this.state.sensors){
+					result=this.state.sensors.filter((item)=>!!item.tempOilMotor);
+					for(i in result){
 						sensor = {
-							data:this.state.sensors[i].tempOilMotor,
-							time:moment.utc(this.state.sensors[i].timestamp).format('MMMM Do YYYY, h:mm:ss a')
+							data:result[i].tempOilMotor,
+							time:moment.utc(result[i].timestamp).format('MMMM Do YYYY, h:mm:ss a')
 						}
 						graphData.push(sensor);
 					}
@@ -126,10 +132,11 @@ class SensorsPage extends React.Component {
 					break;
 
 			case "Motor torque":
-					for(i in this.state.sensors){
+					result=this.state.sensors.filter((item)=>!!item.torqueMotor);
+					for(i in result){
 						sensor = {
-							data:this.state.sensors[i].torqueMotor,
-							time:moment.utc(this.state.sensors[i].timestamp).format('MMMM Do YYYY, h:mm:ss a')							 
+							data:result[i].torqueMotor,
+							time:moment.utc(result[i].timestamp).format('MMMM Do YYYY, h:mm:ss a')							 
 						}
 						graphData.push(sensor);
 					}
