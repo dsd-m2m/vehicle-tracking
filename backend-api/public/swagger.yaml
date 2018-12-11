@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   title: Vehicles tracking API
   description: Backend API for m2m vehicles tracking system
-  version: '1.0.4'
+  version: '2.0.0'
 tags:
 - name: test, auth, user, role, vehicle, sensorData
   description: Test the public and secured endpoints
@@ -48,7 +48,7 @@ paths:
     post:
       tags:
       - auth
-      description: Authenticate the user, using the google provided (oauth2) social token
+      description: Web user authentification with the google provided (oauth2) social token
       requestBody:
         description: Social token provided by google oauth2
         required: true
@@ -61,7 +61,37 @@ paths:
                     type: string
       responses:
         '200':
-          description: The user is successfully authenticated and the new JWT token is returned
+          description: Web user is successfully authenticated and the new JWT token is returned
+          content:
+            application/json:
+              schema:
+                type: object
+                items: 
+                  "$ref": "#/components/User"
+        '401':
+          description: Missing authentication credentials
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/LoginResult"
+  "/api/auth/login/mobile":
+    post:
+      tags:
+      - auth
+      description: Mobile user authentification with the google provided (oauth2) social token
+      requestBody:
+        description: Social token provided by google oauth2
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+                type: object
+                properties:
+                  social_token:
+                    type: string
+      responses:
+        '200':
+          description: Mobile user is successfully authenticated and the new JWT token is returned
           content:
             application/json:
               schema:
