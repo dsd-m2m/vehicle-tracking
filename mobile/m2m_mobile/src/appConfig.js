@@ -1,7 +1,7 @@
 import Config from 'react-native-config';
 
 export default {
-  apiBaseUrl: Config.API_BASE_URL,
+  apiBaseUrl: 'm2m-dev.eu-central-1.elasticbeanstalk.com/api',
   applicationId: Config.APP_ID,
   auth: {
     email: Config.AUTH_USER,
@@ -14,6 +14,6 @@ export default {
   },
   google: {
     appId: '758979408479-goveeriu15321hbui93t610k069kv5ao.apps.googleusercontent.com',
-    bundleId: 'com.dsd.m2m',
+    callback: 'com.dsd.m2m:/oauth2redirect',
   },
 };

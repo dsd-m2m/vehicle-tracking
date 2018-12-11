@@ -10,6 +10,7 @@ import {
   CLEAR_GOOGLE_AUTH_TOKEN,
   SET_SESSION_AUTH_TOKEN,
   CLEAR_SESSION_AUTH_TOKEN,
+  SET_USER,
 } from './actions';
 import { LOGOUT } from '../../core';
 
@@ -37,6 +38,8 @@ export function sessionAuthTokenReducer(state = '', action) {
 
 export function userReducer(state = {}, action) {
   switch (action.type) {
+    case SET_USER:
+      return action.payload.user;
     case LOGOUT:
       return {};
     default:

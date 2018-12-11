@@ -39,4 +39,4 @@ HeaderLeft.propTypes = {
   onPress: PropTypes.func,
 };
 
-HeaderLeft.defaultProps = { iconName: 'back' };
+HeaderLeft.defaultProps = { iconName: 'arrowBack' };

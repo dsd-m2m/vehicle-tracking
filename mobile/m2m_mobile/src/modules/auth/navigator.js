@@ -25,8 +25,6 @@ export default createStackNavigator(
         headerTitleStyle: styles.headerTitle,
       },
     },
-  },
-  {
     [routes.CAR_ID]: {
       name: routes.CAR_ID,
       screen: CarIdScreen,

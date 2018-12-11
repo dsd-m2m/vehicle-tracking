@@ -7,7 +7,7 @@ import {
 import PropTypes from 'prop-types';
 import { Text } from '../Text';
 import { TextButton } from '../Button';
-import StatusBar from '../StatusBar';
+import { StatusBar } from '../StatusBar';
 import { styles } from './styles';
 
 export default function ModalDialog({

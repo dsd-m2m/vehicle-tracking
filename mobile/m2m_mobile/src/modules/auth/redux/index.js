@@ -9,5 +9,8 @@ export {
 } from './actions';
 
 export {
-  getAuthState, getGoogleAuthToken, getSessionAuthToken,
+  getAuthState,
+  getGoogleAuthToken,
+  getSessionAuthToken,
+  getUser,
 } from './selectors';

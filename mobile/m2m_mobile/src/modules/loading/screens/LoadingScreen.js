@@ -17,7 +17,7 @@ import {
   routes as authRoutes,
   fetchSessionAuthToken,
   getUser,
-} from '~modules/auth';
+} from '~/modules/auth';
 import { routes as homeRoutes } from '~/modules/home';
 
 class LoadingScreen extends PureComponent {

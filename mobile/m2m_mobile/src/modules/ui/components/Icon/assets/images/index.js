@@ -9,5 +9,5 @@ export const icons = {
   info: require('./info.png'),
   power: require('./power.png'),
   radiatorOn: require('./radiator-on.png'),
-  radiatorOff: require('./radiator-off.png')
+  radiatorOff: require('./radiator-off.png'),
 };

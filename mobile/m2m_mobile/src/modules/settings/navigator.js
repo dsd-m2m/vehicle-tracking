@@ -13,12 +13,12 @@ export default createStackNavigator(
     [routes.SETTINGS]: {
       name: routes.SETTINGS,
       screen: SettingsScreen,
-      navigationOptions: {
+      navigationOptions: ({ navigation }) => ({
         headerStyle: styles.header,
         title: 'Settings',
-        headerLeft: <HeaderLeft />,
+        headerLeft: <HeaderLeft navigation={navigation} />,
         headerTitleStyle: styles.headerTitle,
-      },
+      }),
     },
   },
   { initialRouteName: routes.SETTINGS },

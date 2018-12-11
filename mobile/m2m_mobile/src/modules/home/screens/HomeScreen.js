@@ -28,9 +28,18 @@ class HomeScreen extends PureComponent {
     return (
       <Screen>
         <View>
-          <IconButton />
-          <IconButton />
-          <IconButton />
+          <IconButton
+            onPress={this.handleRadiatorPress}
+            name="radiatorOn"
+          />
+          <IconButton
+            onPress={this.handlePowerPress}
+            name="power"
+          />
+          <IconButton
+            onPress={this.handleFanPress}
+            name="fanOn"
+          />
         </View>
         <Card />
       </Screen>

@@ -71,7 +71,7 @@ export function parseResponseData(response) {
 export function buildRequestEndpoint(path, params = {}) {
   const endpoint = new URI(`${API_BASE_URL}/${path}`);
 
-  endpoint.protocol('https');
+  endpoint.protocol('http');
   endpoint.query(params);
   return endpoint.readable();
 }

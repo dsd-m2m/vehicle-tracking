@@ -11,4 +11,6 @@ export {
   HorizontalLine,
   TextItem,
   ModalDialog,
+  Card,
+  NetworkErrorModal,
 } from './components';
