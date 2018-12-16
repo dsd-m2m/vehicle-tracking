@@ -463,11 +463,11 @@ paths:
       description: Subscribe the user to the vehicle data
       responses:
         '200':
-          description: User successfully subscribed to the vehicle data
+          description: Subscribed vehicle info
           content:
             application/json:
               schema:
-                "$ref": "#/components/GenericResponse"
+                "$ref": "#/components/Vehicle"
         '400':
           description: Invalid vehicle identifier
           content:
@@ -746,6 +746,12 @@ components:
       manufactureYear: 
         type: integer
         description: Manufacture year
+      createdAt: 
+        type: string
+        description: Time of the creation
+      updatedAt: 
+        type: string
+        description: Time of the last update
   
   User:
     type: object
@@ -765,14 +771,17 @@ components:
       pic:
         type: string
         description: Url to user's profile picture
-      creationDate:
-        type: string
-        description: Registration date
       vehicles:
         type: array
         items:
           type: string
         description: Subscribed vehicles ids
+      createdAt: 
+        type: string
+        description: Time of the creation
+      updatedAt: 
+        type: string
+        description: Time of the last update
 
   Role:
     type: object
