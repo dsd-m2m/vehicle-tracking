@@ -132,6 +132,26 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/GenericResponse"
+  "/api/me":
+    get:
+      security:
+        - authentication: []
+      tags:
+      - user
+      description: Get info about the logged in user
+      responses:
+        '200':
+          description: User info
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/User"
+        '401':
+          description: Missing authentication credentials
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/GenericResponse"
   "/api/role":
     get:
       security:
