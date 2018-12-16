@@ -19,4 +19,11 @@ const SensorData = dynamo.define('sensor_data', {
     tableName: 'sensor_data'
 });
 
-module.exports = SensorData;
+const SensorDataFields = [
+    "vin", "timestamp", "MotorRpm",
+    "altitude", "carSpeed", "createdAt",
+    "latitude", "longitude", "powerMotorTotal",
+    "tempOilMotor", "torqueMotor"
+];
+
+module.exports = { SensorData, SensorDataFields }

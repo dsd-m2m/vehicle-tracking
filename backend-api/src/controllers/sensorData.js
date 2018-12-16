@@ -3,7 +3,8 @@
 const _ = require('lodash');
 const moment = require('moment');
 const json2csv = require('json2csv');
-const SensorData = require('../models/sensor/sensorData');
+const SensorData = require('../models/sensor/sensorData').SensorData;
+const SensorDataFields = require('../models/sensor/sensorData').SensorDataFields;
 
 const get = async (req, res, next) => {
   const { vin } = req.params;
@@ -27,7 +28,7 @@ const get = async (req, res, next) => {
 
 const exportCsv = async (req, res, next) => {
   const { vin } = req.params;
-  const field = req.query.field;
+  const fields = req.query.field || SensorDataFields;
 
   if (!vin) {
     return res.status(400).json({ message: 'Undefined vehicle id' });
@@ -35,34 +36,24 @@ const exportCsv = async (req, res, next) => {
   const start = parseInt(req.query.start, 10) || 0;
   const end = parseInt(req.query.end, 10) || moment().valueOf();
 
-  let call;
-  if (field) {
-    call = SensorData
-      .query(vin)
-      .where('timestamp').between(start, end)
-      .attributes(field);
-  } else {
-    call = SensorData
-      .query(vin)
-      .where('timestamp').between(start, end);
-  }
+  const call = SensorData
+    .query(vin)
+    .where('timestamp').between(start, end)
+    .attributes(fields);
+
   call.exec((err, resp) => {
     if (err) {
       return next();
     }
-    let data = _.map(resp.Items, 'attrs');
+    const data = _.map(resp.Items, 'attrs');
 
-    
+    const opts = { fields };
+    const csv = json2csv.parse(data, opts);
+
     const filename = `${vin}-${start}-${end}.csv`;
-    if (data.length !== 0) {
-      data = json2csv.parse(data);
-    }else{
-      data = undefined;
-    }
-
     res.setHeader('Content-disposition', `attachment; filename=${filename}`);
     res.set('Content-Type', 'text/csv');
-    res.status(200).send(data);
+    res.status(200).send(csv);
   });
 };
 
@@ -70,19 +61,12 @@ const all = async (req, res, next) => {
 
   const start = parseInt(req.query.start, 10) || 0;
   const end = parseInt(req.query.end, 10) || moment().valueOf();
-  const field = req.query.field;
+  const fields = req.query.field || SensorDataFields;
+  const call = SensorData
+    .scan()
+    .where('timestamp').between(start, end)
+    .attributes(fields);
 
-  let call;
-  if (field) {
-    call = SensorData
-      .scan()
-      .where('timestamp').between(start, end)
-      .attributes(field);
-  } else {
-    call = SensorData
-      .scan()
-      .where('timestamp').between(start, end);
-  }
   call.exec((err, resp) => {
     if (err) {
       return next();
