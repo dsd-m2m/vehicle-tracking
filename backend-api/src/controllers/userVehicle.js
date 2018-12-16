@@ -34,7 +34,7 @@ const subscribe = async (req, res) => {
       throw Error('SequelizeError');
     });
 
-  return res.status(200).json({ message: 'User is successfully subscribed to the vehicle' });
+  return res.status(200).json(vehicle);
 };
 
 const unsubscribe = async (req, res) => {
