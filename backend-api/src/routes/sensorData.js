@@ -4,5 +4,6 @@ const { requireAdmin } = require('../utils/controllers');
 
 module.exports = (api, basePath) => {
   api.route(`${basePath}/sensorData/:vin`).get(requireAdmin(), wrapAsync(SensorData.get));
+  api.route(`${basePath}/sensorData/:vin/export`).get(requireAdmin(), wrapAsync(SensorData.exportCsv));
   api.route(`${basePath}/sensorData`).get(requireAdmin(), wrapAsync(SensorData.all));
 };
