@@ -3,7 +3,7 @@ import json
 import time
 import simplejson #for decimal support
 
-from faker import Faker
+from faker import Faker #using faker to produce mock sensors data
 
 with open('config.json') as f:
     config = json.load(f)
@@ -35,15 +35,15 @@ fake = Faker()
 loopCount = 0
 while True:
     message = {}
-    message['MotorRpm'] = loopCount
-    message['tempOilMotor'] = loopCount
-    message['torqueMotor'] = loopCount
-    message['powerMotorTotal'] = loopCount
-    message['altitude'] = loopCount
-    message['latitude'] = fake.latlng()[0]
-    message['longitude'] = fake.latlng()[1]
-    message['carSpeed'] = loopCount
-    message['timeStamp'] = time.time()
+    message['MotorRpm'] = loopCount #speed of the motor
+    message['tempOilMotor'] = loopCount #temperature of the oil
+    message['torqueMotor'] = loopCount #torque of the motor
+    message['powerMotorTotal'] = loopCount #calculated power of the motor
+    message['altitude'] = loopCount #altitude of the car 
+    message['latitude'] = fake.latlng()[0] #gps latitude
+    message['longitude'] = fake.latlng()[1] #gps longitude
+    message['carSpeed'] = loopCount #speed of the car (instant speed)
+    message['timeStamp'] = time.time() #time stamp for the above results
     messageSJson = simplejson.dumps(message)
     client.publish(topic, messageSJson, 1)
     print('Published topic %s: %s\n' % (topic, messageSJson))
