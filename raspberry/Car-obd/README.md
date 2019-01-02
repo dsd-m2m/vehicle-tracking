@@ -1,3 +1,6 @@
+This is our main library to connect to the car TCU using the obd2 protocol.
+First we need to install the obd on the raspberry and then test the connection using the test program.
+
 python-OBD
 ==========
 
