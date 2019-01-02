@@ -1,0 +1,22 @@
+[DEFAULT]
+host =  <your mqtt broker hostname>
+port = 8883
+
+# use TLS YES|NO
+TLS = YES
+CAFILEPATH = /path-to/ca.crt
+
+timeout = 60
+myQos = 1
+carID = bmwx1
+
+# mqttLogging YES|NO
+mqttLogging = YES
+# logging messages on file
+msgLogging = YES
+
+# how to format numbers
+OBDDATA_FORMAT_STRING = {0:.3f}
+
+# log commands received
+COMMAND_LOG = commands.log
