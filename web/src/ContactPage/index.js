@@ -36,8 +36,8 @@ class ContactPage extends React.Component {
 					<h1>Contact Us</h1>
 					<div className="form">
 						<form>
-							<input type="text" id="name" placeholder="Name" onChange={(e) => this.handleInput("userName",e)}></input>
-							<input type="text" placeholder="E-Mail" onChange={(e) => this.handleInput("userMail",e)}></input>
+							<input className="ContactPageInput" type="text" id="name" placeholder="Name" onChange={(e) => this.handleInput("userName",e)}></input>
+							<input className="ContactPageInput" type="text" placeholder="E-Mail" onChange={(e) => this.handleInput("userMail",e)}></input>
 							<textarea id="msg" cols="10" rows="5" placeholder="Type your message here" onChange={(e) => this.handleInput("userMsg",e)}></textarea>
 						</form>
 

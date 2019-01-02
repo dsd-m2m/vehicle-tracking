@@ -35,11 +35,15 @@ class VehiclesPage extends React.Component {
 			});
 	};
 
+
+	//function that redirects to component for visualisation of sensor readings
 	getSensors =(vin)=>{
 			console.log(vin);
 			this.props.history.push('/sensors');
 	};
 
+
+	//function for adding new vehicle in database
 	addNewVehicle = () =>{
 		console.log(this.state.newVehicle);
 		api('POST','vehicle',this.state.newVehicle)
@@ -57,10 +61,14 @@ class VehiclesPage extends React.Component {
 		this.setState({showForm:false});
 	};
 
+
+	//toggles view of form for adding new vehicle on/off
 	setFormVisibility=()=>{
 		this.setState({showForm:!this.state.showForm});
 	};
 
+
+	//function that handles input type=text and saves new vehicle information in current state
 	handleInput=(name,e)=>{
 		var newState = {...this.state.newVehicle}
 		newState[name]=e.target.value;
@@ -68,6 +76,8 @@ class VehiclesPage extends React.Component {
 		//console.log(newState);
 	};
 
+
+	//deletes vehicle from database
 	deleteVehicle=(vin)=>{
 		api('DELETE','vehicle/'+vin)
 					.then(window.location.reload)
@@ -75,6 +85,8 @@ class VehiclesPage extends React.Component {
 						console.log(e);
 					});
 	}
+
+
 
 	render() {
 		return (
@@ -99,7 +111,7 @@ class VehiclesPage extends React.Component {
 
 					{this.state.vehicles.map((vehicle,index) =>{
 						return (
-							<ol key={vehicle.vin}>
+							<ol className="vehiclesList" key={vehicle.vin}>
 								{index+1}.VehicleID:{vehicle.vin}<br/>
 								Model:{vehicle.model}<br/>
 								Manufacturer:{vehicle.manufacturer}<br/>

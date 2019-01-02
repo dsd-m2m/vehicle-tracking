@@ -21,14 +21,12 @@ import './_designs/aboutpage.css'
 class App extends React.Component {
 	render() {
 		const { alert } = this.props;
-		const name = localStorage.getItem('userData');
-		console.log(name);
 		return (
 			<div id="root-div">
 					{alert.message && <div className={`alert ${alert.type}`}>{alert.message}</div>}
 					<Router history={this.props.history}>
 						<div className="Hpage">
-							<SideBar name={name}/>
+							<SideBar/>
 
 							<Switch>
 								<Route path="/login" component={LoginPage} />

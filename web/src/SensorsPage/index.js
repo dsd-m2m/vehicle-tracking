@@ -5,20 +5,8 @@ import { VictoryChart, VictoryLine } from "victory";
 
 import api from '../api';
 import Header from '../_components/Header';
-//import VehicleMap from "../_components/VehicleMap"
-
-/*<div className="map">
-										<VehicleMap 
-											location={{lat: sensor.latitude, lng: sensor.longitude}}
-											googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyDvoDfjH3RFwKvHVIAV2mBr5ZyXeSuWmTw&v=3.exp&libraries=geometry,drawing,places`}
-											loadingElement={<div style={{ height: `100%` }} />}
-											containerElement={<div style={{ height: `500px`, width: `500px` }} />}
-											mapElement={<div style={{ height: `100%` }} />}
-										/>
-										</div>*/
 
 
-//component on route /vehicles,it renders list of vehicles stored in database
 class SensorsPage extends React.Component {
 	constructor(props) {
 		super(props);
@@ -28,19 +16,22 @@ class SensorsPage extends React.Component {
 			isOpened: [],
 			render:false,
 			showGraph:false,
-			graphData:[]
+			graphData:[],
+			checkboxSensor:[],
+			start:false,
+			end:false,
+			selectAll:true
 		};
 	}
 
-
-
+	
 	componentDidMount() {
 		this.getSensors("1T7HT4B27X1183680");
+		this.setState({vin:"1T7HT4B27X1183680"});
 	}
 
 
-
-//1T7HT4B27X1183680
+//fetches sensors readings for selected car(VIN)
 	getSensors = (vin) =>{
 		api('GET','sensorData/'+vin)
 		.then(res=>{
@@ -48,6 +39,7 @@ class SensorsPage extends React.Component {
 			//console.log(res.data[0]);
 			for(var i=0;i<this.state.sensors.length;i++){
 				this.state.isOpened.push(false);
+				this.state.checkboxSensor.push(false);
 			}
 			this.setState({render:true})
 			//console.log(this.state.isOpened);
@@ -58,97 +50,79 @@ class SensorsPage extends React.Component {
 	};
 
 
+//handles click on specific sensor reading and toggles viewing on/off
 	handleClick = i =>{
-		this.setState(state => {
-	     	const isOpened = state.isOpened.map((item, j) => {
-	        	if (j === i) {
-	          		return item?false:true;
-	        	} else {
-	          		return item;
-	        	}
-	      	});
-
-	      	return {
-	        	isOpened,
-	      	};
-	    });
+		const Open=Array.from(this.state.isOpened);
+		Open[i]=Open[i]?false:true;
+		this.setState({isOpened:Open});
+	};
+//handles checkbox for selecting which sensor data will be shown on graph or exported to csv
+	handleCheckbox= i =>{
+		const checkbox=Array.from(this.state.checkboxSensor);
+		checkbox[i]=checkbox[i]?false:true;
+		this.setState({checkboxSensor:checkbox});
+	};
+//handles selected start and end timeframe
+	handleTimestamp=(name,i)=>{
+		if(this.state[name]===i){
+			this.setState({[name]:false});
+		}else{
+			this.setState({[name]:i});
+		}
 	};
 
 
-	
-	showGraph = type => { 
+//called when user wants to visualise specific sensor data with graph	
+	showGraph = sensorName => { 
 		var graphData=[];
 		var i,sensor;
-		var result;
+		var start=this.state.start===false?0:this.state.start;
+		var end=this.state.end===false?this.state.sensors.length:this.state.end;
 
-		switch(type){
-			case "Motor Rounds per minute":
-					result=this.state.sensors.filter((item)=>!!item.MotorRpm);
-					for(i in result){
-						sensor = {
-							data:result[i].MotorRpm,
-							time:moment.utc(result[i].timestamp).format('MMMM Do YYYY, h:mm:ss a')		
-						}
-						graphData.push(sensor);
-					}
-					console.log(graphData);
-					break;
+		for(i in this.state.sensors){
+			if(this.state.checkboxSensor[i] || ( i>=start && i<=end && (this.state.start!==false || this.state.end!==false ) ) ){
+				sensor = {
+					data:this.state.sensors[i][sensorName],
+					time:moment.utc(this.state.sensors[i].timestamp).format('MMMM Do YYYY, h:mm:ss a')		
+				}
 
-			case "Car speed":
-					result=this.state.sensors.filter((item)=>!!item.carSpeed);
-					console.log(result)
-					for(i in result){
-						sensor = {
-							data:result[i].carSpeed,
-							time:moment.utc(result[i].timestamp).format('MMMM Do YYYY, h:mm:ss a')
-						}
-						graphData.push(sensor);
-					}
-					console.log(graphData);
-					break;
-
-			case "Motor power":
-					result=this.state.sensors.filter((item)=>!!item.powerMotorTotal);
-					for(i in result){
-						sensor = {
-							data:result[i].powerMotorTotal,
-							time:moment.utc(result[i].timestamp).format('MMMM Do YYYY, h:mm:ss a')		
-						}
-						graphData.push(sensor);
-					}
-					console.log(graphData);
-					break;
-
-			case "Oil motor temperature":
-					result=this.state.sensors.filter((item)=>!!item.tempOilMotor);
-					for(i in result){
-						sensor = {
-							data:result[i].tempOilMotor,
-							time:moment.utc(result[i].timestamp).format('MMMM Do YYYY, h:mm:ss a')
-						}
-						graphData.push(sensor);
-					}
-					console.log(graphData);
-					break;
-
-			case "Motor torque":
-					result=this.state.sensors.filter((item)=>!!item.torqueMotor);
-					for(i in result){
-						sensor = {
-							data:result[i].torqueMotor,
-							time:moment.utc(result[i].timestamp).format('MMMM Do YYYY, h:mm:ss a')							 
-						}
-						graphData.push(sensor);
-					}
-					console.log(graphData);
-					break;
-
-			default: console.log("Error");
+				graphData.push(sensor);
+			}
 		}
+		graphData=graphData.filter((item)=>!!item.data);
+
+		console.log(graphData);
+
 		this.setState({ graphData:graphData });
 		this.setState({ showGraph:true });
-	}
-	
+	};
+
+//exports sensors readings in specified timeframe as .csv file,if start and end timestamp arent selected it automatically exports all readings
+	exportcsv=()=>{
+		var start=this.state.start===false?this.state.sensors[0].timestamp:this.state.sensors[this.state.start].timestamp;
+		var end=this.state.end===false?this.state.sensors[this.state.sensors.length-1].timestamp:this.state.sensors[this.state.end].timestamp;
+		const FileDownload = require('js-file-download');
+		api('GET','sensorData/'+this.state.vin+'/export?start='+start+'&end='+end)
+		.then((response) =>{ 
+			FileDownload(response.data, "report.csv");
+		})
+		.catch(e => {
+				console.log(e);
+			});
+
+	};
+
+	//function that toggles select all checkbox ON/OFF
+	toggleSelectAll=()=>{
+		var toggleCheckAll=[];
+		for(var i=0;i<this.state.checkboxSensor.length;i++){
+				toggleCheckAll.push(this.state.selectAll?true:false);
+			}
+		var newSelectAll=this.state.selectAll?false:true
+		this.setState({selectAll:newSelectAll});
+		this.setState({checkboxSensor:toggleCheckAll});
+	};	
+
 	render() {
 		if(!this.state.render)return null;
 		return (
@@ -156,11 +130,13 @@ class SensorsPage extends React.Component {
 			 	<Header/>
 				<div className="list" >
 					<h2>Sensor Data VIN:{this.state.vin}</h2>
-					<button className="sensorsButtons" onClick={()=>this.showGraph("Motor Rounds per minute")}>Motor Rpm</button>
-					<button className="sensorsButtons" onClick={()=>this.showGraph("Car speed")}>Speed</button>
-					<button className="sensorsButtons" onClick={()=>this.showGraph("Motor power")}>Motor Power</button>
-					<button className="sensorsButtons" onClick={()=>this.showGraph("Oil motor temperature")}>Motor Oil</button>
-					<button className="sensorsButtons" onClick={()=>this.showGraph("Motor torque")}>Motor Torque</button>
+					<button className="sensorsButtons" onClick={()=>this.showGraph("MotorRpm")}>Motor Rpm</button>
+					<button className="sensorsButtons" onClick={()=>this.showGraph("carSpeed")}>Speed</button>
+					<button className="sensorsButtons" onClick={()=>this.showGraph("powerMotorTotal")}>Motor Power</button>
+					<button className="sensorsButtons" onClick={()=>this.showGraph("tempOilMotor")}>Motor Oil</button>
+					<button className="sensorsButtons" onClick={()=>this.showGraph("torqueMotor")}>Motor Torque</button>
+					<button className="sensorsButtons" onClick={()=>this.exportcsv()}>Export CSV</button>
+					<br/>
 
 					{this.state.showGraph &&
 						<VictoryChart width={800} height={400}>
@@ -173,11 +149,19 @@ class SensorsPage extends React.Component {
 							  />
 							</VictoryChart>
 					}
+					<label className="SelectAllCheckbox"><input type="checkbox" onChange={() => this.toggleSelectAll()}/>Select All</label>
 					{this.state.sensors.map((sensor,index)=>{
 						let date=moment.utc(sensor.timestamp).toString();
 						return(
 							<div key={index}>
-								<ol onClick={()=>this.handleClick(index)}> {index+1}.{date} </ol><br/>
+								<ol> 
+								<span className="sensorsList" onClick={()=>this.handleClick(index)}>{index+1}.{date}</span>
+								<div className="listCheckboxes">
+								<input type="checkbox" onChange={() => this.handleCheckbox(index)} className="sensorsCheckbox" checked={this.state.checkboxSensor[index]}/>Select
+								<input type="checkbox" onChange={() => this.handleTimestamp("start",index)}  checked={this.state.start===index}/>Start
+								<input type="checkbox" onChange={() => this.handleTimestamp("end",index)}  checked={this.state.end===index}/>End
+								</div>
+								</ol>
 								<Collapse isOpened={this.state.isOpened[index]}>
 									<div className="textData">
 										Motor Rounds per Minute:{sensor.MotorRpm}<br/> 

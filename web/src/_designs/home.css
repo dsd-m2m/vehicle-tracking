@@ -20,13 +20,13 @@
 	left:10%;
 	top:15%;
 	color:black;
-	margin:25px 50px 50px 25px;
 }
 
-.list ol{
+.sensorsList,.vehiclesList,.usersList{
 	font-size: 18px;
 	font-weight: bold;
 	cursor:pointer;
+  color:black;
 }
 
 .textData{
@@ -46,9 +46,11 @@
   color: #fff;
 }
 
-#SensorsPage{
-  height:auto;
+.SelectAllCheckbox{
+position: absolute;
+left:50%;
 }
-
-
-
+.listCheckboxes{
+  position: absolute;
+  left:50%;
+}
