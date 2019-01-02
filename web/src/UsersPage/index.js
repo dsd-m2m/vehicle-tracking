@@ -34,7 +34,7 @@ class UsersPage extends React.Component {
 					<h2>Users</h2>
 					{this.state.users.map((user, index) => {
 						return (
-							<ol key={index}>
+							<ol className="usersList" key={index}>
 								{index + 1}.UserID:{user.id}
 								<br />
 								Username:{user.username}

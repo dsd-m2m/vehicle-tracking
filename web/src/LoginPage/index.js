@@ -55,7 +55,7 @@ class LoginPage extends React.Component {
 					<Link to="/contact">Contact</Link>
 				</div>
 				<div className="user_authorization">
-					<GoogleLogin
+					<GoogleLogin 
 						clientId="758979408479-h8rgnvkfhro2o2i3q3idek10r5cbt4u3.apps.googleusercontent.com"
 						buttonText="Login with Google"
 						onSuccess={this.signup}
