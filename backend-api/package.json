@@ -7,7 +7,7 @@
 		"start": "node ./src/server.js",
 		"dev": "nodemon ./src/server.js",
 		"lint": "./node_modules/.bin/eslint ./src --fix",
-		"test": "node ./node_modules/mocha/bin/mocha --timeout 5000 "
+		"test": "node ./node_modules/mocha/bin/mocha --timeout 50000 "
 	},
 	"author": "",
 	"license": "ISC",
