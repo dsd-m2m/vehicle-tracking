@@ -14,7 +14,6 @@ const all = async (req, res) => {
 
 const changeUserRole = async (req, res) => {
   const { userId, newRoleId } = req.body;
-
   const newRole = await Role.findOne({ where: { id: newRoleId } }).catch(() => {
     throw Error('SequelizeError');
   });
