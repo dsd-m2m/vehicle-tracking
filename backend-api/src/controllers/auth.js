@@ -14,8 +14,8 @@ const getUser = async (login, isMobile) => googleAuth
     };
     return content;
   })
-  .catch((err) => {
-    throw new Error(`Authentification error: ${err.message}`);
+  .catch(() => {
+    throw new Error(`UnauthorizedError`);
   });
 
 const processLogin = async (req, res, next, loggedInUser) => {
@@ -50,9 +50,7 @@ const processLogin = async (req, res, next, loggedInUser) => {
 const loginMobile = async (req, res, next) => {
   const loginData = req.body;
   try {
-    const credentials = await getUser(loginData, true).catch((err) => {
-      throw new Error(`Authentification error: ${err.message}`);
-    });
+    const credentials = await getUser(loginData, true);
     const loggedInUser = credentials.user;
 
     return processLogin(req, res, next, loggedInUser);
@@ -65,9 +63,7 @@ const loginMobile = async (req, res, next) => {
 const loginWeb = async (req, res, next) => {
   const loginData = req.body;
   try {
-    const credentials = await getUser(loginData, false).catch(() => {
-      throw new Error('Authentification error');
-    });
+    const credentials = await getUser(loginData, false);
     const loggedInUser = credentials.user;
 
     return processLogin(req, res, next, loggedInUser);
