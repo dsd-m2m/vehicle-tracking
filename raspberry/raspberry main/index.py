@@ -3,6 +3,13 @@ import json
 import time
 import simplejson #for decimal support
 
+import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
+from time import sleep # Import the sleep function from the time module
+
+GPIO.setwarnings(False) # Ignore warning for now
+GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
+GPIO.setup(8, GPIO.OUT, initial=GPIO.LOW) # Set pin 8 to be an output pin and set initial value to low (off)
+
 from faker import Faker #using faker to produce mock sensors data
 
 with open('config.json') as f:
@@ -33,6 +40,10 @@ def commandsCallback(client, userdata, message):
     print("from topic: ")
     print(message.topic)
     print("--------------\n\n")
+    if message.payload[0] == "HIGH":
+	GPIO.output(8, GPIO.HIGH)
+    else
+	GPIO.output(8, GPIO.LOW)
 
 topic = "tcu"
 commandTopic = "commands"
