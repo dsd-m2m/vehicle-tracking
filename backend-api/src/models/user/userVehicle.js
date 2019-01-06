@@ -1,8 +1,10 @@
 
 module.exports = (sequelize, DataTypes) => {
   const userVehicle = sequelize.define('user_vehicle', {
+    id: {
+      type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false,
+    },
     userId: {
-      primaryKey: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {

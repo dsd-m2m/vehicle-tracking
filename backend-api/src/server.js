@@ -54,7 +54,7 @@ fs.readdirSync(path.join(__dirname, 'routes')).map((file) => {
 app.use((req, res) => res.status(404).send({ message: 'Resource not found' }));
 app.use((err, req, res, next) => {
   console.log('ERROR:', err.message);
-  if (err.name === 'UnauthorizedError') {
+  if (err.name === 'UnauthorizedError' || err.message === 'UnauthorizedError') {
     res.status(401).send({ message: 'Missing authentication credentials' });
   } else {
     res.status(500).send({ message: err.message });
@@ -67,3 +67,5 @@ server.listen(config.server.port, () => {
 
 require('./stream/index')(io);
 require('./stream/data_generator')(io);
+
+module.exports = server; // for testing

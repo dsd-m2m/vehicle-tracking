@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 const UserVehicle = require('../models/user').user_vehicle;
 const User = require('../models/user').user;
 const RoleEnum = require('./enums/role');
@@ -8,6 +9,42 @@ function wrapAsync(fn) {
       next(e);
     });
   };
+}
+
+function requireAdminOrCarSubscription() {
+  return async function requireAdminOrCarSubscriptionInner(req, res, next) {
+    try {
+      const userId = req.user.sub;
+      const vin = req.params.vin;
+
+      const user = await User
+        .findOne({
+          where: {
+            id: userId,
+          },
+        }).catch(() => {
+          throw Error('SequelizeError');
+        });
+
+      const userVehicle = await UserVehicle
+        .findOne({
+          where: {
+            userId,
+            vin,
+          },
+        }).catch(() => {
+          throw Error('SequelizeError');
+        });
+
+      if (user.roleId === RoleEnum.oem_user || userVehicle) {
+        return next();
+      }
+      return res.status(403).json({ message: 'Admin or car subscription rights are needed' });
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  }
+
 }
 
 function requireAdmin() {
@@ -59,5 +96,5 @@ function requireCarSubscription() {
   };
 }
 
-module.exports = { wrapAsync, requireCarSubscription, requireAdmin };
+module.exports = { wrapAsync, requireCarSubscription, requireAdmin, requireAdminOrCarSubscription };
 

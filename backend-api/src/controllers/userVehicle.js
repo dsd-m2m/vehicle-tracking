@@ -1,3 +1,4 @@
+/* eslint-disable object-shorthand */
 const AWS = require('aws-sdk');
 const _ = require('lodash');
 const UserVehicle = require('../models/user').user_vehicle;
@@ -18,7 +19,6 @@ const subscribe = async (req, res) => {
   if (!vehicle) {
     return res.status(400).json({ message: 'Vehicle is not registered in the system' });
   }
-
   await UserVehicle
     .findOrCreate({
       where: {
@@ -26,12 +26,11 @@ const subscribe = async (req, res) => {
         vin,
       },
       defaults: {
-        userId,
-        vin,
-        creationDate: new Date(),
+        userId: userId,
+        vin: vin
       },
-    }).catch(() => {
-      throw Error('SequelizeError');
+    }).catch((err) => {
+      throw Error(err);
     });
 
   return res.status(200).json(vehicle);
@@ -39,7 +38,7 @@ const subscribe = async (req, res) => {
 
 const unsubscribe = async (req, res) => {
   const { vin } = req.params;
-  const { userId } = req.user.sub;
+  const userId = req.user.sub;
 
   if (!vin) {
     return res.status(400).json({ message: 'Undefined vehicle identifer' });
