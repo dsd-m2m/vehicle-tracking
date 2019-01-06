@@ -1,0 +1,9 @@
+{
+	"host": "asqizqwrefcmk-ats.iot.eu-central-1.amazonaws.com",
+	"port": 8883,
+	"caPath": "certs/root-CA.crt",
+	"clientId": "1T7HT4B27X1183680",
+	"thingName": "1T7HT4B27X1183680",
+	"certPath": "certs/2c85921b45-certificate.pem.crt",
+	"keyPath": "certs/2c85921b45-private.pem.key"
+}
