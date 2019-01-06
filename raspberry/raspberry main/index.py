@@ -34,13 +34,9 @@ def customCallback(client, userdata, message):
     print("--------------\n\n")
 
 # Commands MQTT callback
-def commandsCallback(client, userdata, message):
-    print("Received a new message: ")
-    print(message.payload)
-    print("from topic: ")
-    print(message.topic)
-    print("--------------\n\n")
-    if message.payload[0] == "HIGH":
+def commandsCallback(client, userdata, message): #send 1 for turning on the led and 0 for turning it off
+    string = str(message.payload)    
+   if int(re.search(r'\d+', string).group()) == 1
 	GPIO.output(8, GPIO.HIGH)
     else
 	GPIO.output(8, GPIO.LOW)
@@ -58,6 +54,10 @@ fake = Faker()
 loopCount = 0
 while True:
     message = {}
+    commandMessage = {}
+
+    commandMessage['LED'] = loopCount % 2
+
     message['MotorRpm'] = loopCount #speed of the motor
     message['tempOilMotor'] = loopCount #temperature of the oil
     message['torqueMotor'] = loopCount #torque of the motor
@@ -67,8 +67,13 @@ while True:
     message['longitude'] = fake.latlng()[1] #gps longitude
     message['carSpeed'] = loopCount #speed of the car (instant speed)
     message['timeStamp'] = time.time() #time stamp for the above results
+
     messageSJson = simplejson.dumps(message)
     client.publish(topic, messageSJson, 1)
+
+    messageSJson = simplejson.dumps(commandMessage)
+    client.publish(commandTopic, messageSJson, 1)
+
     print('Published topic %s: %s\n' % (topic, messageSJson))
     time.sleep(2)
     loopCount += 1
