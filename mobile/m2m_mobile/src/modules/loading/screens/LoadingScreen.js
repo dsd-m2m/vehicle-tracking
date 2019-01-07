@@ -17,6 +17,7 @@ import {
   routes as authRoutes,
   fetchSessionAuthToken,
   getUser,
+  getVehicle,
 } from '~/modules/auth';
 import { routes as homeRoutes } from '~/modules/home';
 
@@ -37,12 +38,19 @@ class LoadingScreen extends PureComponent {
       googleToken,
       navigation,
       fetchSessionAuthTokenAction,
+      vehicle,
     } = this.props;
 
     const isUserEmpty = _.isEmpty(googleToken);
+    const isVehicleEmpty = _.isEmpty(vehicle);
 
     if (isUserEmpty) {
       navigation.navigate(authRoutes.LOGIN);
+      return;
+    }
+
+    if (isVehicleEmpty) {
+      navigation.navigate(authRoutes.CAR_ID);
       return;
     }
 
@@ -85,12 +93,14 @@ class LoadingScreen extends PureComponent {
 
 LoadingScreen.propTypes = {
   googleToken: PropTypes.string,
+  vehicle: PropTypes.object,
   fetchSessionAuthTokenAction: PropTypes.func,
 };
 
 function mapStateToProps(state) {
   return {
     user: getUser(state),
+    vehicle: getVehicle(state),
     googleToken: getGoogleAuthToken(state),
   };
 }

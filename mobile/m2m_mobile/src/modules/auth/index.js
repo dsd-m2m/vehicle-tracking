@@ -6,6 +6,7 @@ export {
   getGoogleAuthToken,
   getSessionAuthToken,
   getUser,
+  getVehicle,
   fetchGoogleAuthToken,
   fetchSessionAuthToken,
 } from './redux';
