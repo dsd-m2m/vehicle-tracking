@@ -1,3 +1,5 @@
+We use this library for debugging and setup perpuse. In case that the car dosn't have good documentation of the TCU we can use the logger to see what information are comming from the car and then modify our fucntions on the obd2car program.
+
 obd2datacollectorpi
 ===================
 
