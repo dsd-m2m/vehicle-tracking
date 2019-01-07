@@ -8,9 +8,9 @@ process.env.NODE_ENV = 'test';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 
-const withLoginVehicleOwner = require('./utils').withLoginVehicleOwner;
-const withLoginOEM = require('./utils').withLoginOEM;
-const api = require('../src/server');
+const withLoginVehicleOwner = require('../utils').withLoginVehicleOwner;
+const withLoginOEM = require('../utils').withLoginOEM;
+const api = require('../../src/server');
 
 chai.use(chaiHttp);
 

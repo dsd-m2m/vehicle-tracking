@@ -3,7 +3,7 @@ const jwt = require('../src/auth/jwt');
 function withLoginVehicleOwner(
     req,
     user = {
-        id: 11
+        id: 1
     },
 ) {
     const authToken = jwt.generateToken(user);
@@ -13,7 +13,7 @@ function withLoginVehicleOwner(
 function withLoginOEM(
     req,
     user = {
-        id: 12
+        id: 2
     },
 ) {
     const authToken = jwt.generateToken(user);
