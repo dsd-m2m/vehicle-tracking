@@ -19,7 +19,7 @@ describe('vehicle', () => {
     describe('get vehicles (VO)', () => {
         it('should return status 403', async () => {
             const response = await withLoginVehicleOwner(chai.request(api).get(`/api/vehicle`));
-            chai.expect(response).to.have.status(403);            
+            chai.expect(response).to.have.status(403);
         });
     });
 
@@ -80,6 +80,13 @@ describe('vehicle', () => {
         });
     });
 
+    describe('get one non-existent vehicle (OEM)', () => {
+        it('should return status 400', async () => {
+            const response = await withLoginOEM(chai.request(api).get(`/api/vehicle/non_existent_vehicle`));
+            chai.expect(response).to.have.status(400);
+        });
+    });
+
     describe('subscribe to one vehicle (VO)', () => {
         it('should return status 200', async () => {
             const response = await withLoginVehicleOwner(chai.request(api).put(`/api/vehicle/test/subscribe`));
@@ -93,14 +100,21 @@ describe('vehicle', () => {
             chai.expect(response).to.have.status(200);
         });
     });
-    
+
+    describe('subscribe to one non-existent vehicle (OEM)', () => {
+        it('should return status 400', async () => {
+            const response = await withLoginOEM(chai.request(api).put(`/api/vehicle/non_existent_vehicle/subscribe`));
+            chai.expect(response).to.have.status(400);
+        });
+    });
+
     describe('unsubscribe from one vehicle (OEM)', () => {
         it('should return status 200', async () => {
             const response = await withLoginVehicleOwner(chai.request(api).put(`/api/vehicle/test/unsubscribe`));
             chai.expect(response).to.have.status(200);
         });
     });
-    
+
     describe('unsubscribe from one vehicle (OEM)', () => {
         it('should return status 200', async () => {
             const response = await withLoginOEM(chai.request(api).put(`/api/vehicle/test/unsubscribe`));
@@ -108,10 +122,55 @@ describe('vehicle', () => {
         });
     });
 
+    describe('unsubscribe from one non-existent vehicle (OEM)', () => {
+        it('should return status 403', async () => {
+            const response = await withLoginOEM(chai.request(api).put(`/api/vehicle/non-existent-vehicle/unsubscribe`));
+            chai.expect(response).to.have.status(403);
+        });
+    });
+
     describe('delete one vehicle (VO)', () => {
         it('should return status 200', async () => {
             const response = await withLoginOEM(chai.request(api).delete(`/api/vehicle/test`));
             chai.expect(response).to.have.status(200);
+        });
+    });
+
+    describe('subscribe, get and send command to the vehicle, unsubscribe (VO)', () => {
+
+        it('should return status 200', async () => {
+            const response = await withLoginVehicleOwner(chai.request(api).put(`/api/vehicle/1T7HT4B27X1183680/subscribe`));
+            chai.expect(response).to.have.status(200);
+        });
+
+        it('should return status 200', async () => {
+            const response = await withLoginVehicleOwner(chai.request(api).get(`/api/vehicle/1T7HT4B27X1183680/command`));
+            chai.expect(response).to.have.status(200);
+        });
+
+        it('should return status 200', async () => {
+            const response = await withLoginVehicleOwner(chai.request(api).put(`/api/vehicle/1T7HT4B27X1183680/command`).send({ engine: true, ac: true, radiator: false }));
+            chai.expect(response).to.have.status(200);
+        });
+
+        it('should return status 200', async () => {
+            const response = await withLoginVehicleOwner(chai.request(api).get(`/api/vehicle/1T7HT4B27X1183680/command`));
+            chai.expect(response).to.have.status(200);
+        });
+
+        it('should return status 200', async () => {
+            const response = await withLoginVehicleOwner(chai.request(api).put(`/api/vehicle/1T7HT4B27X1183680/unsubscribe`));
+            chai.expect(response).to.have.status(200);
+        });
+
+        it('should return status 403', async () => {
+            const response = await withLoginVehicleOwner(chai.request(api).get(`/api/vehicle/1T7HT4B27X1183680/command`));
+            chai.expect(response).to.have.status(403);
+        });
+
+        it('should return status 403', async () => {
+            const response = await withLoginVehicleOwner(chai.request(api).put(`/api/vehicle/1T7HT4B27X1183680/command`).send({ engine: true, ac: true, radiator: false }));
+            chai.expect(response).to.have.status(403);
         });
     });
 });

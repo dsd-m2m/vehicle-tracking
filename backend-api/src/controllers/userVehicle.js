@@ -1,6 +1,6 @@
 /* eslint-disable object-shorthand */
-const AWS = require('aws-sdk');
-const _ = require('lodash');
+// const AWS = require('aws-sdk');
+// const _ = require('lodash');
 const UserVehicle = require('../models/user').user_vehicle;
 const Vehicle = require('../models/user').vehicle;
 
@@ -68,6 +68,7 @@ const unsubscribe = async (req, res) => {
   return res.status(200).json({ message: 'User is successfully unsubscribed from the vehicle' });
 };
 
+/* // lists all registered things in AWS Iot
 const get = async (req, res, next) => {
 
   const iot = new AWS.Iot();
@@ -78,6 +79,6 @@ const get = async (req, res, next) => {
     const resp = _.map(data.things, 'thingName') || [];
     return res.status(200).json(resp);
   });
-};
+}; */
 
-module.exports = { get, unsubscribe, subscribe };
+module.exports = { unsubscribe, subscribe };
