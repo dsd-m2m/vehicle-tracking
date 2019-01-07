@@ -100,14 +100,13 @@ describe('vehicle', () => {
             chai.expect(response).to.have.status(200);
         });
     });
-
+    
     describe('unsubscribe from one vehicle (OEM)', () => {
         it('should return status 200', async () => {
             const response = await withLoginOEM(chai.request(api).put(`/api/vehicle/test/unsubscribe`));
             chai.expect(response).to.have.status(200);
         });
     });
-
 
     describe('delete one vehicle (VO)', () => {
         it('should return status 200', async () => {

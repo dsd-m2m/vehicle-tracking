@@ -94,7 +94,7 @@ const remove = async (req, res) => {
 
 const readCommand = async (req, res) => {
     const thingName = req.params.vin;
-    return iotData.getThingShadow({ thingName }, (err, data) => {
+    return iotData.getThingShadow({ thingName}, (err, data) => {
         if (err) {
             return res.status(400).json({ message: err });
         }

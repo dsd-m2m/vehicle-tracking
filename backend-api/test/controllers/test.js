@@ -16,6 +16,20 @@ chai.use(chaiHttp);
 
 describe('test', () => {
 
+	describe('get unknown without auth', () => {
+		it('should return status 401', async () => {
+			const response = await chai.request(api).get(`/api/unknown`);
+			chai.expect(response).to.have.status(401);
+		});
+	});
+
+	describe('get unknown with auth', () => {
+		it('should return status 404', async () => {
+			const response = await withLoginOEM(chai.request(api).get(`/api/unknown`));
+			chai.expect(response).to.have.status(404);
+		});
+	});
+
 	describe('get ping public', () => {
 		it('should return status 200', async () => {
 			const response = await chai.request(api).get(`/api/ping/public`);

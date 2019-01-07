@@ -37,7 +37,14 @@ describe('role', () => {
         });
     });
 
-    describe('change user role', () => {
+    describe('change user role (VO)', () => {
+        it('should return status 403', async () => {
+            const response = await withLoginVehicleOwner(chai.request(api).post(`/api/role/changeUserRole`).send({userId: 2, newRoleId: 2}));
+            chai.expect(response).to.have.status(403);
+        });
+    });
+
+    describe('change user role (OEM)', () => {
         it('should return status 200', async () => {
             const response = await withLoginOEM(chai.request(api).post(`/api/role/changeUserRole`).send({userId: 1, newRoleId: 2}));
             chai.expect(response).to.have.status(200);
