@@ -53,6 +53,16 @@ fake = Faker()
 
 loopCount = 0
 while True:
+
+    #uncomment for testing led connection only
+    #while True:
+    #	GPIO.output(8, GPIO.HIGH)
+    #	print "LED on"
+    #	time.sleep(1)	
+    #	GPIO.output(8, GPIO.LOW)
+    #	time.sleep(1)
+    #	print "LED off"
+
     message = {}
     commandMessage = {}
 
