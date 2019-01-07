@@ -9,7 +9,10 @@ from time import sleep # Import the sleep function from the time module
 GPIO.setwarnings(False) # Ignore warning for now
 GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
 GPIO.setup(8, GPIO.OUT, initial=GPIO.LOW) # Set pin 8 to be an output pin and set initial value to low (off)
-
+GPIO.setup(9, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(10, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(11, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(12, GPIO.OUT, initial=GPIO.LOW)
 from faker import Faker #using faker to produce mock sensors data
 
 with open('config.json') as f:
@@ -34,13 +37,28 @@ def customCallback(client, userdata, message):
     print("--------------\n\n")
 
 # Commands MQTT callback
-def commandsCallback(client, userdata, message): #send 1 for turning on the led and 0 for turning it off
+def commandsCallback(client, userdata, message): #send commands for turning on and off the desired feature of the car!
     string = str(message.payload)    
-   if int(re.search(r'\d+', string).group()) == 1
+   if re.search(r'\d+', string).group() == 'lights-on'
 	GPIO.output(8, GPIO.HIGH)
-    else
+   elif re.search(r'\d+', string).group() == 'hazzard-on'
+	GPIO.output(9, GPIO.HIGH)
+   elif re.search(r'\d+', string).group() == 'horn-on'
+	GPIO.output(10, GPIO.HIGH)
+   elif re.search(r'\d+', string).group() == 'radiator-on'
+	GPIO.output(11, GPIO.HIGH)
+   elif re.search(r'\d+', string).group() == 'fan-on'
+	GPIO.output(12, GPIO.HIGH)
+   elif re.search(r'\d+', string).group() == 'lights-off'
 	GPIO.output(8, GPIO.LOW)
-
+   elif re.search(r'\d+', string).group() == 'hazzard-off'
+	GPIO.output(9, GPIO.LOW)
+   elif re.search(r'\d+', string).group() == 'horn-off'
+	GPIO.output(10, GPIO.LOW)
+   elif re.search(r'\d+', string).group() == 'radiator-off'
+	GPIO.output(11, GPIO.LOW)
+   elif re.search(r'\d+', string).group() == 'fan-off'
+	GPIO.output(12, GPIO.LOW)
 topic = "tcu"
 commandTopic = "commands"
 client.connect()
