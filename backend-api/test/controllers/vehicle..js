@@ -8,19 +8,18 @@ process.env.NODE_ENV = 'test';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 
-const withLoginVehicleOwner = require('./utils').withLoginVehicleOwner;
-const withLoginOEM = require('./utils').withLoginOEM;
-const api = require('../src/server');
+const withLoginVehicleOwner = require('../utils').withLoginVehicleOwner;
+const withLoginOEM = require('../utils').withLoginOEM;
+const api = require('../../src/server');
 
 chai.use(chaiHttp);
 
 describe('vehicle', () => {
 
-
     describe('get vehicles (VO)', () => {
         it('should return status 403', async () => {
             const response = await withLoginVehicleOwner(chai.request(api).get(`/api/vehicle`));
-            chai.expect(response).to.have.status(403);
+            chai.expect(response).to.have.status(403);            
         });
     });
 
@@ -101,14 +100,13 @@ describe('vehicle', () => {
             chai.expect(response).to.have.status(200);
         });
     });
-
+    
     describe('unsubscribe from one vehicle (OEM)', () => {
         it('should return status 200', async () => {
             const response = await withLoginOEM(chai.request(api).put(`/api/vehicle/test/unsubscribe`));
             chai.expect(response).to.have.status(200);
         });
     });
-
 
     describe('delete one vehicle (VO)', () => {
         it('should return status 200', async () => {

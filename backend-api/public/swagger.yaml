@@ -324,7 +324,7 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-                "$ref": "#/components/Vehicle"
+                "$ref": "#/components/VehicleCreateUpdate"
       responses:
         '200':
           description: Created new vehicle
@@ -402,7 +402,7 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-                "$ref": "#/components/Vehicle"
+                "$ref": "#/components/VehicleCreateUpdate"
       responses:
         '200':
           description: Vehicle updated
@@ -835,6 +835,22 @@ components:
         type: string
         description: Time of the last update
   
+  VehicleCreateUpdate: 
+    type: object
+    properties:
+      vin: 
+        type: string
+        description: Vehicle identifier
+      model: 
+        type: string
+        description: Vehicle model
+      manufacturer: 
+        type: string
+        description: Vehicle manufacturer
+      manufactureYear: 
+        type: integer
+        description: Manufacture year
+
   User:
     type: object
     properties:

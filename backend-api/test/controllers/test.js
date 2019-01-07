@@ -8,13 +8,27 @@ process.env.NODE_ENV = 'test';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 
-const withLoginVehicleOwner = require('./utils').withLoginVehicleOwner;
-const withLoginOEM = require('./utils').withLoginOEM;
-const api = require('../src/server');
+const withLoginVehicleOwner = require('../utils').withLoginVehicleOwner;
+const withLoginOEM = require('../utils').withLoginOEM;
+const api = require('../../src/server');
 
 chai.use(chaiHttp);
 
 describe('test', () => {
+
+	describe('get unknown without auth', () => {
+		it('should return status 401', async () => {
+			const response = await chai.request(api).get(`/api/unknown`);
+			chai.expect(response).to.have.status(401);
+		});
+	});
+
+	describe('get unknown with auth', () => {
+		it('should return status 404', async () => {
+			const response = await withLoginOEM(chai.request(api).get(`/api/unknown`));
+			chai.expect(response).to.have.status(404);
+		});
+	});
 
 	describe('get ping public', () => {
 		it('should return status 200', async () => {
