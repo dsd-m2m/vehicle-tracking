@@ -54,4 +54,18 @@ describe('role', () => {
             chai.expect(response).to.have.status(200);
         });
     });
+
+    describe('change user role for non-existent user (OEM)', () => {
+        it('should return status 400', async () => {
+            const response = await withLoginOEM(chai.request(api).post(`/api/role/changeUserRole`).send({userId: 100, newRoleId: 2}));
+            chai.expect(response).to.have.status(400);
+        });
+    });
+ 
+    describe('change user role to non-existent role (OEM)', () => {
+        it('should return status 400', async () => {
+            const response = await withLoginOEM(chai.request(api).post(`/api/role/changeUserRole`).send({userId: 1, newRoleId: 3}));
+            chai.expect(response).to.have.status(400);
+        });
+    });
 });

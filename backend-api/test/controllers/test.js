@@ -16,14 +16,14 @@ chai.use(chaiHttp);
 
 describe('test', () => {
 
-	describe('get unknown without auth', () => {
+	describe('get unknown resource without auth', () => {
 		it('should return status 401', async () => {
 			const response = await chai.request(api).get(`/api/unknown`);
 			chai.expect(response).to.have.status(401);
 		});
 	});
 
-	describe('get unknown with auth', () => {
+	describe('get unknown resource with auth', () => {
 		it('should return status 404', async () => {
 			const response = await withLoginOEM(chai.request(api).get(`/api/unknown`));
 			chai.expect(response).to.have.status(404);

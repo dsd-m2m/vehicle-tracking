@@ -47,4 +47,11 @@ describe('sensorData', () => {
             chai.expect(response).to.have.status(200);
         });
     });
+    
+    describe('get sensor data for one car (csv export)', () => {
+        it('should return status 200', async () => {
+            const response = await withLoginOEM(chai.request(api).get(`/api/sensorData/1T7HT4B27X1183680/export`));
+            chai.expect(response).to.have.status(200);
+        });
+    });
 });
