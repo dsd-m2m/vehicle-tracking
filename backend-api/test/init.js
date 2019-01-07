@@ -67,7 +67,7 @@ before(async () => {
 
 
 
-after(async () => {
+/* after(async () => {
     await UserVehicle.destroy({
         where: {},
     }).catch((err) => {
@@ -84,4 +84,4 @@ after(async () => {
     }).catch((err) => {
         throw Error('SequelizeError ', err);
     });
-});
+}); */
