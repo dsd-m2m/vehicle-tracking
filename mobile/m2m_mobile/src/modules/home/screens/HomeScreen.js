@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import { autobind } from 'core-decorators';
 import { connect } from 'react-redux';
+import SocketIOClient from 'socket.io-client';
 import {
   Screen,
   Card,
@@ -13,6 +14,7 @@ import {
 } from '~/modules/ui';
 import { getVehicle } from '~/modules/auth';
 import { styles } from './styles';
+import Config from '~/appConfig';
 import {
   CarFunctionButton,
   Sensor,
@@ -26,6 +28,7 @@ import {
   updateCarState,
 } from '../redux';
 
+
 function handleHornPress() {
   Vibration.vibrate();
 }
@@ -33,13 +36,29 @@ function handleHornPress() {
 class HomeScreen extends PureComponent {
   constructor(props) {
     super(props);
-
     const {
       vehicle: { vin },
       fetchCarStateAction,
     } = props;
 
+    this.state = {
+      carSpeed: 'Not Available',
+      torqueMotor: 'Not Available',
+      powerMotorTotal: 'Not Available',
+      MotorRpm: 'Not Available',
+    };
+
     fetchCarStateAction(vin);
+
+    this.socket = SocketIOClient(Config.socketUrl);
+    this.socket.emit('join', vin);
+    this.socket.on(vin, this.updateState);
+  }
+
+  @autobind
+  updateState(message) {
+    const body = JSON.parse(message);
+    this.setState({ ...body });
   }
 
   @autobind
@@ -101,12 +120,12 @@ class HomeScreen extends PureComponent {
 
   render() {
     const {
-      speed,
-      temp,
-      torq,
-      rpm,
-      carState,
-    } = this.props;
+      carSpeed,
+      powerMotorTotal,
+      torqueMotor,
+      MotorRpm,
+    } = this.state;
+    const { carState } = this.props;
     const {
       radiator,
       ac,
@@ -135,19 +154,19 @@ class HomeScreen extends PureComponent {
           </Text>
           <Sensor
             name="Speed"
-            value={speed}
+            value={carSpeed}
           />
           <Sensor
             name="RPM"
-            value={rpm}
+            value={MotorRpm}
           />
           <Sensor
-            name="Oil Temperature"
-            value={temp}
+            name="Motor Power Total"
+            value={powerMotorTotal}
           />
           <Sensor
             name="Torque"
-            value={torq}
+            value={torqueMotor}
           />
         </Card>
         <View style={styles.buttonContainer}>
@@ -188,21 +207,10 @@ class HomeScreen extends PureComponent {
 }
 
 HomeScreen.propTypes = {
-  speed: PropTypes.any,
-  torq: PropTypes.any,
-  temp: PropTypes.any,
-  rpm: PropTypes.any,
   vehicle: PropTypes.object,
   fetchCarStateAction: PropTypes.func,
   updateCarStateAction: PropTypes.func,
   carState: PropTypes.object,
-};
-
-HomeScreen.defaultProps = {
-  speed: 'Not Available',
-  torq: 'Not Available',
-  temp: 'Not Available',
-  rpm: 'Not Available',
 };
 
 function mapStateToProps(state) {

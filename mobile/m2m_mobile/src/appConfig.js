@@ -2,6 +2,7 @@ import Config from 'react-native-config';
 
 export default {
   apiBaseUrl: 'm2m-dev.eu-central-1.elasticbeanstalk.com/api',
+  socketUrl: 'http://m2m-dev.eu-central-1.elasticbeanstalk.com',
   applicationId: Config.APP_ID,
   auth: {
     email: Config.AUTH_USER,
