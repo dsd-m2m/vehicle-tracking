@@ -50,8 +50,6 @@ export function fetchSessionAuthToken() {
       body: JSON.stringify({ social_token: getGoogleAuthToken(state) }),
     };
 
-    console.log('Fetching session');
-
     return fetchRequest(LOGIN_ENDPOINT, fetchConfig)
       .then(payload => dispatch({
         type: SET_SESSION_AUTH_TOKEN,

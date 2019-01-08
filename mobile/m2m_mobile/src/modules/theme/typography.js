@@ -100,6 +100,12 @@ export const textStyles = StyleSheet.create({
     color: colors.white,
     lineHeight: 8,
   },
+  sensorName: {
+    ...fontWeight.medium,
+    fontSize: 14,
+    color: colors.textPrimary,
+    lineHeight: 20,
+  },
   regular: fontWeight.regular,
   medium: fontWeight.medium,
   bold: fontWeight.bold,
