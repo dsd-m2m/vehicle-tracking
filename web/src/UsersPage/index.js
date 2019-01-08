@@ -55,6 +55,7 @@ class UsersPage extends React.Component {
 								{/* </ol>
 								 */}
 									<div className="tile-left">
+								 		<br/>
 										<b>ID</b> <br/><br/>
 										<b>username</b> <br/><br/>
 										<b>email</b> <br/><br/>
