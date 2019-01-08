@@ -3,6 +3,15 @@ import api from '../api';
 import Header from '../_components/Header';
 
 
+const h2style = {
+	color: '#2D9CDB',
+	fontFamily: 'Roboto',
+	fontWeight: 'bold',
+	fontSize: '48px',
+	marginLeft: '5%',
+	marginTop: '3%'
+}
+
 //conponent on route /users,it renders list of users in database with their name,email and role
 class UsersPage extends React.Component {
 	constructor(props) {
@@ -30,18 +39,39 @@ class UsersPage extends React.Component {
 		return (
 			<div>
 			 	<Header/>
-				<div className="list">
-					<h2>Users</h2>
+				<div className="usersPage">
+					<h2 style={h2style}>       Users</h2>
 					{this.state.users.map((user, index) => {
 						return (
-							<ol className="usersList" key={index}>
-								{index + 1}.UserID:{user.id}
-								<br />
-								Username:{user.username}
-								<br />
-								Email:"{user.email}"<br />
-								Role:{user.roleId === 1 ? 'Vehicle owner' : 'OEM user'}
-							</ol>
+							<div className="tileUsers">
+								<ol key={index}>
+									{/*ID:{user.id}
+									<br /> <br/>
+									username:{user.username}
+									<br /> <br/>
+									email:"{user.email}"
+									<br /> <br/>
+									role:{user.roleId === 1 ? 'Vehicle owner' : 'OEM user'} */}
+								{/* </ol>
+								 */}
+									<div className="tile-left">
+										ID <br/><br/>
+										username <br/><br/>
+										email <br/><br/>
+										role <br/><br/> 
+									</div>
+									<div className="tile-right">
+								 		<br/><br/>
+										{user.id}
+										<br /> <br/>
+										{user.username}
+										<br /> <br/>
+										{user.email}
+										<br /> <br/>
+										{user.roleId === 1 ? 'Vehicle owner' : 'OEM user'}
+									</div>
+								</ol>
+							</div>
 						);
 					})}
 				</div>

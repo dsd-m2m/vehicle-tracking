@@ -30,18 +30,20 @@ class ContactPage extends React.Component {
 
 	render() {
 		return (
-			<div className="ContactPage">
+			<div className="contactPage">
 				<Header/>
-				<div className="contact">
-					<h1>Contact Us</h1>
-					<div className="form">
-						<form>
-							<input className="ContactPageInput" type="text" id="name" placeholder="Name" onChange={(e) => this.handleInput("userName",e)}></input>
-							<input className="ContactPageInput" type="text" placeholder="E-Mail" onChange={(e) => this.handleInput("userMail",e)}></input>
-							<textarea id="msg" cols="10" rows="5" placeholder="Type your message here" onChange={(e) => this.handleInput("userMsg",e)}></textarea>
-						</form>
+				
+				<div className="contactTile">
+					<div className="contact">
+						<div className="form">
+							<form>
+								<input className="ContactPageInput" type="text" id="name" placeholder="Name" onChange={(e) => this.handleInput("userName",e)}></input>
+								<input className="ContactPageInput" type="text" placeholder="E-Mail" onChange={(e) => this.handleInput("userMail",e)}></input>
+								<textarea id="msg" cols="10" rows="5" placeholder="Type your message here" onChange={(e) => this.handleInput("userMsg",e)}></textarea>
+							</form>
 
-						<button type="button" className="contactButton" onClick={()=>this.sendMail()}>Send E-Mail</button>
+							<button type="button" className="contactButton" onClick={()=>this.sendMail()}>Submit</button>
+						</div>
 					</div>
 				</div>
 			</div>

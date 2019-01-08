@@ -26,6 +26,7 @@ class App extends React.Component {
 					{alert.message && <div className={`alert ${alert.type}`}>{alert.message}</div>}
 					<Router history={this.props.history}>
 						<div className="Hpage">
+						
 							<SideBar/>
 
 							<Switch>
