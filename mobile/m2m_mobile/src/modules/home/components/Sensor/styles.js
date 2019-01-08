@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderBottomWidth: 1,
-    borderBottomColor: colors.black,
+    borderBottomColor: colors.inactive,
     marginTop: spacing.medium,
   },
 });
