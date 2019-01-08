@@ -2,6 +2,7 @@ export { default as reducer } from './reducer';
 
 export {
   fetchCarState,
+  fetchTripData,
   updateCarState,
   createSocket,
 } from './actions';
@@ -9,4 +10,5 @@ export {
 export {
   getCarState,
   getSocket,
+  getTripData,
 } from './selectors';

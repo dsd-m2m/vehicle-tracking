@@ -115,6 +115,8 @@ class CarIdScreen extends PureComponent {
               onPress={this.handleConfirmPress}
               enabled={vin.length >= 14}
             />
+          </View>
+          <View style={styles.buttonContainer}>
             <TextButton
               title="DEBUG CAR"
               onPress={this.handleDebugCar}

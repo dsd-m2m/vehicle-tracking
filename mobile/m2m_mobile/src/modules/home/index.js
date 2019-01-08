@@ -7,6 +7,8 @@ export {
   getSocket,
   createSocket,
   getCarState,
+  getTripData,
+  fetchTripData,
 } from './redux';
 
 export {
@@ -14,4 +16,7 @@ export {
   routes,
 } from './navigator';
 
-export { Sensor } from './components';
+export {
+  Sensor,
+  TabNavigatorButton,
+} from './components';
