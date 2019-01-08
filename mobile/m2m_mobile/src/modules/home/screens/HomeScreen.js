@@ -11,6 +11,7 @@ import {
   Card,
   Text,
 } from '~/modules/ui';
+import { getVehicle } from '~/modules/auth';
 import { styles } from './styles';
 import {
   CarFunctionButton,
@@ -19,6 +20,11 @@ import {
 import { TabNavigatorButton } from '../components/TabNavigatorButton';
 import { routes as locationRoutes } from '~/modules/location';
 import { routes as tripsRoutes } from '~/modules/trips';
+import {
+  getCarState,
+  fetchCarState,
+  updateCarState,
+} from '../redux';
 
 function handleHornPress() {
   Vibration.vibrate();
@@ -27,26 +33,57 @@ function handleHornPress() {
 class HomeScreen extends PureComponent {
   constructor(props) {
     super(props);
+
+    const {
+      vehicle: { vin },
+      fetchCarStateAction,
+    } = props;
+
+    fetchCarStateAction(vin);
   }
 
   @autobind
   handleRadiatorPress() {
+    const {
+      vehicle: { vin },
+      carState: { radiator },
+      updateCarStateAction,
+    } = this.props;
 
+    updateCarStateAction(vin, 'radiator', !radiator).catch(() => { });
   }
 
   @autobind
   handleFanPress() {
+    const {
+      vehicle: { vin },
+      carState: { ac },
+      updateCarStateAction,
+    } = this.props;
 
+    updateCarStateAction(vin, 'ac', !ac).catch(() => { });
   }
 
   @autobind
   handleHazzardPress() {
+    const {
+      vehicle: { vin },
+      carState: { hazzard },
+      updateCarStateAction,
+    } = this.props;
 
+    updateCarStateAction(vin, 'hazzard', !hazzard).catch(() => { });
   }
 
   @autobind
   handleLightsPress() {
+    const {
+      vehicle: { vin },
+      carState: { lights },
+      updateCarStateAction,
+    } = this.props;
 
+    updateCarStateAction(vin, 'lights', !lights).catch(() => { });
   }
 
 
@@ -68,7 +105,14 @@ class HomeScreen extends PureComponent {
       temp,
       torq,
       rpm,
+      carState,
     } = this.props;
+    const {
+      radiator,
+      ac,
+      hazzard,
+      lights,
+    } = carState;
 
     return (
       <Screen>
@@ -111,11 +155,13 @@ class HomeScreen extends PureComponent {
             onPress={this.handleRadiatorPress}
             name="radiatorOn"
             togglable
+            on={radiator}
           />
           <CarFunctionButton
             onPress={this.handleFanPress}
             name="fanOn"
             togglable
+            on={ac}
           />
         </View>
         <View style={styles.buttonContainer}>
@@ -123,6 +169,7 @@ class HomeScreen extends PureComponent {
             onPress={this.handleLightsPress}
             name="lights"
             togglable
+            on={lights}
           />
           <CarFunctionButton
             onPress={handleHornPress}
@@ -132,6 +179,7 @@ class HomeScreen extends PureComponent {
             onPress={this.handleHazzardPress}
             name="hazzard"
             togglable
+            on={hazzard}
           />
         </View>
       </Screen>
@@ -144,6 +192,10 @@ HomeScreen.propTypes = {
   torq: PropTypes.any,
   temp: PropTypes.any,
   rpm: PropTypes.any,
+  vehicle: PropTypes.object,
+  fetchCarStateAction: PropTypes.func,
+  updateCarStateAction: PropTypes.func,
+  carState: PropTypes.object,
 };
 
 HomeScreen.defaultProps = {
@@ -154,9 +206,15 @@ HomeScreen.defaultProps = {
 };
 
 function mapStateToProps(state) {
-  return {};
+  return {
+    vehicle: getVehicle(state),
+    carState: getCarState(state),
+  };
 }
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  fetchCarStateAction: fetchCarState,
+  updateCarStateAction: updateCarState,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

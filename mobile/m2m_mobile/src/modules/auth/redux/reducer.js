@@ -61,7 +61,7 @@ export function vehicleReducer(state = {}, action) {
 export const persistConfig = {
   key: MODULE_NAME,
   storage,
-  blacklist: ['sessionToken'],
+  blacklist: [],
 };
 
 export const combinedReducer = combineReducers({

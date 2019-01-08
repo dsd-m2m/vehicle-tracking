@@ -27,6 +27,8 @@ const LOGIN_ENDPOINT = buildRequestEndpoint('auth/login/mobile');
 
 const VEHICLE_ENDPOINT = buildRequestEndpoint('vehicle');
 
+const ME_ENDPOINT = buildRequestEndpoint('me');
+
 export function logout() {
   return { type: LOGOUT };
 }
@@ -66,7 +68,7 @@ export function fetchUser() {
       authorization: getSessionAuthToken(getState()),
     };
 
-    return fetchRequest(LOGIN_ENDPOINT, fetchConfig)
+    return fetchRequest(ME_ENDPOINT, fetchConfig)
       .then(payload => dispatch({
         type: SET_USER,
         payload,
@@ -74,6 +76,7 @@ export function fetchUser() {
       .catch(error => { throw error; });
   };
 }
+
 
 export function subscribeToCar(vin) {
   return (dispatch, getState) => {

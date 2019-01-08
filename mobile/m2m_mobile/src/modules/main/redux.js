@@ -6,7 +6,10 @@ import {
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 
-import { MODULE_NAME as HOME_MODULE } from '~/modules/home';
+import {
+  MODULE_NAME as HOME_MODULE,
+  reducer as homeReducer,
+} from '~/modules/home';
 import { MODULE_NAME as APP_INFO_MODULE } from '~/modules/app-info';
 import {
   MODULE_NAME as AUTH_MODULE,
@@ -21,7 +24,10 @@ import { MODULE_NAME as TRIPS_MODULE } from '~/modules/trips';
 
 // Load all imported application modules
 export function composeRootReducer() {
-  const moduleReducers = { [AUTH_MODULE]: authReducer };
+  const moduleReducers = {
+    [AUTH_MODULE]: authReducer,
+    [HOME_MODULE]: homeReducer,
+  };
 
   return combineReducers(moduleReducers);
 }
