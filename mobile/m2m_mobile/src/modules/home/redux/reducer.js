@@ -8,6 +8,7 @@ import {
   SET_CAR_STATE,
   GET_CAR_STATE,
   SET_SOCKET,
+  GET_SENSOR_DATA,
 } from './actions';
 
 
@@ -47,6 +48,15 @@ export function socketReducer(state = {}, action) {
   }
 }
 
+export function tripDataReducer(state = {}, action) {
+  switch (action.type) {
+    case GET_SENSOR_DATA:
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 export const persistConfig = {
   key: MODULE_NAME,
   storage,
@@ -56,6 +66,7 @@ export const persistConfig = {
 export const combinedReducer = combineReducers({
   carState: logoutReducerFactory(carStateReducer),
   socket: logoutReducerFactory(socketReducer),
+  tripData: logoutReducerFactory(tripDataReducer),
 });
 
 export default persistReducer(persistConfig, combinedReducer);

@@ -30,6 +30,8 @@
     "react-native-config": "^0.11.7",
     "react-native-indicators": "^0.13.0",
     "react-native-simple-auth": "^2.4.0",
+    "react-native-svg": "^8.0.10",
+    "react-native-svg-charts": "^5.2.0",
     "react-navigation": "^2.18.2",
     "react-redux": "^5.1.0",
     "redux": "^4.0.1",

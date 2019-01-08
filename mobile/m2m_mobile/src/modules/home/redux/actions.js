@@ -14,8 +14,11 @@ export const GET_CAR_STATE = buildActionType(MODULE_NAME, 'GET_CAR_STATE');
 
 export const SET_SOCKET = buildActionType(MODULE_NAME, 'SET_SOCKET');
 
+export const GET_SENSOR_DATA = buildActionType(MODULE_NAME, 'GET_SENSOR_DATA');
 
 const VEHICLE_ENDPOINT = buildRequestEndpoint('vehicle');
+
+const SENSOR_ENDPOINT = buildRequestEndpoint('sensorData');
 
 
 export function fetchCarState(vin) {
@@ -69,5 +72,26 @@ export function createSocket() {
       type: SET_SOCKET,
       payload: socket,
     });
+  };
+}
+
+export function fetchTripData(vin) {
+  return (dispatch, getState) => {
+    const sessionToken = getSessionAuthToken(getState());
+
+    const fetchConfig = {
+      method: 'GET',
+      authorization: sessionToken,
+    };
+
+    return fetchRequest(`${SENSOR_ENDPOINT}/${vin}`, fetchConfig)
+      .then(payload => {
+        dispatch({
+          type: GET_SENSOR_DATA,
+          payload,
+        });
+      }).catch(error => {
+        throw error;
+      });
   };
 }

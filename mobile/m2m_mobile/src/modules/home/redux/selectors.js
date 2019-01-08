@@ -15,3 +15,9 @@ export function getSocket(state) {
 
   return _.get(homeState, 'socket');
 }
+
+export function getTripData(state) {
+  const homeState = getHomeState(state);
+
+  return _.get(homeState, 'tripData');
+}
