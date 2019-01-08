@@ -31,7 +31,7 @@ class Header extends React.Component {
       };
       return (
         <div>
-          {name && <div className="welcoming">Welcome {name}</div>}
+          {/* name && <div className="welcoming">Welcome {name}</div> */}
           <div className="user_authorization">
             {name && (
                 <div>

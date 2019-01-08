@@ -1,5 +1,5 @@
 html{
-    background: #B0B0B0;
+    background: #E0E0E0;
 }
 #footer{
 	position:absolute;
@@ -30,40 +30,6 @@ html{
 .logo{
 	width:50px;
 	height:50px;
-}
-
-/* The sidebar menu */
-.sidenav {
-    height: 100%;
-    width: 120px; 
-    position: fixed; 
-    z-index: 1; /* Stay on top */
-    left: 0;
-    background-color: #111; /* Black */
-    overflow-x: hidden;
-    padding-top: 20px;
-	margin-top:97px;
-   
-}
-
-/* The navigation menu links */
-.sidenav a,span{
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-}
-
-/* When you mouse over the navigation links, change their color */
-.sidenav a:hover {
-    color: #f1f1f1;
-    cursor: pointer;
-}
-
-.sidenav span:hover {
-    color: #f1f1f1;
-    cursor: pointer;
 }
 
 .srvDown{

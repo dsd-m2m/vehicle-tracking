@@ -2,10 +2,23 @@ import React from 'react';
 import moment from 'moment';
 import Collapse from 'react-collapse';
 import { VictoryChart, VictoryLine } from "victory";
+import cloudIcon from '../pictures/cloud-download.svg'
 
 import api from '../api';
 import Header from '../_components/Header';
 
+const h2style = {
+	color: '#2D9CDB',
+	fontFamily: 'Roboto',
+	fontWeight: 'bold',
+	fontSize: '48px',
+	marginLeft: '2%',
+	marginTop: '1%'
+}
+
+const spanStyle = {
+	padding: '3px'
+}
 
 class SensorsPage extends React.Component {
 	constructor(props) {
@@ -129,28 +142,36 @@ class SensorsPage extends React.Component {
 			<div id="SensorsPage">
 			 	<Header/>
 				<div className="list" >
-					<h2>Sensor Data VIN:{this.state.vin}</h2>
+					<h2 style={h2style}>Sensor Data VIN:{this.state.vin}</h2>
 					<button className="sensorsButtons" onClick={()=>this.showGraph("MotorRpm")}>Motor Rpm</button>
 					<button className="sensorsButtons" onClick={()=>this.showGraph("carSpeed")}>Speed</button>
 					<button className="sensorsButtons" onClick={()=>this.showGraph("powerMotorTotal")}>Motor Power</button>
 					<button className="sensorsButtons" onClick={()=>this.showGraph("tempOilMotor")}>Motor Oil</button>
 					<button className="sensorsButtons" onClick={()=>this.showGraph("torqueMotor")}>Motor Torque</button>
-					<button className="sensorsButtons" onClick={()=>this.exportcsv()}>Export CSV</button>
-					<br/>
+					<button className="sensorsButtons" onClick={()=>this.exportcsv()}>
+						<img src={cloudIcon} alt="Export"/> <span style={spanStyle}>CSV</span>
+					</button>
 
-					{this.state.showGraph &&
-						<VictoryChart width={800} height={400}>
-							  <VictoryLine style={{   data: { stroke: "#c43a31" },
-												      parent: { border: "1px solid #ccc"}
-												    }}
-							    data={this.state.graphData}
-							    x="time"
-        						y="data"
-							  />
-							</VictoryChart>
-					}
+						{ this.state.showGraph &&
+							<div className="tile">
+								<VictoryChart width={800} height={400}>
+									<VictoryLine style={{   data: { stroke: "#c43a31" },
+															parent: { border: "1px solid #ccc"}
+															}}
+										data={this.state.graphData}
+										x="time"
+										y="data"
+									/>
+									</VictoryChart>
+							</div>
+						}
+
+						<br/><br/>
+
+					
 					<label className="SelectAllCheckbox"><input type="checkbox" onChange={() => this.toggleSelectAll()}/>Select All</label>
-					{this.state.sensors.map((sensor,index)=>{
+					<br/><br/><br/><br/><br/>
+					{/* {this.state.sensors.map((sensor,index)=>{
 						let date=moment.utc(sensor.timestamp).toString();
 						return(
 							<div key={index}>
@@ -173,7 +194,7 @@ class SensorsPage extends React.Component {
 								</Collapse>
 							</div>						
 						);
-					})}
+					})} */}
 				</div>
 			</div>
 		);

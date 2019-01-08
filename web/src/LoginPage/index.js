@@ -3,6 +3,16 @@ import { GoogleLogin } from 'react-google-login';
 import { Link } from 'react-router-dom';
 
 import api from '../api';
+import gsi from '../pictures/google-sign-in.png';
+
+const googleStyle = {
+	width: '180px',
+	height: '60px',
+	top: '0px',
+	left: '0px',
+	padding: '0',
+	margin: '0'
+}
 
 //It renders when user is not logged in on route /login
 class LoginPage extends React.Component {
@@ -49,18 +59,25 @@ class LoginPage extends React.Component {
 		}
 
 		return (
-			<div className="Lpage">
-				<div className="sidenav">
-					<Link to="/about">About</Link>
-					<Link to="/contact">Contact</Link>
+			<div>
+				<div className="">
+					{/* <div className="sidenav">
+						<Link to="/about">About</Link>
+						<Link to="/contact">Contact</Link>
+					</div> */}
+					<div className="user_authorization">
+						<GoogleLogin 
+							clientId="758979408479-h8rgnvkfhro2o2i3q3idek10r5cbt4u3.apps.googleusercontent.com"
+							buttonText="Login with Google"
+							onSuccess={this.signup}
+							onFailure={this.signup}
+						>
+							{/* <img src={gsi} alt="Login with Google" style={googleStyle} /> */}
+						</GoogleLogin>
+					</div>
 				</div>
-				<div className="user_authorization">
-					<GoogleLogin 
-						clientId="758979408479-h8rgnvkfhro2o2i3q3idek10r5cbt4u3.apps.googleusercontent.com"
-						buttonText="Login with Google"
-						onSuccess={this.signup}
-						onFailure={this.signup}
-					/>
+				<div className="homepage">
+
 				</div>
 			</div>
 		);

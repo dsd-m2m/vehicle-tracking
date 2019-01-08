@@ -1,25 +1,60 @@
 #AboutPage{
-  position: absolute;
-  top:15%;
-  left:30%;
+  position: relative;
+  width: auto;
+  height: 5500px;
+  overflow-y: scroll;
+  background: #E0E0E0;
 }
 
+.tile{
+  position: relative;
+  width: 80%;
+  height: 600px;
+  margin-top: 100px;
+  left: 10%;
+  background: #F2F2F2;
+  box-shadow: 0px 4px 4px rgba(148, 131, 131, 0.25);
+  overflow: hidden;
+}
 
-.border{
-  display: block;
-  margin:auto;
-  width: 200px;
-  background-color: #3498db;
-  margin-bottom: 20px;
+.tileUsers{
+  position: relative;
+  width: 80%;
+  height: 400px;
+  margin-top: 100px;
+  left: 10%;
+  background: #F2F2F2;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.tile-left{
+  margin-top: 7%;
+  width: 40%;
+  height: 70%;
+  border-right: 1px solid #2D9CDB;
+  float: left
+}
+
+.tile-right{
+  padding: 50px 50px;
+  overflow: hidden;
+  margin: auto;
+  text-align: center
+}
+
+.tile-center{
+  margin-top: 20%;
+  display: inline-block
 }
 
 .memberPics{
-  position: relative;
-  left:30%;
-  margin-bottom: 20px;
-  height:200px;
-  width:200px;
-  align-self: center;
+  position: absolute;
+  border-radius: 180px;
+  top: 15%;
+  left: 130px;
+  width: 300px;
+  height: 300px
 }
 
 .section{
@@ -37,10 +72,16 @@
 
 .name{
   display: block;
+  position: absolute;
+  left: 230px;
+  top: 73%;
   margin-bottom: 5px;
   text-align: center;
-  text-transform: uppercase;
-  font-size: 22px;
+  font-size: 36px;
   color:black;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  line-height: normal;
 }
 
