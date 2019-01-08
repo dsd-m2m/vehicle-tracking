@@ -10,4 +10,7 @@ export const icons = {
   power: require('./power.png'),
   radiatorOn: require('./radiator-on.png'),
   radiatorOff: require('./radiator-off.png'),
+  horn: require('./horn.png'),
+  hazzard: require('./hazzard.png'),
+  lights: require('./lights.png'),
 };

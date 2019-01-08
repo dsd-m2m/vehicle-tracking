@@ -16,6 +16,10 @@ const textSecondaryColor = '#63d14f';
 const textTitleColor = '#333333';
 const textH4Color = '#2d2d2d';
 
+// Function
+const functionOnColor = '#4DA045';
+const functionOffColor = '#C75353';
+
 export const colors = {
   primary: primaryColor,
   gray: grayColor,
@@ -36,8 +40,10 @@ export const colors = {
   headerBackground: whiteColor,
   shadow: blackColor,
   overlay: overlayColor,
-  Anactive: darkGrayColor,
-  Inactive: blackColor,
+  active: blackColor,
+  inactive: darkGrayColor,
+  functionOn: functionOnColor,
+  functionOff: functionOffColor,
 };
 
 export const gradients = {

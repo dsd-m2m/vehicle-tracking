@@ -21,3 +21,9 @@ export function getUser(state) {
 
   return _.get(authState, 'user');
 }
+
+export function getVehicle(state) {
+  const authState = getAuthState(state);
+
+  return _.get(authState, 'vehicle');
+}

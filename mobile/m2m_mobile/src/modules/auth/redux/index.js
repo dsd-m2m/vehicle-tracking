@@ -13,4 +13,5 @@ export {
   getGoogleAuthToken,
   getSessionAuthToken,
   getUser,
+  getVehicle,
 } from './selectors';

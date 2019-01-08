@@ -15,6 +15,7 @@ export function resolveComponentStyle(props) {
     screen,
     button,
     date,
+    sensorName,
     notification,
   } = props;
 
@@ -48,6 +49,10 @@ export function resolveComponentStyle(props) {
 
   if (screen) {
     return textStyles.screen;
+  }
+
+  if (sensorName) {
+    return textStyles.sensorName;
   }
 
   if (button) {

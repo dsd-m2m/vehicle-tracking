@@ -46,6 +46,22 @@ class CarIdScreen extends PureComponent {
   }
 
   @autobind
+  handleDebugCar() {
+    const { subscribeToCarAction } = this.props;
+    const vin = '1T7HT4B27X1183680';
+
+    subscribeToCarAction(vin)
+      .then(() => this.setState({ success: true }))
+      .catch(error => {
+        if (isRequestNetworkConnectionError(error)) {
+          this.setState({ networkError: true });
+          return;
+        }
+        this.setState({ wrongId: true });
+      });
+  }
+
+  @autobind
   handleConfirmSuccessPress() {
     const { navigation: { navigate } } = this.props;
 
@@ -98,6 +114,10 @@ class CarIdScreen extends PureComponent {
               title="CONFIRM"
               onPress={this.handleConfirmPress}
               enabled={vin.length >= 14}
+            />
+            <TextButton
+              title="DEBUG CAR"
+              onPress={this.handleDebugCar}
             />
           </View>
         </Card>
