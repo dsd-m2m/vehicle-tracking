@@ -83,7 +83,7 @@ class LoadingScreen extends PureComponent {
     return (
       <Screen style={styles.container}>
         <MaterialIndicator
-          color={colors.primary}
+          color={colors.black}
           size={80}
         />
         <Text>M2M Mobile</Text>

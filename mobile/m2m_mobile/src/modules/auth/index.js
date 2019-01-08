@@ -8,7 +8,11 @@ export {
   getUser,
   getVehicle,
   fetchGoogleAuthToken,
+  fetchUser,
   fetchSessionAuthToken,
+  subscribeToCar,
+  unsubscribeFromCar,
+  logout,
 } from './redux';
 
 export {

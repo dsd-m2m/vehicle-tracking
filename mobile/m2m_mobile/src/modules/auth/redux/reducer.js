@@ -29,8 +29,9 @@ export function sessionAuthTokenReducer(state = '', action) {
   switch (action.type) {
     case SET_SESSION_AUTH_TOKEN:
       return action.payload.token;
+    case LOGOUT:
     case CLEAR_SESSION_AUTH_TOKEN:
-      return action.payload.token;
+      return '';
     default:
       return state;
   }
@@ -39,7 +40,7 @@ export function sessionAuthTokenReducer(state = '', action) {
 export function userReducer(state = {}, action) {
   switch (action.type) {
     case SET_USER:
-      return action.payload.user;
+      return action.payload;
     case LOGOUT:
       return {};
     default:
