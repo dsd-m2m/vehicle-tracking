@@ -1,28 +1,31 @@
-import React, { PureComponent } from 'react';
-import { View } from 'react-native';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React from 'react';
 import {
   Screen,
   Card,
 } from '~/modules/ui';
+import { Sensor } from '~/modules/home';
 
-class CarInfoScreen extends PureComponent {
-  render() {
-    return (
-      <Screen>
-        <Card />
-      </Screen>
-    );
-  }
+export default function AppInfoScreen() {
+  return (
+    <Screen>
+      <Card>
+        <Sensor
+          name="Model name"
+          value="Concept One"
+        />
+        <Sensor
+          name="Manufacturer"
+          value="Rimac Automobili"
+        />
+        <Sensor
+          name="Year"
+          value="2015"
+        />
+        <Sensor
+          name="VIN"
+          value="1T7HT4B27X1183680"
+        />
+      </Card>
+    </Screen>
+  );
 }
-
-CarInfoScreen.propTypes = {};
-
-function mapStateToProps(state) {
-  return {};
-}
-
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CarInfoScreen);

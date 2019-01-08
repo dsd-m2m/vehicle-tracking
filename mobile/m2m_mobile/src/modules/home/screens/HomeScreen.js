@@ -11,7 +11,10 @@ import {
   Card,
   Text,
 } from '~/modules/ui';
-import { getVehicle } from '~/modules/auth';
+import {
+  getVehicle,
+  fetchUser,
+} from '~/modules/auth';
 import { styles } from './styles';
 import {
   CarFunctionButton,
@@ -49,6 +52,7 @@ class HomeScreen extends PureComponent {
     };
 
     fetchCarStateAction(vin);
+    fetchUser();
     socket.emit('join', vin);
     socket.on(vin, this.updateState);
   }
@@ -223,6 +227,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
   fetchCarStateAction: fetchCarState,
   updateCarStateAction: updateCarState,
+  fetchUserAction: fetchUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

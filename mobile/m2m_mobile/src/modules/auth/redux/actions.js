@@ -69,10 +69,12 @@ export function fetchUser() {
     };
 
     return fetchRequest(ME_ENDPOINT, fetchConfig)
-      .then(payload => dispatch({
-        type: SET_USER,
-        payload,
-      }))
+      .then(payload => {
+        dispatch({
+          type: SET_USER,
+          payload,
+        });
+      })
       .catch(error => { throw error; });
   };
 }

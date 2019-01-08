@@ -13,3 +13,5 @@ export {
   default as Navigator,
   routes,
 } from './navigator';
+
+export { Sensor } from './components';
