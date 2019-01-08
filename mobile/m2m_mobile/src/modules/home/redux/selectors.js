@@ -9,3 +9,9 @@ export function getCarState(state) {
 
   return _.get(homeState, 'carState');
 }
+
+export function getSocket(state) {
+  const homeState = getHomeState(state);
+
+  return _.get(homeState, 'socket');
+}

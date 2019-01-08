@@ -4,6 +4,8 @@ export {
   reducer,
   fetchCarState,
   updateCarState,
+  getSocket,
+  createSocket,
   getCarState,
 } from './redux';
 

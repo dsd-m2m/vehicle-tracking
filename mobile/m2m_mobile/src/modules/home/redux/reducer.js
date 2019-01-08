@@ -7,6 +7,7 @@ import {
   REQUEST_CAR_STATE,
   SET_CAR_STATE,
   GET_CAR_STATE,
+  SET_SOCKET,
 } from './actions';
 
 
@@ -37,12 +38,24 @@ export function carStateReducer(
   }
 }
 
+export function socketReducer(state = {}, action) {
+  switch (action.type) {
+    case SET_SOCKET:
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 export const persistConfig = {
   key: MODULE_NAME,
   storage,
-  blacklist: ['carState'],
+  blacklist: ['carState', 'socket'],
 };
 
-export const combinedReducer = combineReducers({ carState: logoutReducerFactory(carStateReducer) });
+export const combinedReducer = combineReducers({
+  carState: logoutReducerFactory(carStateReducer),
+  socket: logoutReducerFactory(socketReducer),
+});
 
 export default persistReducer(persistConfig, combinedReducer);

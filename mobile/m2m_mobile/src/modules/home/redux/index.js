@@ -3,6 +3,10 @@ export { default as reducer } from './reducer';
 export {
   fetchCarState,
   updateCarState,
+  createSocket,
 } from './actions';
 
-export { getCarState } from './selectors';
+export {
+  getCarState,
+  getSocket,
+} from './selectors';

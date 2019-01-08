@@ -19,13 +19,18 @@ import {
   getUser,
   getVehicle,
 } from '~/modules/auth';
-import { routes as homeRoutes } from '~/modules/home';
+import {
+  routes as homeRoutes,
+  createSocket,
+} from '~/modules/home';
 
 class LoadingScreen extends PureComponent {
   constructor(props) {
     super(props);
+    const { createSocketAction } = props;
 
     this.state = { networkError: false };
+    createSocketAction();
   }
 
   componentWillMount() {
@@ -95,6 +100,7 @@ LoadingScreen.propTypes = {
   googleToken: PropTypes.string,
   vehicle: PropTypes.object,
   fetchSessionAuthTokenAction: PropTypes.func,
+  createSocketAction: PropTypes.func,
 };
 
 function mapStateToProps(state) {
@@ -105,6 +111,9 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = { fetchSessionAuthTokenAction: fetchSessionAuthToken };
+const mapDispatchToProps = {
+  fetchSessionAuthTokenAction: fetchSessionAuthToken,
+  createSocketAction: createSocket,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoadingScreen);

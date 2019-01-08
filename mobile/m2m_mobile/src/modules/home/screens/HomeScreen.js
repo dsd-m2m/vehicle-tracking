@@ -6,7 +6,6 @@ import {
 } from 'react-native';
 import { autobind } from 'core-decorators';
 import { connect } from 'react-redux';
-import SocketIOClient from 'socket.io-client';
 import {
   Screen,
   Card,
@@ -14,7 +13,6 @@ import {
 } from '~/modules/ui';
 import { getVehicle } from '~/modules/auth';
 import { styles } from './styles';
-import Config from '~/appConfig';
 import {
   CarFunctionButton,
   Sensor,
@@ -25,6 +23,7 @@ import { routes as tripsRoutes } from '~/modules/trips';
 import {
   getCarState,
   fetchCarState,
+  getSocket,
   updateCarState,
 } from '../redux';
 
@@ -39,6 +38,7 @@ class HomeScreen extends PureComponent {
     const {
       vehicle: { vin },
       fetchCarStateAction,
+      socket,
     } = props;
 
     this.state = {
@@ -49,10 +49,8 @@ class HomeScreen extends PureComponent {
     };
 
     fetchCarStateAction(vin);
-
-    this.socket = SocketIOClient(Config.socketUrl);
-    this.socket.emit('join', vin);
-    this.socket.on(vin, this.updateState);
+    socket.emit('join', vin);
+    socket.on(vin, this.updateState);
   }
 
   @autobind
@@ -211,12 +209,14 @@ HomeScreen.propTypes = {
   fetchCarStateAction: PropTypes.func,
   updateCarStateAction: PropTypes.func,
   carState: PropTypes.object,
+  socket: PropTypes.object,
 };
 
 function mapStateToProps(state) {
   return {
     vehicle: getVehicle(state),
     carState: getCarState(state),
+    socket: getSocket(state),
   };
 }
 
