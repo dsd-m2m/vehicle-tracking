@@ -602,17 +602,8 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-                type: object
-                properties:
-                  engine:
-                    type: boolean
-                    description: New engine state (true - on, false - off)
-                  ac:
-                    type: boolean
-                    description: New air conditioner state (true - on, false - off)
-                  radiator:
-                    type: boolean
-                    description: New radiator state (true - on, false - off)
+              "$ref": "#/components/CarState"
+
       responses:
         '200':
           description: Car's state successfully changed
@@ -910,6 +901,12 @@ components:
       radiator:
         type: boolean
         description: radiator state (true - on, false - off)
+      hazzard:
+        type: boolean
+        description: hazzard state (true - on, false - off)
+      lights:
+        type: boolean
+        description: lights state (true - on, false - off)
 
   SensorData:
     type: object

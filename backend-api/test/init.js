@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-env mocha */
