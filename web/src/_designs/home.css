@@ -20,7 +20,7 @@ body { padding-top: 66px; }
 .usersPage{
   position: relative;
   width: auto;
-  height: 5500px;
+  height: auto;
   overflow-y: scroll;
   background: #E0E0E0;
 }
@@ -51,7 +51,7 @@ body { padding-top: 66px; }
   font-size: 12px;
   background: #0078ff;
   border: none;
-  border-radius: 4px;
+  border-radius: 10px;
   margin-top: 10px;
   color: #fff;
 }

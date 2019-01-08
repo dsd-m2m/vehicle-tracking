@@ -3,6 +3,30 @@ import Collapse from 'react-collapse';
 
 import api from '../api';
 import Header from '../_components/Header';
+import addCircle from '../pictures/add-circle.svg';
+import graphic from '../pictures/graphic-eq.svg'
+import removeCircle from '../pictures/remove-circle.svg'
+
+const h2style = {
+	color: '#2D9CDB',
+	fontFamily: 'Roboto',
+	fontWeight: 'bold',
+	fontSize: '48px',
+	marginLeft: '5%',
+	marginTop: '3%'
+}
+
+const addButtonStyle = {
+	marginLeft: '90%'
+}
+
+const addForm = {
+	marginLeft: '35%'
+}
+
+const textAreaStyle = {
+	width: '350px'
+}
 
 //component on route /vehicles,it renders list of vehicles stored in database
 class VehiclesPage extends React.Component {
@@ -92,34 +116,85 @@ class VehiclesPage extends React.Component {
 		return (
 			<div>
 			 	<Header/>
-				<div className="list">
-					<h2>Vehicles</h2>
-					<button onClick={()=>this.setFormVisibility()} className="vehiclePageButtons">Add new Vehicle</button><br/>
+				<div className="usersPage">
+					<h2 style={h2style} >Vehicles</h2>
+					<button onClick={()=>this.setFormVisibility()} style={addButtonStyle} className="vehiclePageButtons">
+						<img src={addCircle} alt="Add Vehicle"/>
+					</button><br/>
 					<Collapse isOpened={this.state.showForm}>
-						<form>
-							<label>Vehicle ID number</label><br/>
-							<input  type="text" onChange={(e) => this.handleInput("vin",e)}></input><br/>
-							<label>Model</label><br/>
-							<input type="text" onChange={(e) => this.handleInput("model",e)}></input><br/>
-							<label>Manufacturer</label><br/>
-							<input type="text" onChange={(e) => this.handleInput("manufacturer",e)}></input><br/>
-							<label>Manufacturer Year</label><br/>
-							<input type="text" onChange={(e) => this.handleInput("manufactureYear",e)}></input><br/>
-							<button onClick={()=>this.addNewVehicle()} className="vehiclePageButtons">Submit</button>
-						</form>
+						<div className="tileUsers">
+							<br/><br/>
+							<form style={addForm}>
+								<label>Vehicle ID number</label><br/>
+								<input type="text" style={textAreaStyle} onChange={(e) => this.handleInput("vin",e)}></input><br/>
+								<label>Model</label><br/>
+								<input type="text" style={textAreaStyle} onChange={(e) => this.handleInput("model",e)}></input><br/>
+								<label>Manufacturer</label><br/>
+								<input type="text" style={textAreaStyle} onChange={(e) => this.handleInput("manufacturer",e)}></input><br/>
+								<label>Manufacturer Year</label><br/>
+								<input type="text" style={textAreaStyle} onChange={(e) => this.handleInput("manufactureYear",e)}></input><br/>
+								<button onClick={()=>this.addNewVehicle()} className="vehiclePageButtons">Submit</button>
+							</form>
+						</div>
 					</Collapse>
 
 					{this.state.vehicles.map((vehicle,index) =>{
 						return (
-							<ol className="vehiclesList" key={vehicle.vin}>
-								{index+1}.VehicleID:{vehicle.vin}<br/>
-								Model:{vehicle.model}<br/>
-								Manufacturer:{vehicle.manufacturer}<br/>
-								Manufacture Year:{vehicle.manufactureYear}<br/>
-								<button onClick={()=>this.getSensors(vehicle.vin)} className="vehiclePageButtons">Get sensor data</button>
-								<button onClick={()=>this.deleteVehicle(vehicle.vin)} className="vehiclePageButtons">Delete vehicle</button>
-								<br />
-							</ol>
+							// <ol className="vehiclesList" key={vehicle.vin}>
+							// 	{index+1}.VehicleID:{vehicle.vin}<br/>
+							// 	Model:{vehicle.model}<br/>
+							// 	Manufacturer:{vehicle.manufacturer}<br/>
+							// 	Manufacture Year:{vehicle.manufactureYear}<br/>
+							// 	<button onClick={()=>this.getSensors(vehicle.vin)} className="vehiclePageButtons">Get sensor data</button>
+							// 	<button onClick={()=>this.deleteVehicle(vehicle.vin)} className="vehiclePageButtons">Delete vehicle</button>
+							// 	<br />
+							// </ol>
+
+
+							<div className="tileUsers">
+								<ol key={vehicle.vin}>
+									{/*ID:{user.id}
+									<br /> <br/>
+									username:{user.username}
+									<br /> <br/>
+									email:"{user.email}"
+									<br /> <br/>
+									role:{user.roleId === 1 ? 'Vehicle owner' : 'OEM user'} */}
+								{/* </ol>
+								*/}
+									<div className="tile-left">
+										<b>ID</b> <br/><br/>
+										<b>Model</b> <br/><br/>
+										<b>Manufacturer</b> <br/><br/>
+										<b>ManufactureYear</b> <br/><br/> <br/>
+										{/* <button onClick={()=>this.getSensors(vehicle.vin)} className="vehiclePageButtons">Get sensor data</button> */}
+									</div>
+									<div className="tile-right">
+										{/* <button onClick={()=>this.getSensors(vehicle.vin)} className="vehiclePageButtons">Get sensor data</button> */}
+										<br/><br/>
+										{vehicle.vin} 
+										<br /> <br/>
+										{vehicle.model}
+										<br /> <br/>
+										{vehicle.manufacturer}
+										<br /> <br/>
+										{vehicle.manufactureYear} 
+
+										<br/> <br/>
+										{/* <button onClick={()=>this.deleteVehicle(vehicle.vin)} className="vehiclePageButtons">Delete vehicle</button> */}
+									</div>
+									<div className="">
+										<button onClick={()=>this.getSensors(vehicle.vin)} className="vehiclePageButtons">
+											<img src={graphic} alt="Get sensor data"/>
+										</button>
+										<button onClick={()=>this.deleteVehicle(vehicle.vin)} className="vehiclePageButtons">
+											<img src={removeCircle} alt="Delete vehicle"/>
+										</button>
+										<br />
+									</div>
+									
+								</ol>
+							</div>
 						);
 					})}
 				</div>

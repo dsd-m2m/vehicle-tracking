@@ -6,6 +6,15 @@ import { VictoryChart, VictoryLine } from "victory";
 import api from '../api';
 import Header from '../_components/Header';
 
+const h2style = {
+	color: '#2D9CDB',
+	fontFamily: 'Roboto',
+	fontWeight: 'bold',
+	fontSize: '48px',
+	marginLeft: '5%',
+	marginTop: '3%'
+}
+
 
 class SensorsPage extends React.Component {
 	constructor(props) {
@@ -129,7 +138,7 @@ class SensorsPage extends React.Component {
 			<div id="SensorsPage">
 			 	<Header/>
 				<div className="list" >
-					<h2>Sensor Data VIN:{this.state.vin}</h2>
+					<h2 style={h2style}>Sensor Data VIN:{this.state.vin}</h2>
 					<button className="sensorsButtons" onClick={()=>this.showGraph("MotorRpm")}>Motor Rpm</button>
 					<button className="sensorsButtons" onClick={()=>this.showGraph("carSpeed")}>Speed</button>
 					<button className="sensorsButtons" onClick={()=>this.showGraph("powerMotorTotal")}>Motor Power</button>
