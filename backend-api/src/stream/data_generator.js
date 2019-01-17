@@ -1,55 +1,94 @@
 /* eslint-disable no-console */
 const faker = require('faker');
 const awsIot = require('aws-iot-device-sdk');
+require('dotenv').config('');
+const AWS = require('aws-sdk');
+const fs = require('fs');
 
-const device = awsIot.device({
-    privateKey: Buffer.from(process.env.AWS_CERTIFICATE_KEY, 'base64'),
-    clientCert: Buffer.from(process.env.AWS_CERTIFICATE_CRT, 'base64'),
-    caCert: Buffer.from(process.env.AWS_ROOT_CA, 'base64'),
-    clientId: process.env.IOT_CLIENT_ID,
-    host: process.env.IOT_ENDPOINT,
+AWS.config.update({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_REGION
 });
+const s3 = new AWS.S3();
 
-const setupStreaming = (io) => {
-    device.on('connect', () => {
-        console.log('connect to MQTT!');
-        device.subscribe('tcu');
+const keyName = process.env.AWS_KEY_NAME;
+const certName = process.env.AWS_CERT_NAME;
+const bucket = process.env.AWS_BUCKET_NAME;
 
-        // for testing the mqtt connection
-        /*         setInterval(() => {
-        
-                    const carSpeed = Math.floor(Math.random() * 110 + 1);
-                    const MotorRpm = Math.floor(Math.random() * 1000 + 1);
-                    const timestamp = Date.now();
-                    const vin = '1T7HT4B27X1183680';
-        
-                    const data = { carSpeed, MotorRpm, timestamp, vin };
-                    device.publish('tcu', JSON.stringify(data));
-                }, 3000); */
-    });
 
-    device.on('message', (topic, payload) => {
-        console.log(topic, ':', payload.toString());
-        if (topic === 'tcu') {
-            const data = JSON.parse(payload);
-            if (data.vin) {
-                io.emit(data.vin, payload.toString());
-            }
-        }
-    });
+const cert = fs.createWriteStream(`certs/${certName}`);
+const key = fs.createWriteStream(`certs/${keyName}`);
 
-    device.on('close', () => {
-        console.log('close MQTT');
-    });
-    device.on('reconnect', () => {
-        console.log('reconnect MQTT');
-    });
-    device.on('offline', () => {
-        console.log('offline MQTT');
-    });
-    device.on('error', error => {
-        console.log('error MQTT', error);
-    });
+const setupStreaming = async (io) => {
+
+
+    s3.getObject({ Bucket: bucket, Key: certName })
+        .on('httpData', chunk => cert.write(chunk))
+        .on('httpDone', () => {
+            cert.end();
+
+            s3.getObject({ Bucket: bucket, Key: keyName })
+                .on('httpData', chunk => key.write(chunk))
+                .on('httpDone', () => {
+                    key.end();
+
+                    const device = awsIot.device({
+                        privateKey: `certs/${process.env.AWS_KEY_NAME}`,
+                        clientCert: `certs/${process.env.AWS_CERT_NAME}`,
+                        caCert: 'certs/root-CA.crt',
+                        clientId: process.env.IOT_CLIENT_ID,
+                        host: process.env.IOT_ENDPOINT,
+                    });
+
+
+                    device.on('connect', () => {
+                        console.log('connect to MQTT!');
+                        device.subscribe('tcu');
+
+                        // for testing the mqtt connection
+                        setInterval(() => {
+
+                            const carSpeed = Math.floor(Math.random() * 110 + 1);
+                            const MotorRpm = Math.floor(Math.random() * 1000 + 1);
+                            const timestamp = Date.now();
+                            const vin = '1T7HT4B27X1183680';
+
+                            const data = { carSpeed, MotorRpm, timestamp, vin };
+                            device.publish('tcu', JSON.stringify(data));
+                        }, 3000);
+                    });
+
+                    device.on('message', (topic, payload) => {
+                        console.log(topic, ':', payload.toString());
+                        if (topic === 'tcu') {
+                            const data = JSON.parse(payload);
+                            if (data.vin) {
+                                io.emit(data.vin, payload.toString());
+                            }
+                        }
+                    });
+
+                    device.on('close', () => {
+                        console.log('close MQTT');
+                    });
+                    device.on('reconnect', () => {
+                        console.log('reconnect MQTT');
+                    });
+                    device.on('offline', () => {
+                        console.log('offline MQTT');
+                    });
+                    device.on('error', error => {
+                        console.log('error MQTT', error);
+                    });
+
+                })
+                .send();
+
+
+        })
+        .send();
+
 }
 
 const fakeGenerator = (io) => {
