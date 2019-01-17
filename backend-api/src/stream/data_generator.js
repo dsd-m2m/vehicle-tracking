@@ -16,23 +16,24 @@ const setupStreaming = (io) => {
         console.log('connect to MQTT!');
         device.subscribe('tcu');
 
-        setInterval(() => {
-
-            const carSpeed = Math.floor(Math.random() * 110 + 1);
-            const MotorRpm = Math.floor(Math.random() * 1000 + 1);
-            const timestamp = Date.now();
-            const vin = '1T7HT4B27X1183680';
-
-            const data = { carSpeed, MotorRpm, timestamp, vin};
-            device.publish('tcu', JSON.stringify(data));
-        }, 3000);
+        /*  for testing purposes
+                setInterval(() => {
+        
+                    const carSpeed = Math.floor(Math.random() * 110 + 1);
+                    const MotorRpm = Math.floor(Math.random() * 1000 + 1);
+                    const timestamp = Date.now();
+                    const vin = '1T7HT4B27X1183680';
+        
+                    const data = { carSpeed, MotorRpm, timestamp, vin};
+                    device.publish('tcu', JSON.stringify(data));
+                }, 3000); */
     });
 
     device.on('message', (topic, payload) => {
         console.log(topic, ':', payload.toString());
-        if (topic === 'tcu' ){
+        if (topic === 'tcu') {
             const data = JSON.parse(payload);
-            if (data.vin){
+            if (data.vin) {
                 io.emit(data.vin, payload.toString());
             }
         }
