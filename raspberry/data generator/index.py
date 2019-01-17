@@ -35,6 +35,8 @@ fake = Faker()
 loopCount = 0
 while True:
     message = {}
+
+    message['vin'] = config["clientId"]
     message['MotorRpm'] = loopCount #speed of the motor
     message['tempOilMotor'] = loopCount #temperature of the oil
     message['torqueMotor'] = loopCount #torque of the motor
