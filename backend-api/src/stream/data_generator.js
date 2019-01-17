@@ -2,11 +2,10 @@
 const faker = require('faker');
 const awsIot = require('aws-iot-device-sdk');
 
-
 const device = awsIot.device({
-    keyPath: 'certs/2c85921b45-private.pem.key',
-    certPath: 'certs/2c85921b45-certificate.pem.crt',
-    caPath: 'certs/root-CA.crt',
+    privateKey: Buffer.from(process.env.AWS_CERTIFICATE_KEY, 'base64'),
+    clientCert: Buffer.from(process.env.AWS_CERTIFICATE_CRT, 'base64'),
+    caCert: Buffer.from(process.env.AWS_ROOT_CA, 'base64'),
     clientId: process.env.IOT_CLIENT_ID,
     host: process.env.IOT_ENDPOINT,
 });
@@ -16,15 +15,15 @@ const setupStreaming = (io) => {
         console.log('connect to MQTT!');
         device.subscribe('tcu');
 
-        /*  for testing purposes
-                setInterval(() => {
+        // for testing the mqtt connection
+        /*         setInterval(() => {
         
                     const carSpeed = Math.floor(Math.random() * 110 + 1);
                     const MotorRpm = Math.floor(Math.random() * 1000 + 1);
                     const timestamp = Date.now();
                     const vin = '1T7HT4B27X1183680';
         
-                    const data = { carSpeed, MotorRpm, timestamp, vin};
+                    const data = { carSpeed, MotorRpm, timestamp, vin };
                     device.publish('tcu', JSON.stringify(data));
                 }, 3000); */
     });
