@@ -66,6 +66,6 @@ server.listen(config.server.port, () => {
 });
 
 require('./stream/index')(io);
-require('./stream/data_generator')(io);
+require('./stream/data_generator').setupStreaming(io);
 
 module.exports = server; // for testing
