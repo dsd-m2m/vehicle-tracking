@@ -117,7 +117,7 @@ class VehiclesPage extends React.Component {
 			 	
 				<div className="usersPage">
 					<h2 style={h2style} >Vehicles</h2>
-					<button onClick={()=>this.setFormVisibility()} style={addButtonStyle} className="vehiclePageButtons">
+					<button onClick={()=>this.setFormVisibility()} style={addButtonStyle} id="setFormVisibility"className="vehiclePageButtons">
 						<img src={addCircle} alt="Add Vehicle"/>
 					</button><br/>
 					<Collapse isOpened={this.state.showForm}>
@@ -125,14 +125,14 @@ class VehiclesPage extends React.Component {
 							<br/><br/>
 							<form style={addForm}>
 								<label>Vehicle ID number</label><br/>
-								<input type="text" style={textAreaStyle} onChange={(e) => this.handleInput("vin",e)}></input><br/>
+								<input id="VinInput" type="text" style={textAreaStyle} onChange={(e) => this.handleInput("vin",e)}></input><br/>
 								<label>Model</label><br/>
-								<input type="text" style={textAreaStyle} onChange={(e) => this.handleInput("model",e)}></input><br/>
+								<input id="ModelInput"type="text" style={textAreaStyle} onChange={(e) => this.handleInput("model",e)}></input><br/>
 								<label>Manufacturer</label><br/>
-								<input type="text" style={textAreaStyle} onChange={(e) => this.handleInput("manufacturer",e)}></input><br/>
+								<input id="ManInput" type="text" style={textAreaStyle} onChange={(e) => this.handleInput("manufacturer",e)}></input><br/>
 								<label>Manufacturer Year</label><br/>
-								<input type="text" style={textAreaStyle} onChange={(e) => this.handleInput("manufactureYear",e)}></input><br/>
-								<button onClick={()=>this.addNewVehicle()} className="vehiclePageButtons">Submit</button>
+								<input id="ManYearInput"type="text" style={textAreaStyle} onChange={(e) => this.handleInput("manufactureYear",e)}></input><br/>
+								<button onClick={()=>this.addNewVehicle()} id="addNewVehicle" className="vehiclePageButtons">Submit</button>
 							</form>
 						</div>
 					</Collapse>
@@ -183,10 +183,10 @@ class VehiclesPage extends React.Component {
 										{/* <button onClick={()=>this.deleteVehicle(vehicle.vin)} className="vehiclePageButtons">Delete vehicle</button> */}
 									</div>
 									<div className="">
-										<button onClick={()=>this.getSensors(vehicle.vin)} className="vehiclePageButtons">
+										<button onClick={()=>this.getSensors(vehicle.vin)} id="getSensors" className="vehiclePageButtons">
 											<img src={graphic} alt="Get sensor data"/>
 										</button>
-										<button onClick={()=>this.deleteVehicle(vehicle.vin)} className="vehiclePageButtons">
+										<button onClick={()=>this.deleteVehicle(vehicle.vin)} id="deleteVehicle" className="vehiclePageButtons">
 											<img src={removeCircle} alt="Delete vehicle"/>
 										</button>
 										<br />

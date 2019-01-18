@@ -148,7 +148,7 @@ class SensorsPage extends React.Component {
 					<button className="sensorsButtons" onClick={()=>this.showGraph("powerMotorTotal")}>Motor Power</button>
 					<button className="sensorsButtons" onClick={()=>this.showGraph("tempOilMotor")}>Motor Oil</button>
 					<button className="sensorsButtons" onClick={()=>this.showGraph("torqueMotor")}>Motor Torque</button>
-					<button className="sensorsButtons" onClick={()=>this.exportcsv()}>
+					<button onClick={()=>this.exportcsv()} id="exportcsv" className="sensorsButtons">
 						<img src={cloudIcon} alt="Export"/> <span style={spanStyle}>CSV</span>
 					</button>
 
