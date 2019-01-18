@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../_components/Header';
+
 import p1 from '../pictures/p1.jpg';
 import p2 from '../pictures/p2.jpg';
 import p3 from '../pictures/p3.jpg';
@@ -23,7 +23,7 @@ class AboutPage extends React.Component {
 	render() {
 		return(
 			<div id="AboutPage">
-				<Header/>
+				
 				<div className="tile">
 					<div className="tile-left">
 						<img src={p1} alt="" className="memberPics"/>

@@ -1,6 +1,6 @@
 import React from 'react';
 import api from '../api';
-import Header from '../_components/Header';
+
 
 
 const h2style = {
@@ -38,7 +38,7 @@ class UsersPage extends React.Component {
 	render() {
 		return (
 			<div>
-			 	<Header/>
+			 	
 				<div className="usersPage">
 					<h2 style={h2style}>       Users</h2>
 					{this.state.users.map((user, index) => {

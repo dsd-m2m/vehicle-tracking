@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from '../_components/Header';
 import api from '../api';
+
 
 
 const blueSpan = {
@@ -27,7 +27,6 @@ class HomePage extends React.Component {
 		return(
 			// <div className="HomePage">
 			<div className="" >
-				<Header/>
 				<div className="homepage">
 					<div className="firstCandy">
 						Number of cars <br/><br/>
