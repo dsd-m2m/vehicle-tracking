@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from '../_components/Header';
 
 class ContactPage extends React.Component {
 	constructor(props) {
@@ -31,7 +30,7 @@ class ContactPage extends React.Component {
 	render() {
 		return (
 			<div className="contactPage">
-				<Header/>
+				
 				
 				<div className="contactTile">
 					<div className="contact">

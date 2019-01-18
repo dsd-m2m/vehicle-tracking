@@ -5,7 +5,7 @@ import { VictoryChart, VictoryLine } from "victory";
 import cloudIcon from '../pictures/cloud-download.svg'
 
 import api from '../api';
-import Header from '../_components/Header';
+
 
 const h2style = {
 	color: '#2D9CDB',
@@ -140,7 +140,7 @@ class SensorsPage extends React.Component {
 		if(!this.state.render)return null;
 		return (
 			<div id="SensorsPage">
-			 	<Header/>
+			 
 				<div className="list" >
 					<h2 style={h2style}>Sensor Data VIN:{this.state.vin}</h2>
 					<button className="sensorsButtons" onClick={()=>this.showGraph("MotorRpm")}>Motor Rpm</button>

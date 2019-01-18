@@ -2,7 +2,6 @@ import React from 'react';
 import Collapse from 'react-collapse';
 
 import api from '../api';
-import Header from '../_components/Header';
 import addCircle from '../pictures/add-circle.svg';
 import graphic from '../pictures/graphic-eq.svg'
 import removeCircle from '../pictures/remove-circle.svg'
@@ -115,7 +114,7 @@ class VehiclesPage extends React.Component {
 	render() {
 		return (
 			<div>
-			 	<Header/>
+			 	
 				<div className="usersPage">
 					<h2 style={h2style} >Vehicles</h2>
 					<button onClick={()=>this.setFormVisibility()} style={addButtonStyle} className="vehiclePageButtons">

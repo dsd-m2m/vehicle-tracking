@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../_components/Header';
+
 
 const blueSpan = {
 	color: '#2D9CDB'
@@ -22,7 +22,6 @@ class HomePage extends React.Component {
 		return(
 			// <div className="HomePage">
 			<div className="" >
-				<Header/>
 				<div className="homepage">
 					<div className="firstCandy">
 						Number of cars <br/><br/>

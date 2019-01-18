@@ -5,6 +5,8 @@
 	"private": true,
 	"dependencies": {
 		"axios": "^0.18.0",
+		"enzyme": "^3.8.0",
+		"enzyme-adapter-react-16": "^1.7.1",
 		"history": "^4.6.3",
 		"js-file-download": "^0.4.4",
 		"jsonwebtoken": "^8.3.0",
